@@ -6,6 +6,7 @@
     <title>Register</title>
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 <x-guest-layout>
@@ -14,8 +15,9 @@
             <div class="w-full md:w-1/2 xl:w-1/2 p-6 bg-blue-400">
                 <img src="{{ asset('images/login-image.png') }}" alt="Left Image" class="w-full h-full object-cover">
             </div>
-            <div class="w-full md:w-1/2 xl:w-1/2 p-4">
-                <form method="POST" action="{{ route('register') }}">
+            <div class=" registerForm w-full md:w-1/2 xl:w-1/2 p-4">
+                <div id="responseMessage" class="response-message"></div> <!-- Response Message Div -->
+                <form method="POST" id="registerForm">
                     @csrf
                     <div class="form-container">
                         <h1 class="text-center font-bold text-2xl">CREATE ACCOUNT</h1>
@@ -135,8 +137,7 @@
     </div>
 </x-guest-layout>
 
-</body>
-</html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
     function togglePasswordVisibility() {
@@ -153,4 +154,48 @@
             eyeIcon.classList.remove('fa-eye');        
         }
     }
+
+    window.onload = function() {
+        @if(session('status'))
+            alert("{{ session('status') }}");
+        @endif
+    }
+
+    $(document).ready(function() {
+        $('#registerForm').on('submit', function(event) {
+            event.preventDefault();
+
+            // Clear previous messages
+            $('#responseMessage').html('');
+
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: '{{ route('register') }}',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    // Show success message in a pop-up prompt
+                    alert('Registration successful! Please log in.');
+                    // Redirect to login page
+                    window.location.href = "{{ route('login') }}";
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        var errorMessages = '<ul>';
+                        $.each(xhr.responseJSON.errors, function(key, value) {
+                            errorMessages += '<li>' + value[0] + '</li>';
+                        });
+                        errorMessages += '</ul>';
+                        $('#responseMessage').html(errorMessages);
+                    } else {
+                        $('#responseMessage').html('<p>' + xhr.responseJSON.message + '</p>');
+                    }
+                    $('#responseMessage').css('color', 'red');
+                }
+            });
+        });
+    });
 </script>
+</body>
+</html>

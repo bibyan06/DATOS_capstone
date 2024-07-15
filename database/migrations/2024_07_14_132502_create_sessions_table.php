@@ -22,18 +22,18 @@ return new class extends Migration
 
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('employee_id')->unique();
             $table->string('last_name');
             $table->string('first_name');
             $table->string('middle_name');
             $table->integer('age');
             $table->string('gender');
-            $table->string('home_address');
-            $table->string('employee_id')->unique();
-            $table->string('username')->unique();
-            $table->string('email')->unique();
             $table->string('phone_number');
+            $table->string('home_address');
+            $table->string('email')->unique();
+            $table->string('username')->unique();
             $table->string('password');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

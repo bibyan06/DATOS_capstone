@@ -5,6 +5,9 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 
 Route::redirect(uri:'/', destination: 'login');
+Route::view('/terms-of-service', 'terms.show')->name('terms.show');
+Route::view('/privacy-policy', 'policy.show')->name('policy.show');
+
 
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('/login', [LoginController::class, 'login'])->name('login');

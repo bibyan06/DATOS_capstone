@@ -13,22 +13,24 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use TwoFactorAuthenticatable;
 
+    public $timestamps = false; 
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'employee_id',
         'last_name',
         'first_name',
         'middle_name',
         'age',
         'gender',
-        'home_address',
-        'employee_id',
-        'username',
-        'email',
         'phone_number',
+        'home_address',
+        'email',
+        'username',
         'password',
     ];
 
