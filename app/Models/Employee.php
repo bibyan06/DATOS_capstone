@@ -9,14 +9,15 @@ class Employee extends Model
 {
     use HasFactory;
 
+    public $timestamps = false; 
+
     protected $fillable = [
-        'id',
         'employee_id',
         'last_name',
         'first_name',
         'position',
-        // Add other fields as needed
     ];
 
-
+    // Specify the correct table name
+    protected $table = 'employee';
 }

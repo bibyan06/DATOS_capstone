@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User; // Assuming you have a User model
-use Illuminate\Support\Facades\Hash; // For password hashing
+use App\Models\User;
+use App\Models\Employee;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use App\Models\Employee; 
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -28,7 +29,9 @@ class RegisterController extends Controller
             'password_confirmation' => 'required|string|min:8',
         ]);
 
-        // Create a new user
+        // Use a transaction to ensure both user and employee records are saved
+        DB::beginTransaction();
+
         try {
             Log::info('Creating new user...');
             $user = User::create([
@@ -44,35 +47,33 @@ class RegisterController extends Controller
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
             ]);
+
             if ($user) {
                 // Determine role based on employee_id prefix
                 $employee_id = $request->employee_id;
-                $role = 'user'; // Default role for other cases
                 $position = 'employee'; // Default position for other cases
 
-
                 if (strpos($employee_id, '01') === 0) {
-                    $role = 'admin';
+                    $position = 'admin';
                 } elseif (strpos($employee_id, '02') === 0) {
-                    $role = 'office_staff';
+                    $position = 'office_staff';
                 } elseif (strpos($employee_id, '03') === 0) {
-                    $role = 'dean';
+                    $position = 'dean';
                 }
 
-                // Assign role to the user
-                $user->assignRole($role);
-
-                 // Log success message
-                Log::info('User registered successfully: ' . $user->id);
-
                 // Update the employee table
-                $employee = new Employee();
-                $employee->user_id = $user->id;
-                $employee->employee_id = $user->employee_id;
-                $employee->last_name = $user->last_name;
-                $employee->first_name = $user->first_name;
-                $employee->position = $position;
-                $employee->save();
+                $employee = Employee::create([
+                    'employee_id' => $user->employee_id,
+                    'last_name' => $user->last_name,
+                    'first_name' => $user->first_name,
+                    'position' => $position,
+                ]);
+
+                // Commit the transaction
+                DB::commit();
+
+                // Log success message
+                Log::info('User registered successfully: ' . $user->id);
 
                 // Flash success message to session
                 $request->session()->flash('status', 'Registration successful! Please log in.');
@@ -85,6 +86,9 @@ class RegisterController extends Controller
                 return response()->json(['message' => 'Failed to register user'], 500);
             }
         } catch (\Exception $e) {
+            // Rollback the transaction
+            DB::rollBack();
+
             // Log exception if registration fails
             Log::error('User registration failed: ' . $e->getMessage());
             return response()->json(['message' => 'Failed to register user'], 500);

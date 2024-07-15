@@ -35,6 +35,14 @@ return new class extends Migration
             $table->string('password');
             $table->timestamp('created_at')->useCurrent();
         });
+
+        Schema::create('employee', function (Blueprint $table) {
+            $table->id();
+            $table->string('employee_id')->unique();
+            $table->string('last_name');
+            $table->string('first_name');
+            $table->string('position');
+        });
     }
 
     /**
