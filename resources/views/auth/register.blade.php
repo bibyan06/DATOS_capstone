@@ -145,13 +145,15 @@
         const eyeIcon = document.getElementById('eye-icon');
 
         if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            eyeIcon.classList.add('fa-eye');
-            eyeIcon.classList.remove('fa-eye-slash');   
+        passwordInput.type = 'text';
+        eyeIcon.classList.add('fa-eye');
+        eyeIcon.classList.remove('fa-eye-slash');
+       
         } else {
             passwordInput.type = 'password';
             eyeIcon.classList.add('fa-eye-slash');
-            eyeIcon.classList.remove('fa-eye');        
+            eyeIcon.classList.remove('fa-eye');
+            
         }
     }
 
