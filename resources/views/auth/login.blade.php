@@ -36,6 +36,19 @@
             <img src="{{ asset('images/login-image.png') }}" alt="" class="w-full h-full object-cover">
         </div>
     </div>
+
+     <!-- Error Modal -->
+    @if(session('error'))
+        <div id="errorModal" class="fixed inset-0 flex items-center justify-center z-50">
+            <div class="error-modal bg-white p-4 rounded shadow-md text-center relative z-50">
+                <h2 class="text-red-500 text-lg font-bold mb-4">Error</h2>
+                <p class="text-gray-700 mb-4">{{ session('error') }}</p>
+                <button onclick="closeErrorModal()" class="okay-button bg-blue-500 text-white px-4 py-2 rounded">OK</button>
+            </div>
+            <div class="fixed inset-0 bg-black opacity-10"></div>
+        </div>
+    @endif
+
 </x-guest-layout>
 
 <script>
@@ -55,5 +68,13 @@
         
     }
  }
+
+    function closeErrorModal() {
+        document.getElementById('errorModal').style.display = 'none';
+    }
+
+    // Automatically close the error modal after 3 seconds (optional)
+    // setTimeout(closeErrorModal, 8000);
 </script>
+
 

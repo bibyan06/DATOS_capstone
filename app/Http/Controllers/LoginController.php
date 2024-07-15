@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,13 +16,15 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
 
+        $credentials = $request->only('employee_id', 'password');
+
         // Attempt to authenticate the user
-        if (Auth::attempt(['employee_id' => $request->employee_id, 'password' => $request->password])) {
+        if (Auth::attempt($credentials)) {
             // Authentication was successful
-            return response()->json(['message' => 'Login successful'], 200);
+            return redirect()->intended('dashboard');
         }
 
         // Authentication failed
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        return redirect()->back()->with('error', 'Invalid employee ID or password.');
     }
 }
