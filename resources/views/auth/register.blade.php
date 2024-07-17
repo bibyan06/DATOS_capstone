@@ -178,9 +178,9 @@
                 data: formData,
                 success: function(response) {
                     // Show success message in a pop-up prompt
-                    alert('Registration successful! Please log in.');
-                    // Redirect to login page
-                    window.location.href = "{{ route('login') }}";
+                    alert('Registration successful! Please verify first you email.');
+                    // Redirect to email verification page
+                    window.location.href = "{{ route('verification.notice') }}";
                 },
                 error: function(xhr, status, error) {
                     if (xhr.responseJSON && xhr.responseJSON.errors) {
