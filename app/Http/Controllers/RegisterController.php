@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Employee;
+use App\Models\TemporaryUser;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyEmail;
+use Illuminate\Auth\Events\Registered;
+
 
 class RegisterController extends Controller
 {
@@ -15,7 +23,7 @@ class RegisterController extends Controller
     {
         // Validation rules
         $request->validate([
-            'employee_id' => 'required|string|max:20|unique:users',
+            'employee_id' => 'required|string|max:20|unique:temporary_users',
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'required|string|max:255',
@@ -23,18 +31,16 @@ class RegisterController extends Controller
             'gender' => 'required|string|in:male,female',
             'phone_number' => 'required|string|max:20',
             'home_address' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'username' => 'required|string|max:20|unique:users',
+            'email' => 'required|string|email|max:255|unique:temporary_users',
+            'username' => 'required|string|max:20|unique:temporary_users',
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required|string|min:8',
         ]);
 
-        // Use a transaction to ensure both user and employee records are saved
-        DB::beginTransaction();
-
         try {
-            Log::info('Creating new user...');
-            $user = User::create([
+            $verification_token = Str::random(64);
+
+            $temporaryUser = TemporaryUser::create([
                 'employee_id' => $request->employee_id,
                 'last_name' => $request->last_name,
                 'first_name' => $request->first_name,
@@ -46,12 +52,45 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
+                'verification_token' => $verification_token,
             ]);
 
-            if ($user) {
-                // Determine role based on employee_id prefix
-                $employee_id = $request->employee_id;
-                $position = 'employee'; // Default position for other cases
+            // Send email verification notification
+            Mail::to($request->email)->send(new VerifyEmail($verification_token));
+
+            return redirect()->route('verification.notice')
+                ->with('message', 'A verification email has been sent. Please check your email to verify your account.');
+        } catch (\Exception $e) {
+            // Log exception if registration fails
+            Log::error('User registration failed: ' . $e->getMessage());
+            return response()->json(['message' => 'Failed to register user'], 500);
+        }
+    }
+
+    public function verifyEmail($token)
+    {
+        $temporaryUser = TemporaryUser::where('verification_token', $token)->first();
+
+        if ($temporaryUser) {
+            DB::beginTransaction();
+
+            try {
+                $user = User::create([
+                    'employee_id' => $temporaryUser->employee_id,
+                    'last_name' => $temporaryUser->last_name,
+                    'first_name' => $temporaryUser->first_name,
+                    'middle_name' => $temporaryUser->middle_name,
+                    'age' => $temporaryUser->age,
+                    'gender' => $temporaryUser->gender,
+                    'phone_number' => $temporaryUser->phone_number,
+                    'home_address' => $temporaryUser->home_address,
+                    'email' => $temporaryUser->email,
+                    'username' => $temporaryUser->username,
+                    'password' => $temporaryUser->password,
+                ]);
+
+                $employee_id = $user->employee_id;
+                $position = 'employee';
 
                 if (strpos($employee_id, '01') === 0) {
                     $position = 'admin';
@@ -61,37 +100,26 @@ class RegisterController extends Controller
                     $position = 'dean';
                 }
 
-                // Update the employee table
-                $employee = Employee::create([
+                Employee::create([
                     'employee_id' => $user->employee_id,
                     'last_name' => $user->last_name,
                     'first_name' => $user->first_name,
                     'position' => $position,
                 ]);
 
-                // Commit the transaction
+                $temporaryUser->delete();
                 DB::commit();
 
-                // Log success message
-                Log::info('User registered successfully: ' . $user->id);
+                event(new Registered($user));
 
-                // Flash success message to session
-                $request->session()->flash('status', 'Registration successful! Please log in.');
-
-                // Redirect to login page
-                return redirect()->route('login');
-            } else {
-                // Log error if user creation fails
-                Log::error('Failed to create user');
-                return response()->json(['message' => 'Failed to register user'], 500);
+                return redirect('/login')->with('message', 'Your email has been verified. You can now log in.');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                Log::error('Email verification failed: ' . $e->getMessage());
+                return response()->json(['message' => 'Email verification failed'], 500);
             }
-        } catch (\Exception $e) {
-            // Rollback the transaction
-            DB::rollBack();
-
-            // Log exception if registration fails
-            Log::error('User registration failed: ' . $e->getMessage());
-            return response()->json(['message' => 'Failed to register user'], 500);
+        } else {
+            return redirect('/register')->with('error', 'Invalid verification token');
         }
     }
 }
