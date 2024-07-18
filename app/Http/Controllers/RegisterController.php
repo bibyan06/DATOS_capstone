@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\VerifyEmail;
+use App\Notifications\VerifyEmail;
 use Illuminate\Auth\Events\Registered;
+
 
 
 class RegisterController extends Controller
@@ -40,7 +41,7 @@ class RegisterController extends Controller
         try {
             $verification_token = Str::random(64);
 
-            $temporaryUser = TemporaryUser::create([
+            $tempUser = TemporaryUser::create([
                 'employee_id' => $request->employee_id,
                 'last_name' => $request->last_name,
                 'first_name' => $request->first_name,
@@ -56,7 +57,7 @@ class RegisterController extends Controller
             ]);
 
             // Send email verification notification
-            Mail::to($request->email)->send(new VerifyEmail($verification_token));
+            $tempUser->notify(new VerifyEmail($tempUser->verification_token));
 
             return redirect()->route('verification.notice')
                 ->with('message', 'A verification email has been sent. Please check your email to verify your account.');

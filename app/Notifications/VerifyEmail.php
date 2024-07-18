@@ -6,18 +6,17 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
 
 class VerifyEmail extends Notification
 {
     use Queueable;
 
-    protected $temporaryUser;
+    protected $token;
 
-    public function __construct($temporaryUser)
+    public function __construct($token)
     {
-        $this->temporaryUser = $temporaryUser;
+        $this->token = $token;
     }
 
     public function via($notifiable)
@@ -42,8 +41,8 @@ class VerifyEmail extends Notification
             'verification.verify',
             now()->addMinutes(60),
             [
-                'id' => $this->temporaryUser->getKey(),
-                'token' => $this->temporaryUser->verification_token,
+                'id' => $notifiable->getKey(),
+                'token' => $this->token,
             ]
         );
     }
