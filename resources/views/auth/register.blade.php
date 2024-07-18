@@ -15,7 +15,7 @@
             <div class="w-full md:w-1/2 xl:w-1/2 p-6 bg-blue-400">
                 <img src="{{ asset('images/login-image.png') }}" alt="Left Image" class="w-full h-full object-cover">
             </div>
-            <div class=" registerForm w-full md:w-1/2 xl:w-1/2 p-4">
+            <div class="registerForm w-full md:w-1/2 xl:w-1/2 p-4">
                 <div id="responseMessage" class="response-message"></div> <!-- Response Message Div -->
                 <form method="POST" id="registerForm">
                     @csrf
@@ -42,7 +42,7 @@
                                 </div>
                                 <div>
                                     <label for="age" class="age block mb-2 text-sm font-medium text-gray-900">Age</label>
-                                    <input type="number" id="age" name="age" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  required>
+                                    <input type="number" id="age" name="age" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                 </div>
                             </div>
                         </div>
@@ -50,12 +50,12 @@
                         <div class="mt-4">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                <label for="gender" class="gender block mb-2 text-sm font-medium text-gray-900">Gender</label>
-                                <select id="gender" name="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                                    <option value="">Select Gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
+                                    <label for="gender" class="gender block mb-2 text-sm font-medium text-gray-900">Gender</label>
+                                    <select id="gender" name="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
                                 </div>
                                 <div>
                                     <label for="phone_number" class="phone_number block mb-2 text-sm font-medium text-gray-900">Phone Number</label>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
 
-                        <div  class="mt-4">
+                        <div class="mt-4">
                             <label for="home_address" class="home_address block mb-2 text-sm font-medium text-gray-900">Home Address</label>
                             <input type="text" id="home_address" name="home_address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                         </div>
@@ -73,7 +73,7 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label for="employee_id" class="employee_id block mb-2 text-sm font-medium text-gray-900">Employee ID</label>
-                                    <input type="text" id="employee_id" name="employee_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  required>
+                                    <input type="text" id="employee_id" name="employee_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                 </div>
                                 <div>
                                     <label for="username" class="username block mb-2 text-sm font-medium text-gray-900">Username</label>
@@ -84,27 +84,27 @@
 
                         <div class="mt-4">
                             <label for="email" class="email block mb-2 text-sm font-medium text-gray-900">Email</label>
-                            <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"  required>
+                            <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                         </div>
 
                         <div class="mt-4">
                             <div class="grid grid-cols-2 gap-4">
-                            <div class="password-container">
-                                <label for="password" class="password block mb-2 text-sm font-medium text-gray-900">Password</label>
-                                <div class="input-container">
-                                    <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                                    <span class="register-show-password" onclick="togglePasswordVisibility()">
-                                        <i class="fas fa-eye-slash" id="eye-icon"></i>
-                                    </span>
+                                <div class="password-container">
+                                    <label for="password" class="password block mb-2 text-sm font-medium text-gray-900">Password</label>
+                                    <div class="input-container">
+                                        <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                                        <span class="register-show-password" onclick="togglePasswordVisibility()">
+                                            <i class="fas fa-eye-slash" id="eye-icon"></i>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
                                 <div>
                                     <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900">Confirm Password</label>
                                     <input type="password" id="password_confirmation" name="password_confirmation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                 </div>
                             </div>
                         </div>
-                        
+
                         @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                             <div class="mt-4">
                                 <label for="terms" class="block mb-2 text-sm font-medium text-gray-900">
@@ -114,17 +114,19 @@
                                             {!! __('I agree to the :terms_of_service and :privacy_policy', [
                                                     'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
                                                     'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
-                                            ])!!}
+                                            ]) !!}
                                         </span>
                                     </div>
                                 </label>
                             </div>
                         @endif
+
                         <div>
                             <button type="submit" class="register-btn inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-25 transition ease-in-out duration-150 mx-auto">
-                            {{ __('CREATE') }}
+                                {{ __('CREATE') }}
                             </button>
                         </div>
+
                         <div class="flex items-center justify-end mt-4">
                             <a style="color: #009FEA;" class="hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                                 {{ __('Back to Login') }}
@@ -145,15 +147,13 @@
         const eyeIcon = document.getElementById('eye-icon');
 
         if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        eyeIcon.classList.add('fa-eye');
-        eyeIcon.classList.remove('fa-eye-slash');
-       
+            passwordInput.type = 'text';
+            eyeIcon.classList.add('fa-eye');
+            eyeIcon.classList.remove('fa-eye-slash');
         } else {
             passwordInput.type = 'password';
             eyeIcon.classList.add('fa-eye-slash');
             eyeIcon.classList.remove('fa-eye');
-            
         }
     }
 
@@ -178,7 +178,7 @@
                 data: formData,
                 success: function(response) {
                     // Show success message in a pop-up prompt
-                    alert('Registration successful! Please verify first you email.');
+                    alert('Registration successful! Please verify your email.');
                     // Redirect to email verification page
                     window.location.href = "{{ route('verification.notice') }}";
                 },
