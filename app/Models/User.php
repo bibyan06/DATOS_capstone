@@ -76,4 +76,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at',
         // Other dates columns...
     ];
+
+    public function hasVerifiedEmail()
+    {
+        return !is_null($this->email_verified_at);
+    }
 }

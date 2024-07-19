@@ -60,3 +60,21 @@
     background-color: #ccc;
     color: #333;
   }
+
+  .emailconfirmed-button{
+    background-color: #009FEA;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .emailconfirmed-buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
