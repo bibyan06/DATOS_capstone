@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify-email</title>
+    <title>Verify Email</title>
     <link rel="stylesheet" href="{{ asset('css/verify-email.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -23,13 +23,13 @@
             @endif
 
             <div class="mt-4 flex items-center justify-between verify-email-buttons">
-                <form method="POST" action="{{ route('verification.send') }}">
+                <form method="POST" id="resend-verification-form" action="{{ route('verification.send') }}">
                     @csrf
 
                     <div>
-                        <x-button type="submit" class="verify-email-button verify-email-button--primary">
+                        <button type="submit" class="verify-email-button verify-email-button--primary">
                             {{ __('Resend Verification Email') }}
-                        </x-button>
+                        </button>
                     </div>
                 </form>
 
@@ -43,5 +43,28 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#resend-verification-form').on('submit', function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('verification.send') }}',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        alert('A new verification link has been sent to your email address.');
+                    },
+                    error: function(response) {
+                        alert('There was an error resending the verification email.');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
