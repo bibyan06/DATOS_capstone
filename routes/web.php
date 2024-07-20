@@ -5,6 +5,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Auth\AuthLoginController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\HomeController; 
+
 
 // Redirect the root URL to the login page
 Route::redirect('/', 'login');
@@ -41,6 +43,7 @@ Route::get('/email/verify/{token}', [RegisterController::class, 'verifyEmail'])-
 
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->name('verification.send');
 
+Route::get('/redirects',[HomeController::class,"index"]);
 
 // Test database connection route
 Route::get('/test-db', function () {

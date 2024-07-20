@@ -47,7 +47,7 @@
 </head>
 <body>
     <x-guest-layout>
-        <div class="container mx-auto p-4 pt-6 md:p-6 lg:p-12 flex flex-wrap">
+        <div class="forgotpass-container mx-auto p-4 pt-6 md:p-6 lg:p-12 flex flex-wrap">
             <div class="w-full md:w-1/2 xl:w-1/2 p-6">
                 <div class="form-container">
                     <h1>RESET PASSWORD</h1>
@@ -58,7 +58,9 @@
                             <label for="email">Email Address</label>
                             <input type="email" name="email" id="email" required>
                         </div>
-                        <button type="submit">Verify</button>
+                        <div class="button">
+                            <button type="submit">Verify</button>
+                        </div> 
                     </form>
                     <div class="links">
                         <a href="{{ route('login') }}">Back to Login</a>
