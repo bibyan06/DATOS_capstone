@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="bg-blue-500 w-full md:w-1/2 xl:w-1/2 p-6">
+        <div class="bg-blue-500 w-full md:w-1/2 xl:w-1/2 p-6" style="height: 590px;">
             <img src="{{ asset('images/login-image.png') }}" alt="Right Image" class="w-full h-full object-cover">
         </div>
     </div>
