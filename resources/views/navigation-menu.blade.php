@@ -1,7 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+</head>
+
+<body>
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
-    <div class="nav-bar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+     <div class="nav-bar fixed top-16 left-0 w-full z-50">
+        <div class="nav-bar-first flex justify-between h-16 max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
@@ -217,3 +224,5 @@
         </div>
     </div>
 </nav>
+</body>
+</html>

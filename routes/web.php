@@ -22,6 +22,8 @@ Route::post('/login', [AuthLoginController::class, 'login']);
 // Route::post('/login', 'Auth\AuthLoginController@login')->middleware('verify.email.and.move.to.employee');
 Route::post('login-verified', [AuthLoginController::class, 'loginverified'])->name('login.verified');
 
+Route::get('home','App\Http\Controllers\HomeController@index');
+
 // Email verification routes
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
@@ -43,7 +45,7 @@ Route::get('/email/verify/{token}', [RegisterController::class, 'verifyEmail'])-
 
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->name('verification.send');
 
-Route::get('/redirects',[HomeController::class,"index"]);
+Route::get('/redirects', [HomeController::class, 'index']);
 
 // Test database connection route
 Route::get('/test-db', function () {

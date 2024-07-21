@@ -27,9 +27,9 @@
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white shadow">
-                    <div class="dashboard-navbar max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
+                <div class="dashboard-navbar  fixed top-0 left-0 w-full z-50">
+                    {{ $header }}
+                </div>
                     
                 </header>
             @endif

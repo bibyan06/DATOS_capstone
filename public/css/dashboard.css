@@ -13,30 +13,42 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    margin-top: 9rem;
+    padding: 0;
+    width: 100%;
   }
   .nav-bar{
     height: 60px;
     width: 100%;
-    max-width: 100%;
     margin: 0;
     padding: 0;
     background-color: #009FEA;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
   }
+
   .dashboard-navbar{
     height: 60px;
     width: 100%;
-    max-width: 100%;
     margin: 0;
     padding: 0;
     background-color: #FF731E;
-    position:absolute;
+    position: absolute;
+    top: 60px; /* Places it below the .nav-bar */
     left: 0;
     right: 0;
+    z-index: 999;
   }
 
   .dashboard-title{
     height: 60px;
-    margin-top: 1rem;
+  /* background-color: #FF731E; */
+    display: grid;
+    grid-template-columns: 1fr auto auto; /* add an extra column for the spacer */
+    gap: 1rem;
   }
  
   /* .bg-white {
