@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\RateLimiter;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    public const HOME = '/redirects';
+    public const HOME = '/home';
 
     public function register()
     {

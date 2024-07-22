@@ -1,0 +1,165 @@
+/*document report dropdown*/
+
+
+#dropdown-icon{
+    margin-left: 10px;
+}
+
+.dropdown a{
+    font-size: 12px;
+}
+
+.dropdown {
+    display: none;
+    margin-left: 10px;
+}
+
+.dropdown-toggle:hover + .dropdown,
+.dropdown:hover {
+    display: block;
+}
+/*document report dropdown*/
+
+/**/
+
+.form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.document-form {
+    padding: 10px;
+    margin: 20px;
+    width: 40rem; /* Ensure it uses the available width */
+    
+}
+
+.upload-section {
+    background-color: #357ae8;
+    text-align: center;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-family: 'Poppins';
+    justify-content: center;
+}
+
+#file-icon {
+    font-size: 60px;
+}
+
+.file-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    font-family: 'Poppins';
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-button {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Poppins';
+}
+
+.upload-button:hover {
+    background-color: #1845A2;
+}
+
+
+.form-group {
+    margin-bottom: 10px;   
+    
+
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+    font-size: 14px;
+}
+
+.document-form-category{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-family: 'Poppins';
+    position: relative;
+}
+
+.form-group-category {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: auto; /* Push to the right */
+    font-family: 'Poppins';
+    font-size: 14px;
+}
+
+.form-group-category select {
+    padding: 6px;
+    font-size: 11px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Poppins';
+    width: 100%;
+    max-width: 250px;
+}
+
+.document-form-category > * {
+    margin-right: 10px; /* Adjust as needed */
+}
+
+.document-form-category .form-group-category {
+    margin-right: 0; /* Remove right margin for the last element */
+}
+
+.save-button {
+    background-color: #1845A2;
+    color: white;
+    border: none;
+    padding: 8px 8px;
+    width: 20%;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Poppins';
+}
+
+.save-button:hover {
+    background-color: #4285f4;
+}
+
+.file-upload-label p{
+    font-size: 12px;
+    padding-top: 10px;
+}
+
+#uploading-content {
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}
+
+#uploading-content.shifted {
+    margin-left: 250px;
+}

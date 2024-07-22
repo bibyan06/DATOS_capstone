@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers; // This is the correct import
+use Illuminate\Support\Str;
 
 class AuthLoginController extends Controller
 {
@@ -28,7 +29,7 @@ class AuthLoginController extends Controller
         // Attempt to authenticate the user
         if (Auth::attempt($credentials)) {
             // Authentication was successful
-            return redirect()->intended('dashboard');
+            return $this->sendLoginResponse($request);
         }
 
         // Authentication failed
@@ -69,5 +70,25 @@ class AuthLoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        $user = auth()->user();
+        $employeeId = $user->employee_id;
+
+        if (Str::startsWith($employeeId, '01')) {
+            return redirect()->route('home.admin');
+        } elseif (Str::startsWith($employeeId, '02')) {
+            return redirect()->route('home.office_staff');
+        } elseif (Str::startsWith($employeeId, '03')) {
+            return redirect()->route('home.dean');
+        }
+
+        return redirect()->intended($this->redirectPath()); // Default fallback
     }
 }

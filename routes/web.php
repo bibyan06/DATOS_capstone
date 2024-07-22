@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\AuthLoginController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\HomeController; 
-
+use App\Http\Controllers\OfficeStaffController; 
 
 // Redirect the root URL to the login page
 Route::redirect('/', 'login');
@@ -19,10 +19,10 @@ Route::view('/privacy-policy', 'policy.show')->name('policy.show');
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 Route::get('/login', [AuthLoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthLoginController::class, 'login']);
-// Route::post('/login', 'Auth\AuthLoginController@login')->middleware('verify.email.and.move.to.employee');
 Route::post('login-verified', [AuthLoginController::class, 'loginverified'])->name('login.verified');
 
-Route::get('home','App\Http\Controllers\HomeController@index');
+// Home route
+Route::get('/home', [HomeController::class, 'index']);
 
 // Email verification routes
 Route::get('/email/verify', function () {
@@ -33,15 +33,11 @@ Route::get('/email/confirmed', function () {
     return view('email-confirmed');
 });
 
-Route::get('/email/verified', 'VerificationController@verified')->name('verification.verified');
+Route::get('/email/verified', [VerificationController::class, 'verified'])->name('verification.verified');
 
 Route::get('/verify-email/confirmed', [EmailVerificationController::class, 'confirmEmail'])->name('email.confirmed');
-// Route::group(['middleware' => ['verify.email.and.move.to.employee']], function () {
-//     Route::get('/login', 'Auth\LoginController@login');
-// });
 
 Route::get('/email/verify/{token}', [RegisterController::class, 'verifyEmail'])->name('verify.email');
-// Route::get('/email/verify-confirmed/{token}', [RegisterController::class, 'verifyEmailConfirmed'])->name('verify.email.confirmed');
 
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->name('verification.send');
 
@@ -67,3 +63,34 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+// Routes for designated landing pages
+Route::get('/home/admin', function () {
+    return view('home.admin');
+})->name('home.admin');
+
+Route::get('/home/office_staff', function () {
+    return view('home.office_staff');
+})->name('home.office_staff');
+
+Route::get('/home/dean', function () {
+    return view('home.dean');
+})->name('home.dean');
+
+
+//Route for office_staff side 
+// Route::get('/office_staff/os_dashboard', function () {
+//     return view('office_staff.os_dashboard');
+// })->name('office_staff.os_dashboard');
+
+Route::get('/office_staff/os_dashboard', [OfficeStaffController::class, 'dashboard'])->name('office_staff.os_dashboard');
+Route::get('/office_staff/account', [OfficeStaffController::class, 'account'])->name('office_staff.account');
+
+
+//Route for Files 
+
+
+// Fallback home route
+Route::get('/home', function () {
+    return view('home');
+})->name('home');

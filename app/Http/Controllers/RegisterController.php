@@ -31,6 +31,16 @@ class RegisterController extends Controller
         try {
             DB::beginTransaction();
 
+            // Determine user_type based on employee_id
+            $user_type = 'employee'; // Default user_type
+            if (strpos($request->employee_id, '01') === 0) {
+                $user_type = 'admin';
+            } elseif (strpos($request->employee_id, '02') === 0) {
+                $user_type = 'office_staff';
+            } elseif (strpos($request->employee_id, '03') === 0) {
+                $user_type = 'dean';
+            }
+
             // Create user
             $user = User::create([
                 'employee_id' => $request->employee_id,
@@ -45,24 +55,15 @@ class RegisterController extends Controller
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'email_verified_at' => now(), // Set email_verified_at if you want it to be verified immediately
+                'user_type' => $user_type,
             ]);
 
-            // Determine position based on employee_id
-            $position = 'employee'; // Default position
-            if (strpos($request->employee_id, '01') === 0) {
-                $position = 'admin';
-            } elseif (strpos($request->employee_id, '02') === 0) {
-                $position = 'office_staff';
-            } elseif (strpos($request->employee_id, '03') === 0) {
-                $position = 'dean';
-            }
-
-            // Create employee record
+            // Create employee record with the same position
             Employee::create([
                 'employee_id' => $request->employee_id,
                 'last_name' => $request->last_name,
                 'first_name' => $request->first_name,
-                'position' => $position,
+                'position' => $user_type, // Position is the same as user_type in this case
             ]);
 
             DB::commit();
