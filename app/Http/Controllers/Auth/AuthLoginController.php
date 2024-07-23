@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\AuthenticatesUsers; // This is the correct import
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AuthLoginController extends Controller
 {
@@ -29,11 +31,36 @@ class AuthLoginController extends Controller
         // Attempt to authenticate the user
         if (Auth::attempt($credentials)) {
             // Authentication was successful
+            $this->updateLoginSession(Auth::user()->employee_id);
             return $this->sendLoginResponse($request);
         }
 
         // Authentication failed
         return redirect()->back()->with('error', 'Invalid employee ID or password.');
+    }
+
+    protected function updateLoginSession($employeeId)
+    {
+        $existingSession = DB::table('login_session')
+            ->where('employee_id', $employeeId)
+            ->first();
+
+        if ($existingSession) {
+            // Update existing session
+            DB::table('login_session')
+                ->where('employee_id', $employeeId)
+                ->update([
+                    'login_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'status' => 'active',
+                ]);
+        } else {
+            // Create new session
+            DB::table('login_session')->insert([
+                'employee_id' => $employeeId,
+                'login_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                'status' => 'active',
+            ]);
+        }
     }
 
     public function loginverified(Request $request)
@@ -90,5 +117,32 @@ class AuthLoginController extends Controller
         }
 
         return redirect()->intended($this->redirectPath()); // Default fallback
+    }
+
+    public function logout(Request $request)
+    {
+        // Get the current user ID
+        $user = Auth::user();
+        $employeeId = $user->employee_id;
+
+        // Log the values for debugging
+        \Log::info("Attempting to update login_session for employee_id: $employeeId");
+        \Log::info("Logout Date: " . Carbon::now()->format('Y-m-d H:i:s'));
+
+        // Update the login_session table
+        DB::table('login_session')
+            ->where('employee_id', $employeeId)
+            ->where('status', 'active')
+            ->update([
+                'logout_date' => Carbon::now()->format('Y-m-d H:i:s'),
+                'status' => 'inactive'
+            ]);
+
+        // Log out the user
+        $this->guard()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

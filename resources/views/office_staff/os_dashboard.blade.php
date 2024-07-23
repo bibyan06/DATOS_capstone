@@ -14,16 +14,21 @@
         <div class="header-content">
             <div class="left-header">
                 <img src="{{ asset('images/Bicol_University.png') }}" alt="Bicol University Logo" class="logo">
-                <h1>BICOL <span>UNIVERSITY</span></h1>
+                    <h1>BICOL <span>UNIVERSITY</span></h1>
             </div>
             <div class="profile-icon">
-                <img src="{{asset('images/user-circle-solid-24.png')}}" alt="Profile Icon" id="profile-icon">
+                <img src="{{ asset('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
                 <div class="dropdown-menu" id="profile-dropdown">
-                    <a href="{{route('office_staff.account')}}"><i class="bi bi-person-circle" id="account-icon"> </i>Account</a>
-                    <a href="#"><i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout</a>
-                </div>
-            </div>   
-        </div>
+                    <a href="{{ route('office_staff.os_account') }}"><i class="bi bi-person-circle" id="account-icon"> </i>Account</a>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                    </div>
+                </div>   
+            </div>
     </header>
 
     <nav>
@@ -51,13 +56,13 @@
                         <a href="claim_monitoring_sheet.html"><i class="bi bi-receipt-cutoff"></i> Claim Monitoring Sheet</a>
                         <a href="monthly_report_service_of_personnel.html"><i class="bi bi-calendar-event-fill"></i> Monthly Report Service of Personnel</a>
                     </div>
-                    <a href="upload_document.html"><i class="bi bi-upload"></i> Upload Document</a>
+                    <a href="{{route ('office_staff.os_upload_document')}}"><i class="bi bi-upload"></i> Upload Document</a>
                 </li>
             </ul>
             <div class="settings">
                 <ul>
-                    <li><a href="{{route('office_staff.account')}}"><i class="bi bi-person-circle" id="account-icon"></i> Account</a></li>
-                    <li><a href="#"><i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout</a></li>
+                    <li><a href="{{route('office_staff.os_account')}}"><i class="bi bi-person-circle" id="account-icon"></i> Account</a></li>
+                    <li><a href="{{ route('logout') }}"><i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout</a></li>
                 </ul>
             </div>
         </div>

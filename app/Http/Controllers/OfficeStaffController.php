@@ -12,6 +12,11 @@ class OfficeStaffController extends Controller
     }
     public function account()
     {
-        return view('office_staff.account');
+        return view('office_staff.os_account');
+    }
+
+    public function upload_document()
+    {
+        return view('office_staff.os_upload_document');
     }
 }

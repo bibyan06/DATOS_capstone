@@ -17,20 +17,27 @@
                 <h1>BICOL <span>UNIVERSITY</span></h1>
             </div>
             <div class="profile-icon">
-                <img src="{{asset('images/user-circle-solid-24.png')}}" alt="Profile Icon" id="profile-icon">
+                <img src="{{ asset('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
                 <div class="dropdown-menu" id="profile-dropdown">
-                    <a href="{{route('office_staff.account')}}"><i class="bi bi-person-circle" id="account-icon"> </i>Account</a>
-                    <a href="#"><i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout</a>
+                    <a href="{{ route('office_staff.os_account') }}"><i class="bi bi-person-circle" id="account-icon"></i>Account</a>
+                    <a href="{{ route('logout') }}" 
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
+                    </a>
                 </div>
-            </div>   
+            </div>
         </div>
     </header>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
 
     <nav>
         <div class="nav-content">
             <div class="nav-left">
                 <a href="#" class="menu-icon" id="menu-toggle"><i class="bi bi-list"></i></a>
-                <img src="{{asset('images/datos.png')}}" alt="Nav Logo" class="nav-logo">
+                <img src="{{ asset('images/datos.png') }}" alt="Nav Logo" class="nav-logo">
                 <ul>
                     <li><a href="#" id="home-link">Home</a></li>
                     <li><a href="{{ route('office_staff.os_dashboard') }}">Dashboard</a></li>
@@ -49,21 +56,26 @@
                     <a href="{{ route('home.office_staff') }}"><i class="bi bi-house-fill" id="home-icon"></i> Home</a>
                 </li>
                 <li>    
-                        <a href="{{ route('office_staff.os_dashboard') }}"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i>   Dashboard</a>
+                    <a href="{{ route('office_staff.os_dashboard') }}"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i> Dashboard</a>
                 </li>
             </ul>
             <div class="settings">
-                <ul><li>
-                    <a href="{{route('office_staff.account')}}"><i class="bi bi-person-circle" id="account-icon"></i> Account</a>
-                    <a href="#"><i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout</a>
-                </li></ul>
+                <ul>
+                    <li>
+                        <a href="{{ route('office_staff.os_account') }}"><i class="bi bi-person-circle" id="account-icon"></i> Account</a>
+                        <a href="{{ route('logout') }}" 
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
 
         <main id="home-section">
             <section class="welcome-section">
                 <div class="welcome-message">
-                    <h2>Welcome back, Admin!</h2>
+                    <h2>Welcome back, Office Staff!</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </div>
                 <div class="current-time">
@@ -90,7 +102,7 @@
                                     <div class="dropdown-more" id="more-option">
                                         <a href="view-document.html">View</a>
                                         <a href="#">Download</a>
-                                        <a href=edit-document.html">Edit</a>
+                                        <a href="edit-document.html">Edit</a>
                                     </div>
                                 </div>
                             </div>
