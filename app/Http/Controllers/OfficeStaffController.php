@@ -10,7 +10,7 @@ class OfficeStaffController extends Controller
     {
         return view('office_staff.os_dashboard');
     }
-    public function account()
+    public function os_account()
     {
         return view('office_staff.os_account');
     }

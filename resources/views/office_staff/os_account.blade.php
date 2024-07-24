@@ -20,12 +20,14 @@
                 <img src="{{ asset('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
                 <div class="dropdown-menu" id="profile-dropdown">
                     <a href="{{ route('profile') }}"><i class="bi bi-person-circle" id="account-icon"> </i>Account</a>
-                    <a href="{{ route('logout') }}" 
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                       <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
                     </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
-            </div>                     
+            </div>
         </div>
     </header>
 
@@ -60,10 +62,12 @@
             <div class="settings">
                 <ul>
                     <li><a href="{{ route('profile') }}"><i class="bi bi-person-circle"></i> Account</a></li>
-                    <li><a href="{{ route('logout') }}" 
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                           <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
+                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
                     </a></li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </ul>
             </div>
         </div>

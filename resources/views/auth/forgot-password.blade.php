@@ -43,6 +43,24 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        .reset-form-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            flex-direction: column; /* Stack children vertically */
+        }
+
+        .reset-form-container button[type="submit"] {
+            background-color: #009FEA;
+            color: #fff;
+            font-size: 15px;
+            padding: 9px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 10rem;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -59,7 +77,7 @@
                             <input type="email" name="email" id="email" required>
                         </div>
                         <div class="button">
-                            <button type="submit">Verify</button>
+                            <button type="submit" style="justify-content: center">Verify</button>
                         </div> 
                     </form>
                     <div class="links">
