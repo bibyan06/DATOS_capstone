@@ -16,7 +16,7 @@
                 <img src="{{ asset('images/login-image.png') }}" alt="Left Image" class="w-full h-full object-cover">
             </div>
             <div class="registerForm w-full md:w-1/2 xl:w-1/2 p-4">
-                <div id="responseMessage" class="response-message"></div> <!-- Response Message Div -->
+                <!-- <div id="responseMessage" class="response-message"></div> Response Message Div -->
                 <form method="POST" id="registerForm">
                     @csrf
                     <div class="form-container">
@@ -97,12 +97,13 @@
                                             <i class="fas fa-eye-slash" id="eye-icon"></i>
                                         </span>
                                     </div>
-                                    <div id="passwordErrorMessages" class="text-red-500 text-sm mt-1"></div> 
+                                    <div id="password-error" class="text-red-500 text-sm mt-1"></div> 
                                 </div>
                                 <div>
                                     <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900">Confirm Password</label>
-                                    <input type="password" id="password_confirmation" name="password_confirmation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                                    <input type="password" id="password_confirmation" name="password_confirmation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required> 
                                 </div>
+                                <div id="password-error" class="text-red-500 text-sm mt-1"></div>
                             </div>
                         </div>
 
@@ -170,8 +171,13 @@
 
         // Clear previous messages
         $('#responseMessage').html('');
-        $('#password-error').html(''); // Clear previous password error
-        $('#age-error').html(''); // Clear previous age error
+        $('#password-error').html('');
+        $('#age-error').html('');
+
+        // Custom client-side validation
+        if (!validateAge() || !validatePassword()) {
+            return false;
+        }
 
         var formData = $(this).serialize();
 
@@ -180,47 +186,43 @@
             type: 'POST',
             data: formData,
             success: function(response) {
-                // Show success message in a pop-up prompt
                 alert('Registration successful! Please login to verify your email.');
-                // Redirect to email verification page
                 window.location.href = "{{ route('login') }}";
             },
-            error: function(xhr, status, error) {
-                if (xhr.responseJSON && xhr.responseJSON.errors) {
-                    // Customize and display password errors
-                    if (xhr.responseJSON.errors.password) {
-                        var passwordErrorMessages = '<ul>';
-                        $.each(xhr.responseJSON.errors.password, function(key, value) {
-                            if (value.includes('required')) {
-                                passwordErrorMessages += '<li>Password is required.</li>';
-                            } else if (value.includes('min')) {
-                                passwordErrorMessages += '<li>Password must be at least 8 characters long and one capital letter.</li>';
-                            } else {
-                                passwordErrorMessages += '<li>Password must be at least 8 characters long and one capital letter</li>';
-                            }
-                        });
-                        passwordErrorMessages += '</ul>';
-                        $('#password-error').html(passwordErrorMessages);
-                    }
+            error: function(xhr) {
+                var errors = xhr.responseJSON.errors || {};
+                var errorMessages = '';
 
-                    // Customize and display age errors
-                    if (xhr.responseJSON.errors.age) {
-                        var ageErrorMessages = '<ul>';
-                        $.each(xhr.responseJSON.errors.age, function(key, value) {
-                            ageErrorMessages += '<li> Invalid age. Input out of range.</li>';
-                        });
-                        ageErrorMessages += '</ul>';
-                        $('#age-error').html(ageErrorMessages);
-                    }
+                // Password errors
+                if (errors.password) {
+                    errorMessages += '<ul>';
+                    $.each(errors.password, function(_, value) {
+                        errorMessages += '<li>' + value + '</li>';
+                    });
+                    errorMessages += '</ul>';
+                    $('#password-error').html(errorMessages);
+                }
 
-                    var generalErrorMessages = '<ul>';
-                    $.each(xhr.responseJSON.errors, function(key, value) {
-                        if (key !== 'password' && key !== 'age') { // Exclude password and age errors
-                            generalErrorMessages += '<li>' + value[0] + '</li>';
+                // Age errors
+                if (errors.age) {
+                    errorMessages += '<ul>';
+                    $.each(errors.age, function(_, value) {
+                        errorMessages += '<li>' + value + '</li>';
+                    });
+                    errorMessages += '</ul>';
+                    $('#age-error').html(errorMessages);
+                }
+
+                // General errors
+                if (Object.keys(errors).length) {
+                    errorMessages += '<ul>';
+                    $.each(errors, function(key, value) {
+                        if (key !== 'password' && key !== 'age') {
+                            errorMessages += '<li>' + value[0] + '</li>';
                         }
                     });
-                    generalErrorMessages += '</ul>';
-                    $('#responseMessage').html(generalErrorMessages);
+                    errorMessages += '</ul>';
+                    $('#responseMessage').html(errorMessages);
                 } else {
                     $('#responseMessage').html('<p>' + xhr.responseJSON.message + '</p>');
                 }
@@ -228,6 +230,54 @@
             }
         });
     });
+
+    function validateAge() {
+        const age = document.getElementById('age').value;
+        const ageError = document.getElementById('age-error');
+
+        if (age < 18) {
+            ageError.textContent = 'Age must be at least 18.';
+            return false;
+        }
+
+        ageError.textContent = '';
+        return true;
+    }
+
+    function validatePassword() {
+        const password = document.getElementById('password').value;
+        const passwordError = document.getElementById('password-error');
+        const regex = /^(?=.*[a-z])(?=.*[A-Z]).{8,18}$/;
+
+        if (!regex.test(password)) {
+            passwordError.textContent = 'Password must be 8-18 characters long, contain both uppercase and lowercase letters.';
+            return false;
+        }
+
+        passwordError.textContent = '';
+        return true;
+    }
+
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eye-icon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.add('fa-eye');
+            eyeIcon.classList.remove('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.add('fa-eye-slash');
+            eyeIcon.classList.remove('fa-eye');
+        }
+    }
+
+    window.onload = function() {
+        @if(session('status'))
+            alert("{{ session('status') }}");
+        @endif
+    }
 });
 
 </script>
