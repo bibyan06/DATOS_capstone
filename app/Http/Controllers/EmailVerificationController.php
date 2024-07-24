@@ -25,7 +25,9 @@ class EmailVerificationController extends Controller
         }
 
         // Redirect to the login page
-        return redirect()->route('login');
+        // return redirect()->route('login');
+        return redirect()->route('verification.notice');
+
     }
     public function resend(Request $request)
     {
@@ -48,7 +50,6 @@ class EmailVerificationController extends Controller
             ['id' => $user->id, 'hash' => sha1($user->email)]
         );
 
-        // Send the verification email
         Mail::to($user->email)->send(new VerifyEmail($verificationUrl));
 
         return response()->json(['message' => 'Verification link sent.'], 200);

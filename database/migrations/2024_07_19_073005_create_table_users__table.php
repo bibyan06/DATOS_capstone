@@ -18,7 +18,7 @@ class RegisterController extends Controller
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'required|string|max:255',
-            'age' => 'required|integer|min:18|max:120',
+            'age' => 'required|numeric|integer|min:18|max:120',
             'gender' => 'required|string|in:male,female',
             'phone_number' => 'required|string|max:20',
             'home_address' => 'required|string|max:255',

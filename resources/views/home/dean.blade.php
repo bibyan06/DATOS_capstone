@@ -38,7 +38,7 @@
                 <a href="#" class="menu-icon" id="menu-toggle"><i class="bi bi-list"></i></a>
                 <img src="{{asset('images/datos.png')}}" alt="Nav Logo" class="nav-logo">
                 <ul>
-                    <li><a href="#" id="home-link">Home</a></li>
+                    <li><a href="{{ route('home.dean') }}" id="home-link">Home</a></li>
                     <li><a href="{{ route('dean.dean_dashboard') }}">Dashboard</a></li>
                 </ul>
             </div>

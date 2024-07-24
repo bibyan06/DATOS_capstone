@@ -13,7 +13,7 @@
         <div class="verify-email-card">
             <h2 class="verify-email-title">SUCCESS!</h2>
             <div class="mb-4 text-sm text-gray-600 verify-email-message">
-                {{ __('Your email has been verified. You can now log in.') }}
+                {{ __('Your email has been verified. You can now proceed.') }}
             </div>
 
             @if (session('status') == 'verification-link-sent')
@@ -22,10 +22,23 @@
                 </div>
             @endif
 
-            <div class="mt-4 flex items-center justify-between emailconfirmed-buttons">
-                <a href="{{ route('email.confirmed') }}" class="emailconfirmed-button verify-email-button--secondary ms-2">
-                    {{ __('Go to Login') }}
-                </a>
+            <div class="mt-4 flex items-center justify-between emailconfirmed-buttons" style="text-decoration:none">
+                @auth
+                    @php
+                        $user = Auth::user();
+                        $employeeId = $user->employee_id;
+                        $dashboardRoute = substr($employeeId, 0, 2) === '01' ? 'home.admin' :
+                                          (substr($employeeId, 0, 2) === '02' ? 'home.office_staff' :
+                                          (substr($employeeId, 0, 2) === '03' ? 'home.dean' : 'home'));
+                    @endphp
+                    <a href="{{ route($dashboardRoute) }}" class="emailconfirmed-button verify-email-button--secondary ms-2">
+                        {{ __('Proceed') }}
+                    </a>
+                @else
+                    <a href="{{ route('home') }}" class="emailconfirmed-button verify-email-button--secondary ms-2">
+                        {{ __('Proceed') }}
+                    </a>
+                @endauth
             </div>
         </div>
     </div>

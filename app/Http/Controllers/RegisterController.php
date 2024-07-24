@@ -8,11 +8,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\RedirectsUsers;
 
 class RegisterController extends Controller
 {
     public function register(Request $request)
     {
+        // Custom validation rule for email domain
+        $allowedDomains = ['bicol-u.edu.ph', 'gmail.com'];
         $request->validate([
             'employee_id' => 'required|string|max:20|unique:users',
             'last_name' => 'required|string|max:255',
@@ -22,9 +28,29 @@ class RegisterController extends Controller
             'gender' => 'required|string|in:male,female',
             'phone_number' => 'required|string|max:20',
             'home_address' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users'),
+                function ($attribute, $value, $fail) use ($allowedDomains) {
+                    $domain = substr(strrchr($value, "@"), 1);
+                    if (!in_array($domain, $allowedDomains)) {
+                        $fail("The email must be from one of the following domains: " . implode(', ', $allowedDomains));
+                    }
+                },
+            ],
             'username' => 'required|string|max:20|unique:users',
-            'password' => 'required|string|min:8|max:18|confirmed',
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'max:18',
+                'confirmed',
+                'regex:/[a-z]/',   // At least one lowercase letter
+                'regex:/[A-Z]/',   // At least one uppercase letter
+            ],
             'password_confirmation' => 'required|string|min:8',
         ]);
 
@@ -54,7 +80,8 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
-                'email_verified_at' => now(), // Set email_verified_at if you want it to be verified immediately
+                // 'email_verified_at' => now(), // Set email_verified_at if you want it to be verified immediately
+                'email_verified_at' => null,
                 'user_type' => $user_type,
             ]);
 
@@ -68,7 +95,14 @@ class RegisterController extends Controller
 
             DB::commit();
 
-            return redirect('/login')->with('message', 'Registration successful. You can now log in.');
+            if ($user instanceof MustVerifyEmail) {
+                $user->sendEmailVerificationNotification();
+                return redirect()->route('verification.notice');
+            }
+
+            Auth::login($user);
+
+            return redirect('/login')->with('message', 'Registration successful. Please check your email to verify your account.');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('User registration failed: ' . $e->getMessage());

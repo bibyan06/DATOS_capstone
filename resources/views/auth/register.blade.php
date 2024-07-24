@@ -43,8 +43,8 @@
                                 <div>
                                     <label for="age" class="age block mb-2 text-sm font-medium text-gray-900">Age</label>
                                     <input type="number" id="age" name="age" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                                    <div id="age-error" class="text-red-500 text-sm mt-1"></div>
                                 </div>
-                            </div>
                         </div>
 
                         <div class="mt-4">
@@ -97,6 +97,7 @@
                                             <i class="fas fa-eye-slash" id="eye-icon"></i>
                                         </span>
                                     </div>
+                                    <div id="passwordErrorMessages" class="text-red-500 text-sm mt-1"></div> 
                                 </div>
                                 <div>
                                     <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900">Confirm Password</label>
@@ -164,40 +165,71 @@
     }
 
     $(document).ready(function() {
-        $('#registerForm').on('submit', function(event) {
-            event.preventDefault();
+    $('#registerForm').on('submit', function(event) {
+        event.preventDefault();
 
-            // Clear previous messages
-            $('#responseMessage').html('');
+        // Clear previous messages
+        $('#responseMessage').html('');
+        $('#password-error').html(''); // Clear previous password error
+        $('#age-error').html(''); // Clear previous age error
 
-            var formData = $(this).serialize();
+        var formData = $(this).serialize();
 
-            $.ajax({
-                url: '{{ route('register') }}',
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    // Show success message in a pop-up prompt
-                    alert('Registration successful! Please login to verify your email.');
-                    // Redirect to email verification page
-                    window.location.href = "{{ route('login') }}";
-                },
-                error: function(xhr, status, error) {
-                    if (xhr.responseJSON && xhr.responseJSON.errors) {
-                        var errorMessages = '<ul>';
-                        $.each(xhr.responseJSON.errors, function(key, value) {
-                            errorMessages += '<li>' + value[0] + '</li>';
+        $.ajax({
+            url: '{{ route('register') }}',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                // Show success message in a pop-up prompt
+                alert('Registration successful! Please login to verify your email.');
+                // Redirect to email verification page
+                window.location.href = "{{ route('login') }}";
+            },
+            error: function(xhr, status, error) {
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    // Customize and display password errors
+                    if (xhr.responseJSON.errors.password) {
+                        var passwordErrorMessages = '<ul>';
+                        $.each(xhr.responseJSON.errors.password, function(key, value) {
+                            if (value.includes('required')) {
+                                passwordErrorMessages += '<li>Password is required.</li>';
+                            } else if (value.includes('min')) {
+                                passwordErrorMessages += '<li>Password must be at least 8 characters long and one capital letter.</li>';
+                            } else {
+                                passwordErrorMessages += '<li>Password must be at least 8 characters long and one capital letter</li>';
+                            }
                         });
-                        errorMessages += '</ul>';
-                        $('#responseMessage').html(errorMessages);
-                    } else {
-                        $('#responseMessage').html('<p>' + xhr.responseJSON.message + '</p>');
+                        passwordErrorMessages += '</ul>';
+                        $('#password-error').html(passwordErrorMessages);
                     }
-                    $('#responseMessage').css('color', 'red');
+
+                    // Customize and display age errors
+                    if (xhr.responseJSON.errors.age) {
+                        var ageErrorMessages = '<ul>';
+                        $.each(xhr.responseJSON.errors.age, function(key, value) {
+                            ageErrorMessages += '<li> Invalid age. Input out of range.</li>';
+                        });
+                        ageErrorMessages += '</ul>';
+                        $('#age-error').html(ageErrorMessages);
+                    }
+
+                    var generalErrorMessages = '<ul>';
+                    $.each(xhr.responseJSON.errors, function(key, value) {
+                        if (key !== 'password' && key !== 'age') { // Exclude password and age errors
+                            generalErrorMessages += '<li>' + value[0] + '</li>';
+                        }
+                    });
+                    generalErrorMessages += '</ul>';
+                    $('#responseMessage').html(generalErrorMessages);
+                } else {
+                    $('#responseMessage').html('<p>' + xhr.responseJSON.message + '</p>');
                 }
-            });
+                $('#responseMessage').css('color', 'red');
+            }
         });
     });
+});
+
 </script>
 </body>
 </html>

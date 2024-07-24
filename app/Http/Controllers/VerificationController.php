@@ -2,94 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TemporaryUser;
-use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Employee;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class VerificationController extends Controller
 {
-    public function showConfirmationPage()
+    use VerifiesEmails;
+
+    /**
+     * Show the email verification notice.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function show()
     {
-        return view('email-confirmed');
+        return view('auth.verify-email');
     }
 
-    public function verified(Request $request)
-{
-    $user = $request->user();
-    $user->email_verified_at = now();
-    $user->save();
+    /**
+     * Mark the authenticated user's email address as verified.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $id
+     * @param  string  $hash
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function verify(Request $request, $id, $hash)
+    {
+        $user = \App\Models\User::findOrFail($id);
 
-    // Move user data to the employee table
-    // You need to implement this logic yourself
-    // For example:
-    $employee = new Employee();
-    $employee->name = $user->name;
-    $employee->email = $user->email;
-    // ...
-    $employee->save();
+        if (! hash_equals((string) $hash, sha1($user->email))) {
+            throw new AuthorizationException;
+        }
 
-    return redirect()->route('login');
-}
-//     public function verifyEmail(Request $request, $id, $token)
-//     {
-// //         // Find the temporary user with the matching ID and verification token
-// //         $tempUser = TemporaryUser::where('id', $id)
-// //             ->where('verification_token', $token)
-// //             ->first();
+        $user->markEmailAsVerified();
 
-// //         if (!$tempUser) {
-// //             return redirect('/login')->withErrors(['message' => 'Invalid or expired verification link.']);
-// //         }
-
-// //         // Move the data to the users table
-// //         // Move data from temporary_users to users
-// //         $user = new User();
-// //         $user->employee_id = $tempUser->employee_id;
-// //         $user->last_name = $tempUser->last_name;
-// //         $user->first_name = $tempUser->first_name;
-// //         $user->middle_name = $tempUser->middle_name;
-// //         $user->age = $tempUser->age;
-// //         $user->gender = $tempUser->gender;
-// //         $user->phone_number = $tempUser->phone_number;
-// //         $user->home_address = $tempUser->home_address;
-// //         $user->email = $tempUser->email;
-// //         $user->username = $tempUser->username;
-// //         $user->password = $tempUser->password; // Assuming password is already hashed
-// //         $user->save();
-
-// //         // Delete the temporary user record
-// //         $tempUser->delete();
-
-// //         Log::info('Temporary user deleted.', ['tempUser' => $tempUser]);
-
-// //         return redirect('/login')->with('message', 'Your email has been verified. You can now log in.');
-//     }
-    
-
-
-    // public function verifyEmail(Request $request)
-    // {
-    //     // Verify the email token and user ID
-    //     $user = User::find($request->route('id'));
-    //     if (!$user || !$user->hasVerifiedEmail()) {
-    //         return redirect()->route('verification.notice');
-    //     }
-
-    //     // Update the email_verified_at column
-    //     $user->email_verified_at = now();
-    //     $user->save();
-
-    //     // Redirect to a success page or display a success message
-    //     return redirect()->route('verification.success');
-    // }
-    
-    // public function resendVerificationEmail(Request $request)
-    // {
-    //     $request->user()->sendEmailVerificationNotification();
-
-    //     return back()->with('status', 'verification-link-sent');
-    // }
+        return Redirect::route('email.confirmed');
+    }
 }

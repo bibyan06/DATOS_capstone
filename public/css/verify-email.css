@@ -71,6 +71,7 @@
     border: none;
     cursor: pointer;
     text-align: center;
+    text-decoration: none;
   }
 
   .emailconfirmed-buttons {
