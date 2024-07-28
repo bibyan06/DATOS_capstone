@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -118,6 +120,43 @@ class AuthLoginController extends Controller
 
         return redirect()->intended($this->redirectPath()); // Default fallback
     }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            $seconds = $this->limiter()->availableIn(
+                $this->throttleKey($request)
+            );
+
+            return redirect()->back()
+                ->withInput($request->only($this->username(), 'remember'))
+                ->withErrors(['error' => 'Too many login attempts. Please try again in ' . ceil($seconds / 60) . ' minutes.']);
+        }
+
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
+    }
+
+    protected function hasTooManyLoginAttempts(Request $request)
+    {
+        return $this->limiter()->tooManyAttempts(
+            $this->throttleKey($request), 3
+        );
+    }
+
+    protected function throttleKey(Request $request)
+    {
+        return strtolower($request->input($this->username())).'|'.$request->ip();
+    }
+
+    public function username()
+    {
+        return 'employee_id';
+    }
+
 
     public function logout(Request $request)
     {

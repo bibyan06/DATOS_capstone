@@ -27,16 +27,25 @@
                     @php
                         $user = Auth::user();
                         $employeeId = $user->employee_id;
-                        $dashboardRoute = substr($employeeId, 0, 2) === '01' ? 'home.admin' :
-                                          (substr($employeeId, 0, 2) === '02' ? 'home.office_staff' :
-                                          (substr($employeeId, 0, 2) === '03' ? 'home.dean' : 'home'));
+                        
+                        // Redirect based on employee_id
+                        if (substr($employeeId, 0, 2) === '03') {
+                            $dashboardRoute = 'home.dean';
+                        } elseif (substr($employeeId, 0, 2) === '01') {
+                            $dashboardRoute = 'home.admin';
+                        } elseif (substr($employeeId, 0, 2) === '02') {
+                            $dashboardRoute = 'home.office_staff';
+                        } else {
+                            // Handle unknown employee_id cases
+                            $dashboardRoute = 'home'; // Or redirect to an error page or a default route
+                        }
                     @endphp
                     <a href="{{ route($dashboardRoute) }}" class="emailconfirmed-button verify-email-button--secondary ms-2">
                         {{ __('Proceed') }}
                     </a>
                 @else
-                    <a href="{{ route('home') }}" class="emailconfirmed-button verify-email-button--secondary ms-2">
-                        {{ __('Proceed') }}
+                    <a href="{{ route('login') }}" class="emailconfirmed-button verify-email-button--secondary ms-2">
+                        {{ __('Proceed to Login') }}
                     </a>
                 @endauth
             </div>

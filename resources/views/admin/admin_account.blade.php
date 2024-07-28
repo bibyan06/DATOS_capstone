@@ -73,7 +73,10 @@
             <div class="card">
                 <div class="card-content">
                     <div class="account-container">
-                        <img src="https://via.placeholder.com/100" alt="Profile Picture">
+                        <div class="profile-picture-wrapper">
+                            <img src="https://via.placeholder.com/100" alt="Profile Picture">
+                            <div class="active-indicator"></div>
+                        </div>
                         <div class="account-cont">
                             <div class="name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</div>
                             <div class="role">{{ Auth::user()->user_type }}</div>

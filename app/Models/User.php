@@ -18,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    public $timestamps = false; 
+    // public $timestamps = false; 
 
     /**
      * The attributes that are mass assignable.
@@ -37,6 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'username',
         'password',
+        
     ];
 
     /**

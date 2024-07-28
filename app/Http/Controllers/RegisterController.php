@@ -20,13 +20,13 @@ class RegisterController extends Controller
         // Custom validation rule for email domain
         $allowedDomains = ['bicol-u.edu.ph', 'gmail.com'];
         $request->validate([
-            'employee_id' => 'required|string|max:20|unique:users',
+            'employee_id' => 'required|string|max:20|unique:users,employee_id',
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'required|string|max:255',
             'age' => 'required|integer|min:18|max:120',
-            'gender' => 'required|string|in:male,female',
-            'phone_number' => 'required|string|max:20',
+            'gender' => 'required|string|in:Male,Female',
+            'phone_number' => 'required|digits:11',
             'home_address' => 'required|string|max:255',
             'email' => [
                 'required',
@@ -80,7 +80,7 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
-                // 'email_verified_at' => now(), // Set email_verified_at if you want it to be verified immediately
+                'created_at'=> null,
                 'email_verified_at' => null,
                 'user_type' => $user_type,
             ]);

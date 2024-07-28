@@ -10,6 +10,7 @@ use App\Http\Controllers\OfficeStaffController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DeanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\CheckEmployeeId;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Models\User;
@@ -24,7 +25,7 @@ Route::view('/privacy-policy', 'policy.show')->name('policy.show');
 // Registration and login routes
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 Route::get('/login', [AuthLoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthLoginController::class, 'login']);
+Route::post('/login', [AuthLoginController::class, 'login'])->middleware('throttle:3,2');
 Route::post('login-verified', [AuthLoginController::class, 'loginverified'])->name('login.verified');
 
 // Home route
@@ -60,6 +61,8 @@ Route::get('/office_staff/os_upload_document', [OfficeStaffController::class, 'u
 Route::get('/admin/admin_dashboard', [AdminController::class, 'dashboard'])->name('admin.admin_dashboard');
 Route::get('/admin/admin_account', [AdminController::class, 'admin_account'])->name('admin.admin_account');
 Route::get('/admin/admin_upload_document', [AdminController::class, 'upload_document'])->name('admin.admin_upload_document');
+Route::get('/admin/admin_view_document', [AdminController::class, 'view_document'])->name('admin.admin_view_document');
+
 
 // Route for dean side 
 Route::get('/dean/dean_dashboard', [DeanController::class, 'dashboard'])->name('dean.dean_dashboard');
@@ -73,6 +76,19 @@ Route::middleware(['auth'])->group(function () {
 
 // Route for Logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');
+
+//Route for access control
+Route::middleware(['auth', 'check_role:01'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index']);
+});
+
+Route::middleware(['auth', 'check_role:02'])->group(function () {
+    Route::get('/office-staff', [OfficeStaffController::class, 'index']);
+});
+
+Route::middleware(['auth', 'check_role:03'])->group(function () {
+    Route::get('/dean', [DeanController::class, 'index']);
+});
 
 // Test database connection route
 Route::get('/test-db', function () {

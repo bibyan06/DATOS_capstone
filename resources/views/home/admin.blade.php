@@ -83,7 +83,7 @@
                 <div class="documents">
                     <div class="documents-content">
                         <div class="document-card">
-                            <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                        <iframe src="{{ Storage::url('CERTIFICATION.pdf') }}" width="100%" height="200px"></iframe>
                         </div>                        
                         <div class="content">
                             <div class="row">
@@ -94,7 +94,7 @@
                                 <div class="column right">
                                     <a href="#"><i class="bi bi-three-dots-vertical" id="dropdownMenuButton" style="cursor: pointer;"></i></a>
                                     <div class="dropdown-more" id="more-option">
-                                        <a href="view-document.html">View</a>
+                                        <a href="{{route('admin.admin_view_document')}}">View</a>
                                         <a href="#">Download</a>
                                         <a href="edit-document.html">Edit</a>
                                     </div>

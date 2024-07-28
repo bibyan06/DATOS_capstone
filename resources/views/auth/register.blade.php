@@ -53,14 +53,18 @@
                                     <label for="gender" class="gender block mb-2 text-sm font-medium text-gray-900">Gender</label>
                                     <select id="gender" name="gender" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                         <option value="">Select Gender</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="phone_number" class="phone_number block mb-2 text-sm font-medium text-gray-900">Phone Number</label>
-                                    <input type="tel" id="phone_number" name="phone_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                                <label for="phone_number" class="phone_number block mb-2 text-sm font-medium text-gray-900">Phone Number</label>
+                                    <input type="tel" id="phone_number" name="phone_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                                    pattern="\d{11}" 
+                                    title="Phone number must be exactly 11 digits" 
+                                    required>     
                                 </div>
+                                <div id="phone_number_error" class="text-red-500 text-sm mt-1"></div>
                             </div>
                         </div>
 
@@ -74,6 +78,7 @@
                                 <div>
                                     <label for="employee_id" class="employee_id block mb-2 text-sm font-medium text-gray-900">Employee ID</label>
                                     <input type="text" id="employee_id" name="employee_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                                    <div id="employee-id-error" class="text-red-500 text-sm mt-1"></div>
                                 </div>
                                 <div>
                                     <label for="username" class="username block mb-2 text-sm font-medium text-gray-900">Username</label>
@@ -85,6 +90,7 @@
                         <div class="mt-4">
                             <label for="email" class="email block mb-2 text-sm font-medium text-gray-900">Email</label>
                             <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                            <div id="email_error" class="text-red-500 text-sm mt-1"></div>
                         </div>
 
                         <div class="mt-4">
@@ -144,6 +150,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+
     function togglePasswordVisibility() {
         const passwordInput = document.getElementById('password');
         const eyeIcon = document.getElementById('eye-icon');
@@ -193,6 +200,8 @@
                 var errors = xhr.responseJSON.errors || {};
                 var errorMessages = '';
 
+                console.log(xhr.responseJSON); // Add this line to log the response
+
                 // Password errors
                 if (errors.password) {
                     errorMessages += '<ul>';
@@ -212,6 +221,11 @@
                     errorMessages += '</ul>';
                     $('#age-error').html(errorMessages);
                 }
+                
+                //Employee ID error
+                if (errors.employee_id) {
+                        $('#employee-id-error').text(errors.employee_id[0]);
+                    }
 
                 // General errors
                 if (Object.keys(errors).length) {

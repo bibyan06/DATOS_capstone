@@ -19,4 +19,15 @@ class OfficeStaffController extends Controller
     {
         return view('office_staff.os_upload_document');
     }
+
+    public function someMethod()
+{
+    $user = auth()->user();
+
+    if (strpos($user->employee_id, '02') !== 0) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    // Proceed with the action
+}
 }

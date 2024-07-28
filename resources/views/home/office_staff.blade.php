@@ -89,7 +89,7 @@
                 <div class="documents">
                     <div class="documents-content">
                         <div class="document-card">
-                            <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                            <iframe src="{{ Storage::url('CERTIFICATION.pdf') }}" width="100%" height="200px"></iframe>
                         </div>                        
                         <div class="content">
                             <div class="row">

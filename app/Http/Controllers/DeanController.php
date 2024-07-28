@@ -19,4 +19,15 @@ class DeanController extends Controller
     {
         return view('dean.dean_upload_document');
     }
+
+    public function someMethod()
+{
+    $user = auth()->user();
+
+    if (strpos($user->employee_id, '03') !== 0) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    // Proceed with the action
+}
 }
