@@ -66,8 +66,8 @@
 <body>
     <x-guest-layout>
         <div class="forgotpass-container mx-auto p-4 pt-6 md:p-6 lg:p-12 flex flex-wrap">
-            <div class="w-full md:w-1/2 xl:w-1/2 p-6">
-                <div class="form-container">
+            <div class="form-container w-full md:w-1/2 xl:w-1/2 p-6">
+                <div class="form">
                     <h1>RESET PASSWORD</h1>
                     <p style="text-align:center;">Enter your valid email address correctly to receive a recovery link</p>
                     <form id="resetPasswordForm" method="POST" action="{{ route('password.email') }}">

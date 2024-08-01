@@ -10,7 +10,7 @@
 </head>
 <body>
 <x-guest-layout>
-    <div class="register-container mx-auto p-4 pt-6 md:p-6 lg:p-12">
+    <div class="register-container mx-auto p-4">
         <div class="flex flex-wrap -mx-4">
             <div class="w-full md:w-1/2 xl:w-1/2 p-6 bg-blue-400">
                 <img src="{{ asset('images/login-image.png') }}" alt="Left Image" class="w-full h-full object-cover">
@@ -34,7 +34,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mt-3">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label for="middle_name" class="middle_name block mb-2 text-sm font-medium text-gray-900">Middle Name</label>
@@ -47,7 +47,7 @@
                                 </div>
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mt-3">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label for="gender" class="gender block mb-2 text-sm font-medium text-gray-900">Gender</label>
@@ -68,12 +68,12 @@
                             </div>
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mt-1">
                             <label for="home_address" class="home_address block mb-2 text-sm font-medium text-gray-900">Home Address</label>
                             <input type="text" id="home_address" name="home_address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mt-3">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label for="employee_id" class="employee_id block mb-2 text-sm font-medium text-gray-900">Employee ID</label>
@@ -87,13 +87,13 @@
                             </div>
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mt-3">
                             <label for="email" class="email block mb-2 text-sm font-medium text-gray-900">Email</label>
                             <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                             <div id="email_error" class="text-red-500 text-sm mt-1"></div>
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mt-3">
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="password-container">
                                     <label for="password" class="password block mb-2 text-sm font-medium text-gray-900">Password</label>
