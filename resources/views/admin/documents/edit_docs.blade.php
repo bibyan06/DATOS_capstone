@@ -3,35 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css')}}">
-    <link rel="stylesheet" href="{{ asset('css/mainhead.css')}}">
+    <title>Edit Document</title>
+    <link rel="stylesheet" href="{{asset ('css/edit_document.css') }}">
+    <link rel="stylesheet" href="{{ asset ('css/mainhead.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 </head>
 <body>
-<header>
-    <div class="header-content">
-        <div class="left-header">
-            <img src="{{ asset('images/Bicol_University.png') }}" alt="Bicol University Logo" class="logo">
-            <h1>BICOL <span>UNIVERSITY</span></h1>
-        </div>
-        <div class="profile-icon">
-            <img src="{{ asset('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
-            <div class="dropdown-menu" id="profile-dropdown">
-                <a href="{{ route('admin.admin_account') }}"><i class="bi bi-person-circle" id="account-icon"> </i>Account</a>
-                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
+    <header>
+        <div class="header-content">
+            <div class="left-header">
+                <img src="{{ asset('images/Bicol_University.png') }}" alt="Bicol University Logo" class="logo">
+                <h1>BICOL <span>UNIVERSITY</span></h1>
             </div>
-        </div>   
-    </div>
-</header>
+            <div class="profile-icon">
+                <img src="images/user-circle-solid-24.png" alt="Profile Icon" id="profile-icon">
+                <div class="dropdown-menu" id="profile-dropdown">
+                    <a href="head_account.html"><i class="bi bi-person-circle" id="account-icon"> </i>Account</a>
+                    <a href="#"><i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout</a>
+                </div>
+            </div>   
+        </div>
+    </header>
 
-<nav>
+    <nav>
         <div class="nav-content">
             <div class="nav-left">
                 <a href="#" class="menu-icon" id="menu-toggle"><i class="bi bi-list"></i></a>
@@ -86,72 +81,55 @@
             </div>
         </div>
 
-    <main id="dashboard-content">
-        <div class="reports-container">
-            <div class="report">
-                <h1>10</h1>
-                <h4>Total Document</h4>
-            </div>
-            <div class="report">
-                <h1>10</h1>
-                <h4>Total Employee</h4>
-            </div>
-        </div>
-
-        <div id="dashboard-section">
-            <div class="dashboard-container">
-                <div class="dashboard-title">
-                    <h2>Digitized Documents</h2>
-                    <div class="search">
-                        <select>
-                            <option value="" disabled selected>Select Document</option>
-                            <option value="doc1">Memorandum</option>
-                            <option value="doc2">Audited Disbursement Voucher</option>
-                            <option value="doc3">Monthly Report Service of Personnel</option>
-                            <option value="doc4">Claim Monitoring Sheet</option>
-                        </select>
+        <main id="view-section">
+            <div class="documents-content">
+                <div class="doc-container">
+                    <div class="view-documents">
+                        <div class="doc-description">
+                            <a href="#" class="back-icon" onclick="showBackPopup()">
+                                <i class="bi bi-arrow-return-left"></i>
+                            </a>                        
+                            <h5 class="file-title">Title:</h5>
+                            <input type="text" class="document_name" value="Administrative Order No. 331 Series of 2023">
+                            <h5 class="issued_date">Issued Date:</h5>
+                            <input type="text" class="issued_date" value="June 2, 2023">
+                            <div class="description">
+                                <h5>Description:</h5>
+                                <textarea class="description">
+In view of the University's continued quest for quality management system and to ensure the highest level of efficiency and effectiveness in the performance of office transactions at the office of the University President, you are hereby designated as Senior Staff at the Presidential Management Staff Office and University Documents and Records Controller on concurrent capacity effective 02 May 2023 until revoked by a subsequent issuance from this Office in accordance with the existing Civil Service rules and regulations.
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="viewing-btn">
+                            <button class="cancel-btn" onclick="cancelEditing()">Cancel</button>
+                            <button class="save-btn" onclick="saveChanges()">Save Changes</button>
+                        </div>
+                        <div class="doc-file">
+                            <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0&zoom=125" width="100%" height="600px"></iframe>
+                        </div>
                     </div>
                 </div>
-                <div class="documents">
-                    <div class="document">
-                        <div class="file-container"></div>
-                        <div class="document-description">
-                            <h3>Office Memorandum No. 84</h3>
-                            <p>Date Updated: April 2, 2024</p>
-                            <p>Details of the memorandum go here.</p>
-                        </div>
-                    </div>
-                    <div class="document">
-                        <div class="file-container"></div>
-                        <div class="document-description">
-                            <h3>Office Memorandum No. 84</h3>
-                            <p>Date Updated: April 2, 2024</p>
-                            <p>Details of the memorandum go here.</p>
-                        </div>
-                    </div>
-                    <div class="document">
-                        <div class="file-container"></div>
-                        <div class="document-description">
-                            <h3>Office Memorandum No. 84</h3>
-                            <p>Date Updated: April 2, 2024</p>
-                            <p>Details of the memorandum go here.</p>
-                        </div>
-                    </div>
-                    <!-- Add more documents as needed -->
-                </div>
             </div>
-        </div>
-    </main>
-</div>
+        </main>
 
-<footer>
-    <div class="footer-content">
-        <p>&copy; DATOS 2024 Bicol University. All Rights Reserved.</p>
-        <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p>
+        <!-- Popup message for back icon -->
+        <div id="back-popup" class="popup-message">
+            <p>Are you sure you want to go back?</p>
+            <button onclick="confirmBack()">Yes</button>
+            <button onclick="hideBackPopup()">No</button>
+        </div>
+
     </div>
-</footer>
 
-<script src="{{ asset('js/mainhead.js') }}"></script>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; DATOS 2024 Bicol University. All Rights Reserved.</p>
+            <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p>
+        </div>
+    </footer>
+
+    <script src="js/mainhead.js"></script>
+    <script src="js/edit-document.js"></script>
 
 </body>
 </html>

@@ -71,7 +71,7 @@
                 </ul>
             </div>
         </div>
-
+        @auth
         <main id="account-content">
             <div class="card">
                 <div class="card-content">
@@ -113,6 +113,9 @@
                     </div>                                      
                     <button class="edit-btn">EDIT</button>
                 </div>
+                @else
+                    <p>You are not authenticated. Please <a href="{{ route('login') }}">login</a>.</p>
+                @endauth
             </div>
         </main>
     </div>

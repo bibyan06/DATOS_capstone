@@ -1,37 +1,47 @@
+main {
+    flex-grow: 1;
+    padding: 10px;
+    transition: margin-left 0.3s ease, padding-left 0.3s ease;
+}
+#main-content {
+    flex: 1;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
 .view-section {
     align-items: center;
     justify-content: center;
     display: flex;
-    justify-content: center;
     margin-left: 0;
     transition: margin-left 0.3s ease;
 }
 
-.documents-content{
-    padding: 60px;
-
-
+.documents-content {
+    padding: 20px;
 }
-.doc-container{
+
+.doc-container {
     background-color: #FEFEFF;
     display: block;
     flex-direction: column;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+
 }
 
 .view-documents {
     padding: 10px;
     align-items: center;
     position: relative;
-
 }
 
 .doc-description {
     margin: 20px;
     text-align: left;
-
 }
 
 .back-icon {
@@ -39,17 +49,18 @@
     top: 20px;
     right: 20px;
     text-decoration: none;
-    color: #5B5B5D; /* Change color as needed */
+    color: #5B5B5D;
     font-size: 15px;
     cursor: pointer;
     display: flex;
     align-items: center;
 }
+
 .back-icon .tooltip {
     visibility: hidden;
     opacity: 0;
     position: absolute;
-    top: -25px; /* Adjust as needed */
+    top: -25px;
     right: 0;
     background: #009FEA;
     color: #fff;
@@ -68,9 +79,9 @@
 
 .viewing-btn {
     display: flex;
-    justify-content: flex-start; /* Align buttons to the left */
-    gap: 15px; /* Space between buttons */
-    margin: 20px 0; /* Space above and below the button group */
+    justify-content: flex-start;
+    gap: 15px;
+    margin: 20px 0;
     padding-left: 30px;
 }
 
@@ -81,14 +92,13 @@
     background-color: #007BFF;
     color: white;
     cursor: pointer;
-    font-size: 14px; /* Make buttons more prominent */
+    font-size: 14px;
     font-family: 'Poppins';
 }
 
 .viewing-btn button:hover {
     background-color: #0056b3;
 }
-
 
 .file-title {
     padding-bottom: 10px;
@@ -102,7 +112,7 @@
 .doc-file {
     position: relative;
     width: 100%;
-    height: 900px;
+    height: 600px;
     overflow: hidden;
 }
 
@@ -113,11 +123,8 @@
     width: 100%;
     height: 100%;
     border: none;
-    overflow: auto; /* Ensure scrolling is enabled */
-    padding-bottom:20px ;
+    overflow: auto;
 }
-
-
 
 #view-section {
     margin-left: 0;
@@ -126,4 +133,61 @@
 
 #view-section.shifted {
     margin-left: 250px;
+}
+
+/* New CSS for editable fields */
+input.document_name, input.issued_date, textarea.description {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Poppins';
+    font-size: 16px;
+}
+
+input.document_name, input.issued_date {
+    display: block;
+}
+
+textarea.description {
+    height: 200px;
+    resize: vertical;
+}
+
+/* CSS for the popup message */
+.popup-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #DDDDDD;
+    color: #5B5B5D;
+    padding: 15px 40px;
+    border-radius: 5px;
+    font-size: 14px;
+    display: none;
+    z-index: 1000;
+    text-align: center;
+}
+
+.popup-message.show {
+    display: block;
+}
+
+.popup-message button {
+    padding: 10px 40px;
+    margin: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #5B5B5D;
+    color: #FEFEFF;
+    cursor: pointer;
+    font-family: 'Poppins';
+    font-size: 14px;
+}
+
+.popup-message button:hover {
+    background-color: #989AA0;
 }

@@ -1,48 +1,43 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('uploading-content');
-
-    menuToggle.addEventListener('click', function () {
-        sidebar.classList.toggle('visible');
-        mainContent.classList.toggle('shifted');
-    });
+/*
+document.getElementById('file-upload').addEventListener('change', function() {
+    var fileList = document.getElementById('file-list');
+    fileList.innerHTML = '';
+    for (var i = 0; i < this.files.length; i++) {
+        var li = document.createElement('li');
+        li.textContent = this.files[i].name;
+        fileList.appendChild(li);
+    }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const dropdownToggle = document.querySelector('.dropdown-toggle');
-    const dropdownMenu = document.querySelector('.dropdown');
-    const dropdownIcon = document.getElementById('dropdown-icon');
+document.getElementById('doc-category').addEventListener('change', function() {
+    var otherCategoryInput = document.getElementById('other-category');
+    if (this.value === 'other') {
+        otherCategoryInput.style.display = 'block';
+        otherCategoryInput.required = true;
+    } else {
+        otherCategoryInput.style.display = 'none';
+        otherCategoryInput.required = false;
+    }
+});
+*/
 
-    dropdownToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        const isDropdownVisible = dropdownMenu.style.display === 'block';
-
-        // Toggle the dropdown menu
-        dropdownMenu.style.display = isDropdownVisible ? 'none' : 'block';
-
-        // Change the icon
-        dropdownIcon.className = isDropdownVisible ? 'bi bi-caret-right-fill' : 'bi bi-caret-down-fill';
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
-            dropdownMenu.style.display = 'none';
-            dropdownIcon.className = 'bi bi-caret-right-fill';
-        }
-    });
+document.getElementById('category').addEventListener('change', function () {
+    var otherCategoryInput = document.getElementById('other-category');
+    if (this.value === 'other') {
+        otherCategoryInput.style.display = 'block';
+        otherCategoryInput.required = true;
+    } else {
+        otherCategoryInput.style.display = 'none';
+        otherCategoryInput.required = false;
+    }
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const profileIcon = document.getElementById('profile-icon');
-    const profileDropdown = document.getElementById('profile-dropdown');
-
-    profileIcon.addEventListener('click', function (e) {
-        e.stopPropagation(); // Prevent click from bubbling up
-        profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
-    });
-
-    document.addEventListener('click', function () {
-        profileDropdown.style.display = 'none'; // Hide dropdown when clicking outside
-    });
+document.getElementById('file-input').addEventListener('change', function () {
+    var fileList = document.getElementById('file-list');
+    fileList.innerHTML = '';
+    for (var i = 0; i < this.files.length; i++) {
+        var li = document.createElement('li');
+        li.textContent = this.files[i].name;
+        fileList.appendChild(li);
+    }
 });

@@ -19,6 +19,26 @@ class User extends Authenticatable implements MustVerifyEmail
     use TwoFactorAuthenticatable;
 
     // public $timestamps = false; 
+ /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'user_id';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true; // Set to true if `user_id` is auto-incrementing
+
+    /**
+     * The data type of the primary key.
+     *
+     * @var string
+     */
+    protected $keyType = 'string'; // Use 'int' if `user_id` is an integer
 
     /**
      * The attributes that are mass assignable.

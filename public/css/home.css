@@ -1,0 +1,300 @@
+/* Main Section */
+main {
+    flex-grow: 1;
+    padding: 20px;
+    transition: margin-left 0.3s ease, padding-left 0.3s ease;
+}
+
+main.with-sidebar {
+    margin-left: 250px;
+    padding-left: 20px;
+}
+
+/* Home Section */
+#home-section {
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+    padding: 30px 60px 30px;
+}
+
+#home-section.shifted {
+    margin-left: 250px;
+}
+
+.welcome-section {
+    height: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #609DF6;
+    padding: 50px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.welcome-message h2 {
+    font-size: 28px;
+    color: #FFFFFF;
+}
+
+.welcome-message p {
+    font-size: 16px;
+    color: #D9E1F2;
+}
+
+
+.dashboard-overview {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+/*
+.dashboard-card {
+    flex: 1;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.dashboard-card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dashboard-card ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.dashboard-card ul li:last-child {
+    border-bottom: none;
+}
+
+.dashboard-card ul li a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.dashboard-card ul li a:hover {
+    text-decoration: underline;
+}
+
+.dashboard-card ul li {
+    font-size: 1em;
+    color: #555;
+}
+    */
+
+.current-time {
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.current-time h3 {
+    font-size: 2em;
+    color: #F47122;
+    margin-bottom: 10px;
+}
+
+.current-time p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+
+.title {
+    display: flex;
+    
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ 
+}
+
+.title-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.title-content h3 {
+    font-size: 20px;
+    color: #fd7e14;
+    margin: 0;
+    padding-left: 20px;
+}
+
+.date-time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    color: #fd7e14;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.date-time i{
+    justify-content: space-between;
+    margin-right: 10px;
+}
+
+.date-time p {
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+
+
+/* Document Section */
+/* CSS for Documents Section */
+/* Document Section */
+.documents {
+    padding: 30px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.documents-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.document-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    height: 200px; /* Fixed height for the card */
+}
+
+
+.content {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.column.left {
+    flex: 1;
+}
+
+.column.right {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.column.right a {
+    text-decoration: none;
+    color: #007bff;
+    position: relative;
+}
+
+.column.right a:hover {
+    text-decoration: underline;
+}
+
+/* General dropdown styling */
+.dropdown-more {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 100;
+}
+
+/* Remove underline and set color for dropdown links */
+.dropdown-more a {
+
+    color: #fd7e14; /* Set link color */
+    display: block; /* Make the links block-level elements */
+    padding: 5px 10px; /* Add some padding */
+}
+
+/* Add hover effect for dropdown links */
+.dropdown-more a:hover {
+    background-color: #f0f0f0; /* Add a hover effect */
+}
+
+/* Ensure cursor changes to pointer on hover */
+.dropdown-toggle {
+    cursor: pointer;
+}
+
+
+.upload-date {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.upload-date p {
+    margin: 0;
+}
+
+/* Dropdown */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .news-card, .upload-card {
+        width: 100%;
+    }
+}

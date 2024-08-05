@@ -10,6 +10,7 @@ use App\Http\Controllers\OfficeStaffController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DeanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Middleware\CheckEmployeeId;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -44,6 +45,13 @@ Route::get('/home/admin', function () {
     return view('home.admin');
 })->name('home.admin');
 
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('home.admin');
+    Route::get('/home/office_staff', [HomeController::class, 'officeStaffHome'])->name('home.office_staff');
+    Route::get('/home/dean', [HomeController::class, 'deanHome'])->name('home.dean');
+});
+//Office staff
 Route::get('/home/office_staff', function () {
     return view('home.office_staff');
 })->name('home.office_staff');
@@ -62,6 +70,16 @@ Route::get('/admin/admin_dashboard', [AdminController::class, 'dashboard'])->nam
 Route::get('/admin/admin_account', [AdminController::class, 'admin_account'])->name('admin.admin_account');
 Route::get('/admin/admin_upload_document', [AdminController::class, 'upload_document'])->name('admin.admin_upload_document');
 Route::get('/admin/admin_view_document', [AdminController::class, 'view_document'])->name('admin.admin_view_document');
+Route::get('/admin/college_dean', [AdminController::class, 'college_dean'])->name('admin.college_dean');
+Route::get('/admin/office_staff', [AdminController::class, 'office_staff'])->name('admin.office_staff');
+
+
+Route::get('/admin/documents/approved_docs', [AdminController::class, 'approved_docs'])->name('admin.documents.approved_docs');
+Route::get('/admin/documents/edit_docs', [AdminController::class, 'edit_docs'])->name('admin.documents.edit_docs');
+Route::get('/admin/documents/memorandum', [AdminController::class, 'memorandum'])->name('admin.documents.memorandum');
+Route::get('/admin/documents/request_docs', [AdminController::class, 'request_docs'])->name('admin.documents.request_docs');
+Route::get('/admin/documents/sent_docs', [AdminController::class, 'sent_docs'])->name('admin.documents.sent_docs');
+Route::get('/admin/documents/view_docs', [AdminController::class, 'view_docs'])->name('admin.documents.view_docs');
 
 
 // Route for dean side 
@@ -89,6 +107,10 @@ Route::middleware(['auth', 'check_role:02'])->group(function () {
 Route::middleware(['auth', 'check_role:03'])->group(function () {
     Route::get('/dean', [DeanController::class, 'index']);
 });
+
+//Route for Uploading documents 
+// Route::post('/upload-document', [OfficeStaffController::class, 'uploadDocument'])->name('office_staff.upload_document');
+Route::post('/upload-document', [DocumentController::class, 'uploadDocument'])->name('office_staff.upload_document');
 
 // Test database connection route
 Route::get('/test-db', function () {

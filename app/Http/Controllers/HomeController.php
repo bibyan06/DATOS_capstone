@@ -4,46 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Employee;
-use App\Models\Users;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        // Get the authenticated user
+        $user = Auth::user();
+        
+        if ($user) {
+            // Fetch the employee record based on the user's employee_id
+            $employee = Employee::where('employee_id', $user->employee_id)->first();
 
-        if (Auth::user()->user_type == 'admin'){
-            return view('admin.home');
+            if ($employee) {
+                $position = $employee->position;
+
+                if ($position == 'admin') {
+                    return view('home.admin');
+                } elseif ($position == 'office_staff') {
+                    return view('home.office_staff');
+                } elseif ($position == 'dean') {
+                    return view('home.dean');
+                }
+            }
         }
-        elseif(Auth::user()->user_type == 'office_staff'){
-            return view ('office_staff.home');
-        }elseif (Auth::user()->user_type == 'dean'){
-            return view ('dean.home');
-        }
 
-
-
-
-        // $user = Auth::user(); // Get the authenticated user
-
-        // if ($user) {
-        //     // Fetch the employee record based on the user's employee_id
-        //     $employee = Employee::where('employee_id', $user->employee_id)->first();
-
-        //     if ($employee) {
-        //         $position = $employee->position;
-
-        //         if ($position == 'admin') {
-        //             return view('admin.home');
-        //         } elseif ($position == 'office_staff') {
-        //             return view('office_staff.home');
-        //         } elseif ($position == 'dean') {
-        //             return view('dean.home');
-        //         }
-        //     }
-        // }
-
-        // Handle cases where the employee relationship doesn't exist
+        // Handle cases where the employee record doesn't exist or user is not authenticated
         return redirect()->route('login'); // Or any default view
+    }
+
+    public function adminHome()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login');
+        }
+        return view('home.admin', compact('user'));
     }
 }
