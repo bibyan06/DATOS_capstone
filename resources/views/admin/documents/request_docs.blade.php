@@ -183,8 +183,8 @@
         </div>
     </footer>
 
-    <script src="js/request.js"></script>
-    <script src="js/mainhead.js"></script>
+    <script src="{{ asset ('js/request.js') }}"></script>
+    <script src="{{ asset('js/mainhead.js') }}"></script>
 
 </body>
 </html>

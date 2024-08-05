@@ -31,7 +31,7 @@
     </div>
 </header>
 
-<nav>
+    <nav>
         <div class="nav-content">
             <div class="nav-left">
                 <a href="#" class="menu-icon" id="menu-toggle"><i class="bi bi-list"></i></a>
@@ -75,7 +75,7 @@
                 <a href="{{ route ('admin.documents.sent_docs') }}"><i class="bi bi-send-plus-fill"></i> Notifications</a>
             </li>
             <li>
-            <a href="{{ route('admin.admin_upload_document') }}"><i class="bi bi-upload"></i> Upload Document</a>
+                <a href="{{ route('admin.admin_upload_document') }}"><i class="bi bi-upload"></i> Upload Document</a>
             </li>
         </ul>
             <div class="settings">

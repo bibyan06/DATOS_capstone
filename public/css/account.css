@@ -1,8 +1,21 @@
+main {
+    flex-grow: 1;
+    padding: 20px;
+    transition: margin-left 0.3s ease, padding-left 0.3s ease;
+}
+#main-content {
+    flex: 1;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
 #account-content {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 50px;
+    padding: 30px;
     margin-left: 0;
     transition: margin-left 0.3s ease;
 }
@@ -38,8 +51,8 @@
     font-weight: 600;
 }
 
-.profile-picture-wrapper {
-    position: relative;
+.profile-picture-wrapper{
+    position:relative;
     display: inline-block;
 }
 
@@ -56,14 +69,13 @@
     border: 2px solid white; /* optional, for a white border around the green circle */
 }
 
-/* Adjust the styles if necessary for better positioning */
 .profile-icon .profile-picture-wrapper img,
 .account-container .profile-picture-wrapper img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-}
 
+}
 
 .card img {
     border-radius: 50%;

@@ -157,8 +157,8 @@
         </div>
     </footer>
 
-    <script src="js/mainhead.js"></script>
-    <script src="js/college_dean.js"></script>
+    <script src="{{ asset('js/mainhead.js') }}"></script>
+    <script src="{{ asset ('js/college_dean.js') }}"></script>
 
 </body>
 </html>

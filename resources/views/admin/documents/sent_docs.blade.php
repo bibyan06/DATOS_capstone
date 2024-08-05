@@ -172,8 +172,8 @@
         </div>
     </footer>
 
-    <script src="js/approved.js"></script>
-    <script src="js/mainhead.js"></script>
+    <script src="{{ asset ('js/approved.js') }}"></script>
+    <script src="{{ asset('js/mainhead.js') }}"></script>
     
 </body>
 </html>

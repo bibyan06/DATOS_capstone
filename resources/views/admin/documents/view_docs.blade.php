@@ -119,8 +119,8 @@
         </div>
     </footer>
 
-    <script src="js/mainhead.js"></script>
-    <script src="js/view-document.js"></script>
+    <script src="{{ asset('js/mainhead.js') }}"></script>
+    <script src="{{ asset ('js/view-document.js') }}"></script>
 
 </body>
 </html>

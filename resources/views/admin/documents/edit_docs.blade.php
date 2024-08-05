@@ -128,8 +128,8 @@ In view of the University's continued quest for quality management system and to
         </div>
     </footer>
 
-    <script src="js/mainhead.js"></script>
-    <script src="js/edit-document.js"></script>
+    <script src="{{ asset('js/mainhead.js') }}"></script>
+    <script src="{{ asset ('js/edit-document.js') }}"></script>
 
 </body>
 </html>
