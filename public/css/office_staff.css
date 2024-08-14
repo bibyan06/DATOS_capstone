@@ -3,16 +3,18 @@ main {
     padding: 20px;
     transition: margin-left 0.3s ease, padding-left 0.3s ease;
 }
-#main-content {
+#dashboard-content {
     flex: 1;
-    margin-left: 250px;
     transition: margin-left 0.3s ease;
     box-sizing: border-box;
     height: 100vh;
+    margin-left: 50px;
 }
 
 #dashboard-section {
     margin-top: 40px;
+    height: 100vh;
+    width: auto;
 }
 .dashboard-container {
     background-color: #fff;
@@ -60,18 +62,17 @@ main {
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin-left: 100px;
+    margin-left: 310px;
 }
 
 
-.staff-search-bar{
-    padding-top: 10px;
+.admin-search-bar{
     display: flex;
     width: 50px;
     padding-left: 40px;
 }
 
-.staff-search-bar .search-text{
+.admin-search-bar .search-text{
     align-items: center;
     justify-content: center;
     background-color: #DDDDDD;
@@ -106,15 +107,16 @@ main {
 }
 
 
-.show-staff{
-    width: 50px;
+.show-admin{
+    text-align: center;
+    width: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     padding-right: 50px;
 }
 
-.show-staff h5{
+.show-admin h5{
     padding-right: 10px;
     padding-left: 10px;
 }

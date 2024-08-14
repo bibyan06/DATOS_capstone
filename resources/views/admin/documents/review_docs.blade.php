@@ -151,6 +151,6 @@
     </footer>
 
     <script src="{{ asset('js/approved.js') }}"></script>
-    <script src="{{ asset('js/mainhead.js') }}"></script>
+    <script src="{{ asset('js/admin_page.js') }}"></script>
 </body>
 </html>

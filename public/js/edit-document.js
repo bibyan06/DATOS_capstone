@@ -14,7 +14,7 @@ function enableEditing() {
 
 function cancelEditing() {
     // Redirect to view-document.html
-    window.location.href = 'view-document.html';
+    window.location.href = 'admin_view.html';
 }
 
 function saveChanges() {
@@ -36,7 +36,7 @@ function saveChanges() {
     // Show popup message
     showPopupMessage("Edited successfully", function() {
         // Redirect to view-document.html after showing the popup
-        window.location.href = 'view-document.html';
+        window.location.href = 'admin_view.html';
     });
 }
 
@@ -85,5 +85,5 @@ function hideBackPopup() {
 }
 
 function confirmBack() {
-    window.location.href = 'view-document.html';
+    window.location.href = 'admin_view.html';
 }

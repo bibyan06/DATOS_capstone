@@ -76,6 +76,10 @@ class AdminController extends Controller
     {
         return view('admin.documents.view_docs');
     }
+    public function all_docs()
+    {
+        return view('admin.documents.all_docs');
+    }
 
     public function someMethod()
     {

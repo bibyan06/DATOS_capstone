@@ -3,15 +3,16 @@ main {
   flex-grow: 1;
   padding:20px;
   transition: margin-left 0.3s ease, padding-left 0.3s ease;
+  margin-left: 50px;
+
+  
 }
 
 
 #main-content {
-  flex: 1; /* Allows main content to grow and fill available space */
-  margin-left: 250px; /* Adjust this value based on the sidebar width */
-  transition: margin-left 0.3s ease;
-
-  box-sizing: border-box; /* Include padding in width/height calculation */
+  flex: 1; 
+  margin-left: 250px;
+  box-sizing: border-box; 
   height: 100vh;
 
 }
@@ -27,7 +28,7 @@ main {
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 48%;
+  width: 23%;
   text-align: center;
 }
 
@@ -72,7 +73,7 @@ main {
 
 .dashboard-title .search select {
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 20px;
   border: 1px solid #ddd;
   width: 300px;
 }
@@ -141,6 +142,7 @@ main {
 
 .dropdown a{
   font-size: 10px;
+
 }
 
 .employee-dropdown a{
@@ -152,11 +154,12 @@ main {
 /* Dropdown Dashboard*/
 
 #dropdown-icon{
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .dropdown a{
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .dropdown {

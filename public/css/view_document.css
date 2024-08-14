@@ -1,23 +1,12 @@
-main {
-    flex-grow: 1;
-    padding: 5px;
-    transition: margin-left 0.3s ease, padding-left 0.3s ease;
-}
-
-#main-content {
-    flex: 1;
-    margin-left: 250px;
-    transition: margin-left 0.3s ease;
-    box-sizing: border-box;
-    height: 100vh;
-}
-
-.view-section {
+#view-section {
     align-items: center;
     justify-content: center;
     display: flex;
-    margin-left: 0;
-    transition: margin-left 0.3s ease;
+}
+main {
+    flex-grow: 1;
+    margin-left: 50px;
+    transition: margin-left 0.3s ease, padding-left 0.3s ease;
 }
 
 .documents-content {
@@ -125,11 +114,4 @@ main {
     overflow: auto; /* Ensure scrolling is enabled */
 }
 
-#view-section {
-    margin-left: 0;
-    transition: margin-left 0.1s ease;
-}
 
-#view-section.shifted {
-    margin-left: 250px;
-}

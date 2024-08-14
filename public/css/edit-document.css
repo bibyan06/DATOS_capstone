@@ -1,13 +1,16 @@
-.view-section {
+#view-section {
     align-items: center;
     justify-content: center;
     display: flex;
-    margin-left: 0;
-    transition: margin-left 0.3s ease;
 }
-
+main {
+    flex-grow: 1;
+    margin-left: 50px;
+    transition: margin-left 0.3s ease, padding-left 0.3s ease;
+}
 .documents-content {
-    padding: 60px;
+    padding: 20px;
+    width: 100%;
 }
 
 .doc-container {
@@ -17,8 +20,7 @@
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: auto;
-    padding: 20px;
+
 }
 
 .view-documents {
@@ -112,15 +114,6 @@
     height: 100%;
     border: none;
     overflow: auto;
-}
-
-#view-section {
-    margin-left: 0;
-    transition: margin-left 0.1s ease;
-}
-
-#view-section.shifted {
-    margin-left: 250px;
 }
 
 /* New CSS for editable fields */

@@ -1,83 +1,134 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('account-content');
-    const editBtn = document.querySelector('.edit-btn');
-    const infoText = document.querySelector('.info-text');
-    const infoInput = document.querySelector('.info-input');
-    const label = document.querySelector('.label');
+document.addEventListener("DOMContentLoaded", function () {
+    var openModalBtn = document.getElementById("openModalBtn");
+    var modal = document.getElementById("myModal");
+    var closeModal = document.getElementsByClassName("close")[0];
+    var saveChangesBtn = document.getElementById("saveChangesBtn");
+    var form = document.getElementById("updateProfileForm");
+    var infoDetails = document.querySelector(".info-details");
+    var ageInput = document.getElementById('age');
 
-    menuToggle.addEventListener('click', function () {
-        sidebar.classList.toggle('visible');
-        mainContent.classList.toggle('shifted');
-    });
+    // Open the modal
+    openModalBtn.onclick = function () {
+        modal.style.display = "block";
+    };
 
-    editBtn.addEventListener('click', function () {
-        if (editBtn.textContent === 'EDIT') {
-            switchToEditMode();
+    // Close the modal
+    closeModal.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    // Close the modal if clicking outside of it
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+
+    // Function to validate age
+    function validateAge() {
+        const currentYear = new Date().getFullYear();
+        const age = parseInt(ageInput.value);
+        const birthYear = currentYear - age;
+
+        if (ageInput.value === "" || birthYear > currentYear) {
+            ageInput.setCustomValidity('Age cannot be set in the future.');
         } else {
-            saveChanges();
+            ageInput.setCustomValidity('');
         }
-    });
-
-    function switchToEditMode() {
-        infoText.style.display = 'none';
-        infoInput.style.display = 'grid';
-        label.classList.add('editing');
-        editBtn.textContent = 'SAVE CHANGES';
+        ageInput.reportValidity();
     }
 
-    function saveChanges() {
-        // Update the text with the input values
-        document.getElementById('employee-id').textContent = document.getElementById('employee-id-input').value;
-        document.getElementById('name').textContent = document.getElementById('name-input').value;
-        document.getElementById('email').textContent = document.getElementById('email-input').value;
-        document.getElementById('phone').textContent = document.getElementById('phone-input').value;
-        document.getElementById('age').textContent = document.getElementById('age-input').value;
-        document.getElementById('gender').textContent = document.getElementById('gender-input').value;
-        document.getElementById('address').textContent = document.getElementById('address-input').value;
+    // Function to validate the entire form
+    function validateForm(event) {
+        let isValid = true;
 
-        infoText.style.display = 'grid';
-        infoInput.style.display = 'none';
-        label.classList.remove('editing');
-        editBtn.textContent = 'EDIT';
-    }
-});
+        // Check all input fields
+        const inputs = form.querySelectorAll('input[required]');
+        inputs.forEach(input => {
+            if (!input.checkValidity()) {
+                input.reportValidity();
+                isValid = false;
+            }
+        });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const dropdownToggle = document.querySelector('.dropdown-toggle');
-    const dropdownMenu = document.querySelector('.dropdown');
-    const dropdownIcon = document.getElementById('dropdown-icon');
-
-    dropdownToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        const isDropdownVisible = dropdownMenu.style.display === 'block';
-
-        // Toggle the dropdown menu
-        dropdownMenu.style.display = isDropdownVisible ? 'none' : 'block';
-
-        // Change the icon
-        dropdownIcon.className = isDropdownVisible ? 'bi bi-caret-right-fill' : 'bi bi-caret-down-fill';
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
-            dropdownMenu.style.display = 'none';
-            dropdownIcon.className = 'bi bi-caret-right-fill';
+        // If the form is invalid, prevent submission
+        if (!isValid) {
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            // Update info-details section
+            updateInfoDetails();
+            // Hide the modal
+            modal.style.display = "none";
+            event.preventDefault(); // Prevent the default form submission
         }
-    });
-});
+    }
 
-document.addEventListener('DOMContentLoaded', function () {
-    const profileIcon = document.getElementById('profile-icon');
-    const profileDropdown = document.getElementById('profile-dropdown');
+    // Function to update info-details section
+    function updateInfoDetails() {
+        // Update address
+        var street = form.querySelector("#street").value.trim();
+        var barangay = form.querySelector("#barangay").value.trim();
+        var city = form.querySelector("#city").value.trim();
+        var province = form.querySelector("#province").value.trim();
 
-    profileIcon.addEventListener('click', function (e) {
-        e.stopPropagation(); // Prevent click from bubbling up
-        profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
-    });
+        var address = [street, barangay, city, province].filter(Boolean).join(", ");
+        var addressSpan = infoDetails.querySelector('.value[data-field="address"]');
+        if (addressSpan) {
+            addressSpan.textContent = address;
+        }
 
-    document.addEventListener('click', function () {
-        profileDropdown.style.display = 'none'; // Hide dropdown when clicking outside
-    });
+        // Update other fields
+        var fields = form.querySelectorAll("input[data-field]");
+        fields.forEach(function (field) {
+            var dataField = field.getAttribute('data-field');
+            var valueSpan = infoDetails.querySelector(`.value[data-field="${dataField}"]`);
+            if (valueSpan && dataField !== "address") {
+                valueSpan.textContent = field.value.trim();
+            }
+        });
+    }
+
+    // Event listener for age validation
+    ageInput.addEventListener('input', validateAge);
+    ageInput.addEventListener('blur', validateAge);
+
+    // Event listener for form submission
+    form.addEventListener('submit', validateForm);
+
+    // Save changes and update profile information
+    saveChangesBtn.onclick = function () {
+        var fields = form.querySelectorAll("input[data-field]");
+        var allFieldsFilled = true;
+        var emailValid = true;
+
+        // Validate inputs
+        fields.forEach(function (field) {
+            field.setCustomValidity(""); // Clear previous validity message
+
+            if (field.value.trim() === "" && field.required) {
+                allFieldsFilled = false;
+                field.setCustomValidity("This field is required.");
+            } else if (field.type === "email" && !field.checkValidity()) {
+                emailValid = false;
+                field.setCustomValidity("Please enter a valid email address.");
+            }
+        });
+
+        if (!allFieldsFilled || !emailValid) {
+            // Show validation warnings if any field is invalid
+            var warningContent = document.getElementById("warningContent");
+            warningContent.innerHTML = "<p>Please correct the errors in the form.</p>";
+            document.getElementById("warningModal").style.display = "block";
+        } else {
+            // If everything is valid, update details and close modal
+            updateInfoDetails();
+            modal.style.display = "none";
+        }
+    };
+
+    // Close warning modal
+    document.getElementById("warningCloseBtn").onclick = function () {
+        document.getElementById("warningModal").style.display = "none";
+    };
 });

@@ -1,3 +1,17 @@
+main {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 50px;
+    transition: margin-left 0.3s ease, padding-left 0.3s ease;
+}
+#main-content {
+    flex: 1;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
 .email-list {
     width: 100%;
     margin: 0 auto;
@@ -6,6 +20,7 @@
 .email-item {
     display: flex;
     align-items: center;
+    font-size: 15px;
     padding: 10px;
     border-bottom: 1px solid #ccc;
 }

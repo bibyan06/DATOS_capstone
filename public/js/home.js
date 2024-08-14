@@ -63,3 +63,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+/*Shortcuts js*/
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("documents-shortcut").addEventListener("click", function() {
+        window.location.href = "admin_all_documents.html";
+    });
+
+    document.getElementById("upload-shortcut").addEventListener("click", function() {
+        window.location.href = "admin_upload.html";
+    });
+});

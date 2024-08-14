@@ -214,6 +214,8 @@ main {
     height: 100px; /* Fixed height for the card */
 }
 
+
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .document {
@@ -226,56 +228,3 @@ main {
         width: calc(100% - 20px);
     }
 }
-
-/* Dropdown Dashboard */
-
-.dropdown-menu {
-    display: none;
-    width: 150px;
-    position: absolute; 
-    top: 100%;
-    right: 0;
-    background-color: #fefffe; 
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 9999;
-}
-
-.dropdown-menu a {
-    padding: 10px;
-    text-decoration: none;
-    display: block;
-    color: #5B5B5D;
-    font-size: 14px;
-}
-
-.dropdown-menu a:hover {
-    background-color: #DDDDDD;
-}
-
-.dropdown a{
-    font-size: 10px;
-}
-
-.employee-dropdown a{
-    font-size: 12px;
-    margin-left: 10px;
-}
-
-
-/* Dropdown Dashboard*/
-
-#dropdown-icon{
-    margin-left: 10px;
-}
-
-.dropdown a{
-    font-size: 12px;
-}
-
-.dropdown {
-    display: none;
-    margin-left: 10px;
-}
-
-

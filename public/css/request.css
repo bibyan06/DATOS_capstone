@@ -3,15 +3,17 @@ main {
     padding: 20px;
     transition: margin-left 0.3s ease, padding-left 0.3s ease;
 }
-#main-content {
+#dashboard-content {
     flex: 1;
-    margin-left: 250px;
+    margin-left: 50px;
     transition: margin-left 0.3s ease;
     box-sizing: border-box;
     height: 100vh;
 }
 
 #dashboard-section {
+    height: 100vh;
+    width: auto;
     margin-top: 40px;
 }
 .dashboard-container {

@@ -83,6 +83,8 @@ Route::get('/admin/documents/memorandum', [AdminController::class, 'memorandum']
 Route::get('/admin/documents/request_docs', [AdminController::class, 'request_docs'])->name('admin.documents.request_docs');
 Route::get('/admin/documents/sent_docs', [AdminController::class, 'sent_docs'])->name('admin.documents.sent_docs');
 Route::get('/admin/documents/view_docs', [AdminController::class, 'view_docs'])->name('admin.documents.view_docs');
+Route::get('/admin/documents/all_docs', [AdminController::class, 'all_docs'])->name('admin.documents.all_docs');
+
 
 
 // Route for dean side 
