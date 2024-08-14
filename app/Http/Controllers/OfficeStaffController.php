@@ -24,6 +24,16 @@ class OfficeStaffController extends Controller
         return view('office_staff.os_upload_document');
     }
 
+    public function memorandum()
+    {
+        return view('office_staff.documents.memorandum');
+    }
+
+    public function os_notification()
+    {
+        return view('office_staff.os_notification');
+    }
+
     public function someMethod()
     {
     $user = auth()->user();

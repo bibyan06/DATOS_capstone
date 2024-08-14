@@ -64,6 +64,9 @@ Route::get('/home/dean', function () {
 Route::get('/office_staff/os_dashboard', [OfficeStaffController::class, 'dashboard'])->name('office_staff.os_dashboard');
 Route::get('/office_staff/os_account', [OfficeStaffController::class, 'os_account'])->name('office_staff.os_account');
 Route::get('/office_staff/os_upload_document', [OfficeStaffController::class, 'upload_document'])->name('office_staff.os_upload_document');
+Route::get('/office_staff/os_notification', [OfficeStaffController::class, 'os_notification'])->name('office_staff.os_notification');
+Route::get('/office_staff/documents/memorandum', [OfficeStaffController::class, 'memorandum'])->name('office_staff.documents.memorandum');
+
 
 // Route for admin side 
 Route::get('/admin/admin_dashboard', [AdminController::class, 'dashboard'])->name('admin.admin_dashboard');
@@ -73,7 +76,7 @@ Route::get('/admin/admin_view_document', [AdminController::class, 'view_document
 Route::get('/admin/college_dean', [AdminController::class, 'college_dean'])->name('admin.college_dean');
 Route::get('/admin/office_staff', [AdminController::class, 'office_staff'])->name('admin.office_staff');
 
-
+Route::get('/admin/documents/review_docs', [AdminController::class, 'review_docs'])->name('admin.documents.review_docs');
 Route::get('/admin/documents/approved_docs', [AdminController::class, 'approved_docs'])->name('admin.documents.approved_docs');
 Route::get('/admin/documents/edit_docs', [AdminController::class, 'edit_docs'])->name('admin.documents.edit_docs');
 Route::get('/admin/documents/memorandum', [AdminController::class, 'memorandum'])->name('admin.documents.memorandum');
@@ -92,6 +95,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });
 
+//Route for admin approved documents 
+// Route::get('/admin/documents/approved_docs', [AdminController::class, 'showApprovedDocs'])->name('admin.documents.approved_docs');
+// Route::post('/admin/documents/{id}/review', [AdminController::class, 'reviewDocument'])->name('admin.review_document');
+
+
+Route::prefix('admin')->name('admin.')->group(function() {
+    Route::get('documents/review', [DocumentController::class, 'showReviewDocs'])->name('documents.review_docs');
+    Route::get('documents/approved', [DocumentController::class, 'showApprovedDocs'])->name('documents.approved_docs');
+    Route::post('documents/review/{id}', [DocumentController::class, 'reviewDocument'])->name('documents.review');
+});
 // Route for Logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');
 
@@ -111,6 +124,12 @@ Route::middleware(['auth', 'check_role:03'])->group(function () {
 //Route for Uploading documents 
 // Route::post('/upload-document', [OfficeStaffController::class, 'uploadDocument'])->name('office_staff.upload_document');
 Route::post('/upload-document', [DocumentController::class, 'uploadDocument'])->name('office_staff.upload_document');
+
+// For displaying the upload form
+Route::get('/upload-document', [DocumentController::class, 'showUploadForm'])->name('admin.documents.showUploadForm');
+
+// For handling the form submission
+Route::post('/upload-document', [DocumentController::class, 'store'])->name('admin.documents.store');
 
 // Test database connection route
 Route::get('/test-db', function () {

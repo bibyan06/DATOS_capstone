@@ -126,7 +126,7 @@
                         </div>
                         <div class="info-input" style="display: none;">
                             <input type="text" id="employee-id-input" value="{{ Auth::user()->employee_id }}">
-                            <input type="text" id="name-input" value="{{ Auth::user()->name }}">
+                            <input type="text" id="name-input" value="{{Auth::user()->first_name }} {{ Auth::user()->last_name }}">
                             <input type="email" id="email-input" value="{{ Auth::user()->email }}">
                             <input type="text" id="phone-input" value="{{ Auth::user()->phone_number }}">
                             <input type="number" id="age-input" value="{{ Auth::user()->age }}">

@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Document;
 
 class AdminController extends Controller
 {
@@ -10,6 +12,7 @@ class AdminController extends Controller
     {
         return view('admin.admin_dashboard');
     }
+
     public function admin_account()
     {
         return view('admin.admin_account');
@@ -35,51 +38,81 @@ class AdminController extends Controller
         return view('admin.office_staff');
     }
 
+    public function review_docs()
+    {
+        // Fetch documents with 'pending' status
+        $documents = Document::where('document_status', 'pending')->get();
+        return view('admin.documents.review_docs', compact('documents'));
+    }
+
     public function approved_docs()
     {
-        return view('admin..documents.approved_docs');
+        // Fetch documents with 'approved' status
+        $documents = Document::where('document_status', 'approved')->get();
+        return view('admin.documents.approved_docs', compact('documents'));
     }
 
     public function edit_docs()
     {
-        return view('admin..documents.edit_docs');
+        return view('admin.documents.edit_docs');
     }
 
     public function memorandum()
     {
-        return view('admin..documents.memorandum');
+        return view('admin.documents.memorandum');
     }
 
     public function request_docs()
     {
-        return view('admin..documents.request_docs');
+        return view('admin.documents.request_docs');
     }
 
     public function sent_docs()
     {
-        return view('admin..documents.sent_docs');
+        return view('admin.documents.sent_docs');
     }
 
     public function view_docs()
     {
-        return view('admin..documents.view_docs');
+        return view('admin.documents.view_docs');
     }
-
 
     public function someMethod()
     {
         $user = auth()->user();
 
+        // Ensure the user has the '01' prefix in employee_id for admin actions
         if (strpos($user->employee_id, '01') !== 0) {
             abort(403, 'Unauthorized action.');
         }
         // Proceed with the action
     }
 
+    public function reviewDocument(Request $request, $id)
+    {
+        $document = Document::findOrFail($id);
+        $action = $request->input('action');
+
+        if ($action == 'approve') {
+            $document->document_status = 'approved';
+        } elseif ($action == 'decline') {
+            $document->document_status = 'declined';
+        }
+
+        $document->save();
+
+        // Redirect based on the action
+        if ($document->document_status == 'approved') {
+            return redirect()->route('admin.documents.approved_docs')->with('success', 'Document approved successfully.');
+        } else {
+            return redirect()->route('admin.documents.review_docs')->with('success', 'Document declined successfully.');
+        }
+    }
+
     public function showAdminHome()
     {
         $user = Auth::user();
-        dd($user); // This will dump the user data and stop execution
+        dd($user); // Debugging line to dump the user data
         return view('admin', compact('user'));
     }
 }

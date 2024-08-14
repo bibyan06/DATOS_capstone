@@ -111,36 +111,37 @@
                         </div>
                     </div>
                     <div class="form-section">
-                        <form>
-                            <div class="form-group">
-                                <label for="document-number">Document Number</label>
-                                <input type="number" id="document-number" name="document-number" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="document-name">Document Name</label>
-                                <input type="text" id="document-name" name="document-name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea id="description" name="description" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="category">Category</label>
-                                <select id="category" name="category" required>
-                                    <option value="">Select Category</option>
-                                    <option value="memorandum">Memorandum</option>
-                                    <option value="claim-monitoring-sheet">Claim Monitoring Sheet</option>
-                                    <option value="mrsp">MRSP</option>
-                                    <option value="other">Other</option>
-                                </select>
-                                <input type="text" id="other-category" name="other-category" placeholder="Please specify other category">
-                            </div>
-                            <div class="form-group">
-                                <label for="document-tags">Document Tags</label>
-                                <input type="text" id="document-tags" name="document-tags" required>
-                            </div>
-                            <button type="submit" class="submit-btn">Upload Document</button>
-                        </form>
+                    <form id="upload-form" action="{{ route('admin.documents.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="document-number">Document Number</label>
+                            <input type="number" id="document-number" name="document_number" value="{{ old('document_number') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="document-name">Document Name</label>
+                            <input type="text" id="document-name" name="document_name" value="{{ old('document_name') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" required>{{ old('description') }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category_id" required>
+                                <option value="">Select Category</option>
+                                <option value="1">Memorandum</option>
+                                <option value="2">Audited Disbursement Voucher</option>
+                                <option value="3">Claim Monitoring Sheet</option>
+                                <option value="4">Monthly Report Service of Personnel</option>
+                            </select>
+                            <input type="text" id="other-category" name="other-category" placeholder="Please specify other category">
+                        </div>
+                        <div class="form-group">
+                            <label for="document-tags">Document Tags</label>
+                            <input type="text" id="document-tags" name="document_tags" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Upload Document</button>
+                    </form>
                     </div>
                 </div>
             </div>

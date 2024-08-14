@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Account</title>
-    <link rel="stylesheet" href="{{ asset('css/account.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <title>Bicol University Home</title>
+    <link rel="stylesheet" href="{{ asset('css/os/staff_account.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/os/staff_page.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </head>
 <body>
     <header>
@@ -31,95 +33,212 @@
         </div>
     </header>
 
-    <nav>
-        <div class="nav-content">
-            <div class="nav-left">
-                <a href="#" class="menu-icon" id="menu-toggle"><i class="bi bi-list"></i></a>
-                <img src="{{ asset('images/datos.png') }}" alt="Nav Logo" class="nav-logo">
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo-container">
+                <img src="{{ asset('images/sidebar-logo.png') }}" alt="Bicol University Logo" class="nav-logo">
             </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Search Document">
+            <ul class="nav-icons">
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-house-fill" id="home-icon"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-file-earmark-fill"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-bell-fill"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-cloud-arrow-up-fill"></i></div></li>
+            </ul>
+            <div class="profile-settings">
+                <div class="icon-container" data-target="logout"><i class="bi bi-door-open-fill"></i></div>
+                <div class="icon-container" data-target="#home"><img src="{{ asset('images/boy-1.png') }}" alt="Profile Icon" class="profile-pic"></div>
             </div>
         </div>
     </nav>
 
-    <div id="main-content">
-        <div class="sidebar" id="sidebar">
+    <div class="extra-sidebar" id="home">
+        <div class="sidebar-content">
+            <div class="sidebar-title">
+                <h3>DASHBOARD</h3>
+                <i class="bi bi-text-right"></i>
+            </div>
             <ul>
-                <li><a href="{{ route('home.office_staff') }}"><i class="bi bi-house-fill" id="home-icon"></i> Home</a></li>
-                <li><a href="{{ route('office_staff.os_dashboard') }}"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
+                <li><a href="{{ route('home.office_staff') }}" id="home">Home</a></li>
+                <li><a href="{{ route('office_staff.os_dashboard') }}">Digitized Report</a></li>
                 <li>
-                    <a href="#" class="dropdown-toggle"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i> Document Reports <i class="bi bi-caret-right-fill" id="dropdown-icon"></i></a>
-                    <div class="dropdown">
-                        <a href="memorandum.html"><i class="bi bi-card-heading" id="memo-icon"></i> Memorandum</a>
-                        <a href="audited_disbursement_voucher.html"><i class="bi bi-credit-card-2-front-fill"></i> Audited Disbursement Voucher</a>
-                        <a href="claim_monitoring_sheet.html"><i class="bi bi-receipt-cutoff"></i> Claim Monitoring Sheet</a>
-                        <a href="monthly_report_service_of_personnel.html"><i class="bi bi-calendar-event-fill"></i> Monthly Report Service of Personnel</a>
-                    </div>
-                    <a href="upload_document.html"><i class="bi bi-upload"></i> Upload Document</a>
+                    <a href="#" class="more-dropdown-toggle">Digitized Documents <i class="bi bi-chevron-right"></i></a>
+                    <ul class="more-dropdown-menu">
+                        <li><a href="{{ route('office_staff.documents.memorandum') }}"><i class="bi bi-card-heading" id="memo-icon"></i> Memorandum</a></li>
+                        <li><a href="">Administrative Order</a></li>
+                        <li><a href=""><i class="bi bi-calendar-event-fill"></i> Monthly Report Service Personnel</a></li>
+                        <li><a href=""><i class="bi bi-receipt-cutoff"></i> Claim Monitoring Sheet</a></li>
+                        <li><a href=""><i class="bi bi-credit-card-2-front-fill"></i> Audited Documents</a></li>
+                    </ul>
                 </li>
             </ul>
-            <div class="settings">
+            <ul>
+                <li><a href="">Notifications</a></li>
+                <li><a href="">Upload</a></li>
+            </ul>
+            <div class="profile-content">
                 <ul>
-                    <li><a href="{{ route('profile') }}"><i class="bi bi-person-circle"></i> Account</a></li>
-                    <li><a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
-                    </a></li>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                    <li><a href="{{ route('register') }}"><i class="bi bi-door-open-fill"></i> Logout</a></li>
+                    <li><a href="{{ route('profile') }}">Profile</a></li>
                 </ul>
             </div>
         </div>
-        @auth
-        <main id="account-content">
-            <div class="card">
-                <div class="card-content">
-                    <div class="account-container">
-                        <img src="https://via.placeholder.com/100" alt="Profile Picture">
-                        <div class="account-cont">
-                            <div class="name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</div>
-                            <div class="role">{{ Auth::user()->user_type }}</div>
-                        </div>
-                    </div>
-                    <div class="info">
-                        <div class="label">
-                            <h6>Employee ID:</h6>
-                            <h6>Name:</h6>
-                            <h6>Email:</h6>
-                            <h6>Phone Number:</h6>
-                            <h6>Age:</h6>
-                            <h6>Gender:</h6>
-                            <h6>Home Address:</h6>
-                        </div>
-                        <div class="info-text">
-                            <h6 id="employee-id">{{ Auth::user()->employee_id }}</h6>
-                            <h6 id="name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h6>
-                            <h6 id="email">{{ Auth::user()->email }}</h6>
-                            <h6 id="phone">{{ Auth::user()->phone_number }}</h6>
-                            <h6 id="age">{{ Auth::user()->age }}</h6>
-                            <h6 id="gender">{{ Auth::user()->gender }}</h6>
-                            <h6 id="address">{{ Auth::user()->home_address }}</h6>
-                        </div>
-                        <div class="info-input" style="display: none;">
-                            <input type="text" id="employee-id-input" value="{{ Auth::user()->employee_id }}">
-                            <input type="text" id="name-input" value="{{ Auth::user()->name }}">
-                            <input type="email" id="email-input" value="{{ Auth::user()->email }}">
-                            <input type="text" id="phone-input" value="{{ Auth::user()->phone_number }}">
-                            <input type="number" id="age-input" value="{{ Auth::user()->age }}">
-                            <input type="text" id="gender-input" value="{{ Auth::user()->gender }}">
-                            <input type="text" id="address-input" value="{{ Auth::user()->home_address }}">
-                        </div>
-                    </div>                                      
-                    <button class="edit-btn">EDIT</button>
-                </div>
-                @else
-                    <p>You are not authenticated. Please <a href="{{ route('login') }}">login</a>.</p>
-                @endauth
-            </div>
-        </main>
     </div>
 
-    <script src="{{ asset('js/os_landing_page.js') }}"></script>
+    <main id="dashboard-content">
+        <section class="title">
+            <div class="title-content">
+                <h3>My Profile</h3>
+            </div>
+        </section>
+
+        @auth
+        <div class="account-profile">
+            <div class="profile-header">
+                <img src="{{ asset('images/cover-photo.png') }}" alt="header_image" class="header-image">
+            </div>
+            <div class="profile-container">
+                <div class="profile-picture">
+                    <img src="{{ asset('images/boy-1.png') }}" alt="Profile Picture">
+                </div>
+                <div class="profile-details">
+                    <h2>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h2>
+                    <div class="profile-info">
+                        <span class="employee-id">{{ Auth::user()->employee_id }}</span>
+                        <span class="position">{{ Auth::user()->user_type }}</span>
+                    </div>
+                </div>
+                <div class="edit-button">
+                    <button id="openModalBtn">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-details">
+            <h2>Personal Information</h2>
+            <div class="info-row">
+                <span class="label">Last Name</span>
+                <span class="value" data-field="lastname">{{ Auth::user()->last_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">First Name:</span>
+                <span class="value" data-field="firstname">{{ Auth::user()->first_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Middle Name</span>
+                <span class="value" data-field="middlename">{{ Auth::user()->middle_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Position:</span>
+                <span class="value" data-field="office">{{ Auth::user()->position }}</span>
+            </div>
+            <div class="info-row">
+                <div class="label">Age:</div>
+                <div class="value" data-field="age">{{ Auth::user()->age }}</div>
+            </div>
+            <div class="info-row">
+                <span class="label">Sex:</span>
+                <span class="value" data-field="sex">{{ Auth::user()->gender }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Email:</span>
+                <span class="value" data-field="email">{{ Auth::user()->email }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Phone Number:</span>
+                <span class="value" data-field="phone">{{ Auth::user()->phone_number }}</span>
+            </div>
+            <div class="info-row">
+                <div class="label">Address:</div>
+                <div class="value" data-field="address">{{ Auth::user()->home_address }}</div>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Update Profile</h2>
+                <form id="updateProfileForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" id="lastname" name="lastname" value="{{ Auth::user()->last_name }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstname">First Name</label>
+                            <input type="text" id="firstname" name="firstname" value="{{ Auth::user()->first_name }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="middlename">Middle Name</label>
+                            <input type="text" id="middlename" name="middlename" value="{{ Auth::user()->middle_name }}" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="position">Position</label>
+                            <input type="text" id="position" name="position" value="{{ Auth::user()->position }}" required>
+                        </div>
+                    </div>
+                        
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" name="age" data-field="age" min="18" max="120"  value="{{ Auth::user()->age }}" required>
+                            <div class="invalid-feedback">Age cannot be set in the future.</div>
+                            </div>
+                        <div class="form-group">
+                            <label for="gender">Sex</label>
+                            <select id="gender" name="gender" required>
+                                <option value="Male" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                                <option value="Female" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                            </select>
+                        </div>
+                    </div>
+                        
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" value="{{ Auth::user()->email }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="text" id="phone" name="phone" value="{{ Auth::user()->phone_number }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" name="address" value="{{ Auth::user()->home_address }}" required>
+                        </div>
+                    </div>
+                        <!-- <button type="submit">Save Changes</button> -->
+                    <div class="form-buttons">
+                        <button type="button" id="closeModalBtn">Cancel</button>
+                        <button type="button" id="saveChangesBtn">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @endauth
+
+         <!-- Warning Modal -->
+         <div id="warningModal" class="modal">
+            <div class="modal-content">
+                <span id="warningCloseBtn" class="close">&times;</span>
+                <h2>Warnings</h2>
+                <div id="warningContent"></div>
+                <button id="warningCloseBtn">Close</button>
+            </div>
+        </div>
+    </main>
+  
+    <footer>
+        <div class="footer-content">
+            <p>© 2023 Bicol University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ asset('js/os/staff_account.js') }}"></script>
+    <script src="{{ asset('js/os/staff_page.js') }}"></script>
 </body>
 </html>

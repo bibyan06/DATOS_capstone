@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Approved Documents</title>
+    <title>Review Documents</title>
     <link rel="stylesheet" href="{{ asset('css/approved.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mainhead.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -67,7 +67,7 @@
                         <a href="{{ route('admin.documents.request_docs') }}"><i class="bi bi-credit-card-2-front-fill"></i> Request</a>
                     </div>
                 </li>
-                <li>
+                <li>    
                     <a href="{{ route('admin.documents.sent_docs') }}"><i class="bi bi-send-plus-fill"></i> Notifications</a>
                 </li>
                 <li>
@@ -87,7 +87,7 @@
         <main id="dashboard-content">
             <section class="title">
                 <div class="title-content">
-                    <h3>Approval Documents</h3>
+                    <h3>Review Documents</h3>
                     <div class="date-time">
                         <i class="bi bi-calendar2-week-fill"></i>
                         <p id="current-date-time"></p>
@@ -121,8 +121,18 @@
                                         {{ ucfirst($document->document_status) }}
                                     </td>
                                     <td class="action-buttons">
-                                        <a href="{{ route('admin.review_document', $document->id) }}" class="bi bi-pencil-square" title="Review"></a>
-                                        <!-- Add a link to view details if necessary -->
+                                        <form action="{{ route('admin.review_document', $document->id) }}" method="POST">
+                                            @csrf
+                                            @method('POST')
+                                            <input type="hidden" name="action" value="approve">
+                                            <button type="submit" class="bi bi-check-circle-fill" title="Approve"></button>
+                                        </form>
+                                        <form action="{{ route('admin.review_document', $document->id) }}" method="POST">
+                                            @csrf
+                                            @method('POST')
+                                            <input type="hidden" name="action" value="decline">
+                                            <button type="submit" class="bi bi-x-circle-fill" title="Decline"></button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
