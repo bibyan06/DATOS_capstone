@@ -29,6 +29,19 @@ class OfficeStaffController extends Controller
         return view('office_staff.documents.memorandum');
     }
 
+    public function os_all_docs()
+    {
+        return view('office_staff.documents.os_all_docs');
+    }
+    public function os_view_docs()
+    {
+        return view('office_staff.documents.os_view_docs');
+    }
+    public function edit_docs()
+    {
+        return view('office_staff.documents.edit_docs');
+    }
+
     public function os_notification()
     {
         return view('office_staff.os_notification');

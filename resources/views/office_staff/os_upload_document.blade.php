@@ -106,6 +106,7 @@
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-file-earmark-fill"></i></div></li>
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-bell-fill"></i></div></li>
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-cloud-arrow-up-fill"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-search" id="search-icon"></i></div></li>
             </ul>
             <div class="profile-settings">
                 <div class="icon-container" data-target="#home"><i class="bi bi-door-open-fill"></i></div>
@@ -121,12 +122,12 @@
                 <i class="bi bi-text-right"></i>
             </div>
             <ul>
-                <li><a href="staff_page.html" id="home">Home</a></li>
-                <li><a href="staff_dashboard.html">Digitized Report</a></li>
+                <li><a href="{{ route('home.office_staff') }}" id="home">Home</a></li>
+                <li><a href="{{ route('office_staff.os_dashboard') }}">Digitized Report</a></li>
                 <li>
                     <a href="#" class="dropdown-toggle">Digitized Documents <i class="bi bi-chevron-right"></i></a>
                     <ul class="more-dropdown-menu">
-                        <li><a href="staff_memorandum.html"><i class="bi bi-card-heading" id="memo-icon"></i> Memorandum</a></li>
+                        <li><a href="{{ route('office_staff.documents.memorandum') }}"><i class="bi bi-card-heading" id="memo-icon"></i> Memorandum</a></li>
                         <li><a href="staff_admin_orders.html">Administrative Order</a></li>
                         <li><a href="staff_mrsp.html"><i class="bi bi-calendar-event-fill"></i> Monthly Report Service Personnel</a></li>
                         <li><a href="staff_cms.html"><i class="bi bi-receipt-cutoff"></i> Claim Monitoring Sheet</a></li>
@@ -135,14 +136,14 @@
                 </li>
             </ul>
             <ul>
-                <li><a href="staff_notification.html">Notifications</a></li>
-                <li><a href="staff_upload.html">Upload</a></li>
-                <li><a href="staff_all_documents.html" id="search">Search</a></li>
+                <li><a href="{{ route('office_staff.os_notification') }}">Notifications</a></li>
+                <li><a href="{{ route('office_staff.os_upload_document') }}">Upload</a></li>
+                <li><a href="{{ route('office_staff.documents.os_all_docs') }}" id="search">Search</a></li>
             </ul>
             <div class="profile-content">
                 <ul>
-                    <li><a href="sign-up.html"><i class="bi bi-door-open-fill"></i> Logout</a></li>
-                    <li><a href="staff_account.html">Profile</a></li>
+                    <li><a href="{{ route('logout') }}"><i class="bi bi-door-open-fill"></i> Logout</a></li>
+                    <li><a href="{{ route('profile') }}">Profile</a></li>
                 </ul>
             </div>
         </div>
@@ -176,7 +177,7 @@
                     </div>
                 </div>
                 <div class="form-section">
-                <form id="upload-form" action="{{ route('office_staff.upload_document') }}" method="POST" enctype="multipart/form-data">
+                <form id="upload-form" action="{{ route('office_staff.os_upload_document') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="document-number">Document Number</label>
@@ -232,8 +233,8 @@
         </div>
     </div>
 
-    <script src="js/os/staff_upload.js"></script>
-    <script src="js/os/staff_page.js"></script>
+    <script src="{{ asset('js/os/staff_upload.js') }}"></script>
+    <script src="{{ asset ('js/os/staff_page.js') }}"></script>
 
     <script>
         $(document).ready(function () {

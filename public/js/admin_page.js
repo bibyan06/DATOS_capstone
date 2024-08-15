@@ -47,10 +47,19 @@ document.addEventListener("DOMContentLoaded", function () {
         iconContainers.forEach((icon) => icon.classList.remove("active"));
     });
 
-    // Add click event to icons to toggle extra-sidebar
+    // Add click event to icons to toggle extra-sidebar and close dropdowns
     iconContainers.forEach((container) => {
         container.addEventListener("click", function () {
             extraSidebar.classList.toggle("active");
+
+            // Hide dropdowns if they are open
+            dropdownMenu.classList.remove("more-dropdown-active");
+            dropdownToggle.querySelector("i.bi-chevron-right").classList.remove("more-dropdown-active");
+            dropdownMenuEmp.classList.remove("emp-dropdown-active");
+            dropdownToggle1.querySelector("i.bi-chevron-right").classList.remove("emp-dropdown-active");
+            dropdownMenuPending.classList.remove("pending-dropdown-active");
+            dropdownToggle2.querySelector("i.bi-chevron-right").classList.remove("pending-dropdown-active");
+
             iconContainers.forEach((icon) => icon.classList.remove("active"));
             this.classList.add("active");
         });

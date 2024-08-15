@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bicol University Home</title>
-    <link rel="stylesheet" href="css/os/staff_notification.css">
-    <link rel="stylesheet" href="css/os/staff_page.css">
+    <link rel="stylesheet" href="{{ asset ('css/os/staff_notification.css') }}">
+    <link rel="stylesheet" href="{{ asset ('css/os/staff_page.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 </head>
@@ -13,7 +13,7 @@
     <header>
         <div class="header-content">
             <div class="left-header">
-                <img src="images/Bicol_University.png" alt="Bicol University Logo" class="logo">
+                <img src="{{ asset ('images/Bicol_University.png') }}" alt="Bicol University Logo" class="logo">
                 <h1>BICOL <span>UNIVERSITY</span></h1>
             </div>
             <div class="search-container">
@@ -21,7 +21,7 @@
                 <i class="bi bi-search"></i>
             </div>
             <div class="profile-icon">
-                <img src="images/user-circle-solid-24.png" alt="Profile Icon" id="profile-icon">
+                <img src="{{ asset ('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
             </div>
         </div>
     </header>
@@ -38,55 +38,53 @@
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-file-earmark-fill"></i></div></li>
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-bell-fill"></i></div></li>
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-cloud-arrow-up-fill"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-search" id="search-icon"></i></div></li>
             </ul>
             <div class="profile-settings">
                 <div class="profile-settings">
                     <div class="icon-container" data-target="#home"><i class="bi bi-door-open-fill"></i></div>
-                    <div class="icon-container" data-target="#home"><img src="images/boy-1.png" alt="Profile Icon" class="profile-pic"></div>
+                    <div class="icon-container" data-target="#home"><img src="{{ asset ('images/boy-1.png') }}" alt="Profile Icon" class="profile-pic"></div>
                 </div>
                 
             </div>
         </div>
     </nav>
 
-    <div class="extra-sidebar" id="home">
+    <div class="extra-sidebar" id="sidebar">
         <div class="sidebar-content">
             <div class="sidebar-title">
                 <h3>DASHBOARD</h3>
                 <i class="bi bi-text-right"></i>
             </div>
-            <!--
-            <div class="search-container">
-                <input type="text" id="sidebar-search" placeholder="Search">
-                <i class="bi bi-search"></i>
-            </div>
-            -->
             <ul>
-                <li><a href="staff_page.html" id="home">Home</a></li>
-
-                <li><a href="staff_dashboard.html">Digitized Report</a></li>
+                <li><a href="{{ route('home.office_staff') }}" id="home">Home</a></li>
+                <li><a href="{{ route('office_staff.os_dashboard') }}" id="report">Digitized Report</a></li>
                 <li>
-                    <a href="#" class="dropdown-toggle">Digitized Documents <i class="bi bi-chevron-right"></i></a>
+                    <a href="#" class="dropdown-toggle" id="digitized">Digitized Documents <i class="bi bi-chevron-right"></i></a>
+                    
                     <ul class="more-dropdown-menu">
-                        <li><a href="staff_memorandum.html"><i class="bi bi-card-heading" id="memo-icon"></i> Memorandum</a></li>
-                        <li><a href="staff_admin_orders.html">Administrative Order</a></li>
-                        <li><a href="staff_mrsp.html"><i class="bi bi-calendar-event-fill"></i> Monthly Report Service Personnel</a></li>
-                        <li><a href="staff_cms.html"><i class="bi bi-receipt-cutoff"></i> Claim Monitoring Sheet</a></li>
-                        <li><a href="staff_audit.html"><i class="bi bi-credit-card-2-front-fill"></i> Audited Documents</a></li>
+                        <li><a href="{{ route ('office_staff.documents.memorandum') }}" id="memorandum">Memorandum</a></li>
+                        <li><a href="staff_admin_orders.html" id="admin_order">Administrative Order</a></li>
+                        <li><a href="staff_mrsp.html" id="mrsp">Monthly Report Service Personnel</a></li>
+                        <li><a href="staff_cms.html" id="cms">Claim Monitoring Sheet</a></li>
+                        <li><a href="staff_audit.html" id="audit">Audited Documents</a></li>
                     </ul>
+
                 </li>
+                
             </ul>
             <ul>
-                <li><a href="staff_.notification.html">Notifications</a></li>
-                <li><a href="staff_upload.html">Upload</a></li>
-                <li><a href="staff_all_documents.html" id="search">Search</a></li>
+                <li><a href="{{ route ('office_staff.os_notification') }}" id="announcements-icon">Notifications</a></li>
+                <li><a href="{{ route ('office_staff.os_upload_document') }}" id="upload">Upload</a></li>
+                <li><a href="{{ route('office_staff.documents.os_all_docs') }}" id="search">Search</a></li>
+                
             </ul>
             <div class="profile-content">
                 <ul>
-                    <li><a href="sign-up.html"><i class="bi bi-door-open-fill"></i> Logout</a></li>
-                    <li><a href="staff_account.html">Profile</a></li>
+                    <li><a href="{{ route('logout') }}">Logout</a></li>
+                    <li><a href="{{ route ('office_staff.os_account') }}" id="account">Profile</a></li>
                 </ul>
-        </div>
+            </div>
         </div>
     </div>
 
@@ -177,7 +175,7 @@
     <footer>
         <div class="footer-content">
             <p>&copy; DATOS 2024 Bicol University. All Rights Reserved.</p>
-            <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p>
+            <!-- <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p> -->
         </div>
     </footer>
 
