@@ -16,6 +16,10 @@
                 <img src="{{ asset('images/Bicol_University.png') }}" alt="Bicol University Logo" class="logo">
                     <h1>BICOL <span>UNIVERSITY</span></h1>
             </div>
+            <div class="search-container">
+                <input type="text" id="sidebar-search" placeholder="Search">
+                <i class="bi bi-search"></i>
+            </div>
             <div class="profile-icon">
                 <img src="{{ asset('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
                 <div class="dropdown-menu" id="profile-dropdown">

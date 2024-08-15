@@ -21,15 +21,6 @@ document.getElementById('doc-category').addEventListener('change', function() {
 });
 */
 
-// Show the modal
-$('#successModal').modal('show');
-
-// Optional: Hide the modal and backdrop after some time
-setTimeout(function(){
-    $('#successModal').modal('hide');
-}, 3000);
-
-
 document.getElementById('category').addEventListener('change', function () {
     var otherCategoryInput = document.getElementById('other-category');
     if (this.value === 'other') {

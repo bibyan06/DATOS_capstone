@@ -65,20 +65,20 @@
                     <a href="#" class="more-dropdown-toggle">Digitized Documents <i class="bi bi-chevron-right"></i></a>
                     <ul class="more-dropdown-menu">
                         <li><a href="{{ route('office_staff.documents.memorandum') }}"><i class="bi bi-card-heading" id="memo-icon"></i> Memorandum</a></li>
-                        <li><a href="">Administrative Order</a></li>
-                        <li><a href=""><i class="bi bi-calendar-event-fill"></i> Monthly Report Service Personnel</a></li>
-                        <li><a href=""><i class="bi bi-receipt-cutoff"></i> Claim Monitoring Sheet</a></li>
-                        <li><a href=""><i class="bi bi-credit-card-2-front-fill"></i> Audited Documents</a></li>
+                        <li><a href="staff_admin_orders.html">Administrative Order</a></li>
+                        <li><a href="staff_mrsp.html"><i class="bi bi-calendar-event-fill"></i> Monthly Report Service Personnel</a></li>
+                        <li><a href="staff_cms.html"><i class="bi bi-receipt-cutoff"></i> Claim Monitoring Sheet</a></li>
+                        <li><a href="staff_audit.html"><i class="bi bi-credit-card-2-front-fill"></i> Audited Documents</a></li>
                     </ul>
                 </li>
             </ul>
             <ul>
-                <li><a href="">Notifications</a></li>
-                <li><a href="">Upload</a></li>
+                <li><a href="staff_notification.html">Notifications</a></li>
+                <li><a href="staff_upload.html">Upload</a></li>
             </ul>
             <div class="profile-content">
                 <ul>
-                    <li><a href="{{ route('register') }}"><i class="bi bi-door-open-fill"></i> Logout</a></li>
+                    <li><a href="{{ route('logout') }}"><i class="bi bi-door-open-fill"></i> Logout</a></li>
                     <li><a href="{{ route('profile') }}">Profile</a></li>
                 </ul>
             </div>

@@ -67,11 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
 /*Shortcuts js*/
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("documents").addEventListener("click", function() {
-        window.location.href = "staff_documents.html";
+    document.getElementById("documents-shortcut").addEventListener("click", function() {
+        window.location.href = "staff_all_documents.html";
     });
 
-    document.getElementById("upload").addEventListener("click", function() {
+    document.getElementById("upload-shortcut").addEventListener("click", function() {
         window.location.href = "staff_upload.html";
     });
 });

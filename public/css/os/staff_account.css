@@ -319,7 +319,6 @@ main {
   background-color: #009FEA;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
-  border-color: #009FEA;
 }
 
 input:invalid::before {

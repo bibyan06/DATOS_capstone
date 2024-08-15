@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bicol University Home</title>
-    <link rel="stylesheet" href="css/staff_notification.css">
-    <link rel="stylesheet" href="css/staff_page.css">
+    <link rel="stylesheet" href="css/os/staff_notification.css">
+    <link rel="stylesheet" href="css/os/staff_page.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 </head>
@@ -15,6 +15,10 @@
             <div class="left-header">
                 <img src="images/Bicol_University.png" alt="Bicol University Logo" class="logo">
                 <h1>BICOL <span>UNIVERSITY</span></h1>
+            </div>
+            <div class="search-container">
+                <input type="text" id="sidebar-search" placeholder="Search">
+                <i class="bi bi-search"></i>
             </div>
             <div class="profile-icon">
                 <img src="images/user-circle-solid-24.png" alt="Profile Icon" id="profile-icon">
@@ -26,7 +30,7 @@
     <nav class="navbar">
         <div class="navbar-content">
             <div class="logo-container">
-                <img src="images/sidebar-logo.png" alt="Bicol University Logo" class="nav-logo">
+                <img src="{{ asset ('images/sidebar-logo.png')}}" alt="Bicol University Logo" class="nav-logo">
             </div>
             <ul class="nav-icons">
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-house-fill" id="home-icon"></i></div></li>
@@ -72,10 +76,10 @@
                     </ul>
                 </li>
             </ul>
-            
             <ul>
                 <li><a href="staff_.notification.html">Notifications</a></li>
                 <li><a href="staff_upload.html">Upload</a></li>
+                <li><a href="staff_all_documents.html" id="search">Search</a></li>
             </ul>
             <div class="profile-content">
                 <ul>
@@ -83,13 +87,10 @@
                     <li><a href="staff_account.html">Profile</a></li>
                 </ul>
         </div>
-
         </div>
     </div>
 
-
-
-        <main id="dashboard-content">
+    <main id="dashboard-content">
             <section class="title">
                 <div class="title-content">
                     <h3>Sent Documents</h3>
@@ -180,8 +181,8 @@
         </div>
     </footer>
 
-    <script src="{{ asset ('js/staff_page.js') }}"></script>
-    <script src="{{ asset ('js/staff_notification.js') }}"></script>
+    <script src="{{ asset ('js/os/staff_page.js') }}"></script>
+    <script src="{{ asset ('js/os/staff_notification.js') }}"></script>
     
 </body>
 </html>

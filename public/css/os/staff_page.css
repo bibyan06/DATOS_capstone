@@ -55,9 +55,13 @@ header {
     margin-right: 10px;
 }
 
+.profile-icon{
+    align-items: center;
+    justify-content: center;
+    padding-right: 30px;
+}
 .profile-icon img {
-    padding-top: 5px;
-    height: 35px;
+    height: 30px;
     border-radius: 50%;
 }
 
@@ -80,7 +84,7 @@ header {
     margin-top: 15px;
     padding: 20px 0;
     height:100vh;
-    background-color: #feffef;
+    background-color: #FFFFFF;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     z-index: 1000;
@@ -100,6 +104,7 @@ header {
     justify-content: center;
 }
 
+
 .icon-container {
     display: flex;
     justify-content: center;
@@ -108,17 +113,26 @@ header {
     height: 40px;
     border-radius: 8px;
     transition: background-color 0.3s ease;
-}
+    background-color: #e0e0e0;
 
-.icon-container:hover {
-    background-color: #009FEA;
 }
 
 .icon-container i {
-    font-size: 20px;
+    font-size: 20px; /* Adjust based on your needs */
     color: #FE8926;
 }
 
+
+/* Active state for the icon */
+.icon-container i.active {
+    background-color: #103955; /* Background color for active state */
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .icon-container:hover {
     background-color: #FE8926; /* Background color on hover */
@@ -192,7 +206,7 @@ header {
     top: 0;
     bottom: 0;
     width: 250px;
-    background-color: #feffef;
+    background-color: #FFFFFF;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     transform: translateX(-100%);
     transition: transform 0.3s ease;
@@ -259,7 +273,7 @@ header {
 .sidebar-content ul li {
     font-size: 14px;
     list-style: none;
-    margin: 6px 0;
+    margin: 8px 0;
 }
 
 .extra-sidebar ul {
@@ -270,18 +284,27 @@ header {
 
 
 /* Maintain hover state on sidebar items */
+/* Default Sidebar Link Styling */
 .extra-sidebar ul li a {
-    display: block;
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: #333;
     text-decoration: none;
-    color: #009FEA;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.extra-sidebar ul li a:hover {
-    background-color: #E9ECF4;
-    color: #FE8926;
+/* Hover Effect */
+.extra-sidebar ul li a:hover,
+.extra-sidebar ul li a.active { /* active class for selected link */
+    background-color: #FE8926;
+    color: #fff;
+}
+
+/* Optional: Change Icon Color on Hover */
+.extra-sidebar ul li a:hover i,
+.extra-sidebar ul li a.active i {
+    color: #fff;
 }
 
 
@@ -318,25 +341,47 @@ header {
 /* Additional CSS for the dropdown */
 
 
- .more-dropdown-toggle {
+.dropdown-toggle {
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    padding: 10px 20px; /* Adjust padding as needed */
+    color: #333;
 }
 
 .more-dropdown-menu {
     display: none;
-    padding-left: 20px;
+    width:220px; /* Adjust width as needed */
+    position: absolute;
+    left: 250px; /* Align the dropdown menu next to the extra-sidebar */
+    top: 200px; /* Adjust top as needed */
+    background-color: #FFFFFF; /* Same background as sidebar */
+    z-index: 1600; /* Ensure it appears above other content */
+    opacity: 0; /* Start hidden */
+    transform: translateY(-10px); /* Slide up initially */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Add shadow for better visibility */
 }
 
-.more-dropdown-menu li a{
-    font-size: 10px;
-    margin-left: 10px;
-}
-
-.more-dropdown-active .more-dropdown-menu {
+.more-dropdown-active {
     display: block;
+    opacity: 1; /* Fade in */
+    transform: translateY(0); /* Slide down */
+}
+
+.more-dropdown-menu li a {
+    font-size: 14px; /* Adjust font size */
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    display: block;
+}
+
+.more-dropdown-menu li a:hover {
+    background-color: #f0f0f0; /* Add hover effect */
+    
+
 }
 
 .bi-chevron-right {
@@ -346,6 +391,7 @@ header {
 .more-dropdown-active .bi-chevron-right {
     transform: rotate(90deg);
 }
+
 
 .profile-content {
     position: absolute;
@@ -399,7 +445,7 @@ footer {
     margin-top: auto; 
     transition: margin-left 0.3s ease, width 0.3s ease;
     margin-left: 50px;
-    z-index: 2500;
+    z-index: 1000;
 }
 
 
@@ -425,10 +471,11 @@ footer {
 }
 
 .search-container {
-    width: 100%;
-    margin: 20px 0;
+    width: 300px;
+    margin-left: 550px;
     display: flex;
-    align-items: center;
+    align-items: right;
+    justify-content: right;
     position: relative;
 }
 
@@ -449,3 +496,4 @@ footer {
     font-size: 16px;
     color: #888;
 }
+

@@ -76,6 +76,10 @@
                 <img src="{{ asset('images/Bicol_University.png') }}" alt="Bicol University Logo" class="logo">
                 <h1>BICOL <span>UNIVERSITY</span></h1>
             </div>
+            <div class="search-container">
+                <input type="text" id="sidebar-search" placeholder="Search">
+                <i class="bi bi-search"></i>
+            </div>
             <div class="profile-icon">
                 <img src="{{ asset('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
                 <div class="dropdown-menu" id="profile-dropdown">
@@ -97,21 +101,11 @@
                 <img src="{{ asset('images/sidebar-logo.png') }}" alt="Bicol University Logo" class="nav-logo">
             </div>
             <ul class="nav-icons">
-                <li>
-                    <div class="icon-container" data-target="#home"><i class="bi bi-house-fill" id="home-icon"></i></div>
-                </li>
-                <li>
-                    <div class="icon-container" data-target="#home"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i></div>
-                </li>
-                <li>
-                    <div class="icon-container" data-target="#home"><i class="bi bi-file-earmark-fill"></i></div>
-                </li>
-                <li>
-                    <div class="icon-container" data-target="#home"><i class="bi bi-bell-fill"></i></div>
-                </li>
-                <li>
-                    <div class="icon-container" data-target="#home"><i class="bi bi-cloud-arrow-up-fill"></i></div>
-                </li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-house-fill" id="home-icon"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-file-earmark-fill"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-bell-fill"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-cloud-arrow-up-fill"></i></div></li>
             </ul>
             <div class="profile-settings">
                 <div class="icon-container" data-target="#home"><i class="bi bi-door-open-fill"></i></div>
@@ -143,6 +137,7 @@
             <ul>
                 <li><a href="staff_notification.html">Notifications</a></li>
                 <li><a href="staff_upload.html">Upload</a></li>
+                <li><a href="staff_all_documents.html" id="search">Search</a></li>
             </ul>
             <div class="profile-content">
                 <ul>
@@ -168,7 +163,7 @@
                     ondragover="handleDragOver(event)" 
                     ondragleave="handleDragLeave(event)">
                     <i class="bi bi-cloud-arrow-up-fill upload-icon"></i>
-                    <p>Drag and drop files to upload</p>
+                    <p>Select File or Drag and drop files to upload</p>
                     <p>or</p>
                     <input type="file" id="file-input" name="file_upload[]" multiple hidden accept=".pdf">
                     <button class="select-files" onclick="document.getElementById('file-input').click()">Select File</button>
@@ -237,9 +232,10 @@
         </div>
     </div>
 
-    <script>
-        
+    <script src="js/os/staff_upload.js"></script>
+    <script src="js/os/staff_page.js"></script>
 
+    <script>
         $(document).ready(function () {
             const urlParams = new URLSearchParams(window.location.search);
             const successParam = urlParams.get('success');
@@ -348,9 +344,7 @@
                 }
             });
         });
-
-
-
+ 
     </script>
 </body>
 </html>

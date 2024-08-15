@@ -199,6 +199,11 @@ main {
     padding-right: 10px; /* To prevent scrollbar from overlapping content */
 }
 
+.rectangle h4{
+    font-size: 13px;
+    padding: 5px;
+}
+
 .notification-list {
     padding-left: 10px;
     padding-right: 10px; /* To prevent scrollbar from overlapping content */
@@ -222,7 +227,7 @@ main {
     border-bottom: none;
 }
 
-.profile-icon {
+.profile-icon-notif {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -312,19 +317,20 @@ main {
 /* Document Section */
 /* CSS for Documents Section */
 /* Document Section */
+/* Document Section */
 .documents {
+    width: calc(33.333% - 20px); /* Set width for three items per row, accounting for the gap */
     padding: 20px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    
 }
 
 .documents-content {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 20px;
 }
 
@@ -334,12 +340,12 @@ main {
     border-radius: 5px;
     overflow: hidden;
     width: 100%;
-    height: 200px; /* Fixed height for the card */
+    height: 180px; /* Fixed height for the card */
 }
 
 
 .content {
-    padding: 20px;
+    padding: 10px;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
