@@ -48,34 +48,8 @@
             <div class="profile-settings">
                 <div class="profile-settings">
                     <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill"></i></div>
-                    <div class="icon-container" data-target="#sidebar"><img src="images/boy-1.png" alt="Profile Icon" class="profile-pic"></div>
-                </div>
-                
-            </div>
-        </div>
-    </nav>
-
-    <nav class="navbar">
-        <div class="navbar-content">
-            <div class="logo-container">
-                <img src="{{ asset ('images/sidebar-logo.png') }}" alt="Bicol University Logo" class="nav-logo">
-            </div>
-            <ul class="nav-icons">
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-house-fill" id="home-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-file-earmark-fill" id="digitized-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-people-fill" id="employees"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-hourglass-split" id="pendings"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-bell-fill" id="notification"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-cloud-arrow-up-fill" id="upload-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-search" id="search-icon"></i></div></li>
-            </ul>
-            <div class="profile-settings">
-                <div class="profile-settings">
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill"></i></div>
                     <div class="icon-container" data-target="#sidebar"><img src="{{ asset ('images/boy-1.png') }}" alt="Profile Icon" class="profile-pic"></div>
                 </div>
-                
             </div>
         </div>
     </nav>
@@ -86,12 +60,12 @@
                 <h3>DASHBOARD</h3>
                 <i class="bi bi-text-right"></i>
             </div>
-            <!--
-            <div class="search-container">
-                <input type="text" id="sidebar-search" placeholder="Search">
-                <i class="bi bi-search"></i>
-            </div>
-            -->
+                <!--
+                <div class="search-container">
+                    <input type="text" id="sidebar-search" placeholder="Search">
+                    <i class="bi bi-search"></i>
+                </div>
+                -->
             <ul>
                 <li><a href="{{ route('home.admin') }}" id="home">Home</a></li>
 
@@ -107,36 +81,35 @@
                     </ul>
                 </li>
             </ul>
-            
+                
             <ul>
                 <li>
                     <a href="#" class="emp-dropdown-toggle" id="digitized">Employee <i class="bi bi-chevron-right"></i></a>
-                    <ul class="emp-dropdown-menu">
-                        <li><a href="{{ route('admin.office_staff') }}" id="memorandum"> Office Staff</a></li>
-                        <li><a href="{{ route('admin.college_dean') }}" id="admin_order">College Dean</a></li>
-                    </ul>
+                        <ul class="emp-dropdown-menu">
+                            <li><a href="{{ route ('admin.office_staff') }}" id="memorandum"> Office Staff</a></li>
+                            <li><a href="{{ route ('admin.college_dean') }}" id="admin_order">College Dean</a></li>
+                        </ul>
                 </li>
                 <li>
                     <a href="#" class="pending-dropdown-toggle" id="digitized">Pendings <i class="bi bi-chevron-right"></i></a>
                     <ul class="pending-dropdown">
-                        <li><a href="{{ route('admin.documents.approved_docs') }}" id="approval">Approval</a></li>
-                        <li><a href="{{ route('admin.documents.request_docs') }}" id="request">Request</a></li>
+                        <li><a href="{{ route ('admin.documents.approved_docs') }}" id="approval">Approved</a></li>
+                        <li><a href="{{ route ('admin.documents.review_docs') }}" id="request">Review</a></li>
+                        <li><a href="{{ route ('admin.documents.request_docs') }}" id="request">Request</a></li>
                     </ul>
                 </li>
                 <li><a href="admin_notification.html" id="announcements-icon"> Notifications</a></li>
                 <li><a href="{{ route('admin.admin_upload_document') }}" id="upload">Upload</a></li>
-                <li><a href="admin_all_documents.html" id="search">Search</a></li>
+                <li><a href="search.html" id="search">Search</a></li>
             </ul>
-            
-            <div class="profile-content">
-                <ul>
-                    <li><a href="{{ route('logout') }}"> Logout</a></li>
-                    <li><a href="{{ route('admin.admin_account') }}" id="account">Profile</a></li>
-                </ul>
+                <div class="profile-content">
+                    <ul>
+                        <li><a href="{{ route('logout') }}"> Logout</a></li>
+                        <li><a href="{{route('admin.admin_account')}}" id="account">Profile</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
     </div>
-
 
     <main id="dashboard-content">
         <section class="title">
@@ -154,41 +127,25 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>Document Number</th>
                             <th>Document Name</th>
                             <th>Description</th>
                             <th>Date Uploaded</th>
-                            <th>Employee Name</th>
-                            <th>Category</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Uploaded By</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Official Memorandum No. 84</td>
-                            <td>In commemoration of the founding anniversary of the company on Wednesday, April 1, 2024.</td>
-                            <td>May 19, 2024</td>
-                            <td>Marie Lee</td>
-                            <td>Memorandum</td>
-                            <td class="approved">Approved</td>
-                            <td class="action-buttons">
-                                <i class="bi bi-eye-fill" title="View"></i>
-                                <i class="bi bi-pencil-square" title="Edit"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Official Memorandum No. 90</td>
-                            <td>Lorem Ipsum</td>
-                            <td>May 22, 2024</td>
-                            <td>Jose Manalo</td>
-                            <td>Memorandum</td>
-                            <td class="pending">Pending</td>
-                            <td class="action-buttons">
-                                <i class="bi bi-eye-fill" title="View"></a></i>
-                                <i class="bi bi-pencil-square" title="Edit"></i>
-                            </td>
-                        </tr>
-                        <!-- Additional rows can be added here -->
+                        @foreach($documents as $document)
+                            @if($document->document_status == 'approved')
+                                <tr>
+                                    <td>{{ $document->document_number }}</td>
+                                    <td>{{ $document->document_name }}</td>
+                                    <td>{{ $document->description }}</td>
+                                    <td>{{ $document->upload_date }}</td>
+                                    <td>{{ $document->uploaded_by }}</td>
+                                </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -113,7 +113,7 @@ header {
     height: 40px;
     border-radius: 8px;
     transition: background-color 0.3s ease;
-    background-color: #e0e0e0;
+    /* background-color: #e0e0e0; */
 
 }
 

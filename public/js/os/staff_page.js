@@ -17,13 +17,14 @@ document.addEventListener("DOMContentLoaded", function () {
         dropdownToggle.querySelector("i.bi-chevron-right").classList.remove("more-dropdown-active");
     });
 
+
     // Close the extra sidebar when the close icon is clicked
     closeIcon.addEventListener("click", function () {
         extraSidebar.classList.remove("active");
         iconContainers.forEach((icon) => icon.classList.remove("active"));
     });
 
-   // Add click event to icons to toggle extra-sidebar and close dropdowns
+    // Add click event to icons to toggle extra-sidebar and close dropdowns
     iconContainers.forEach((container) => {
         container.addEventListener("click", function () {
             extraSidebar.classList.toggle("active");

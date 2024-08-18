@@ -60,43 +60,39 @@
         </div>
     </nav>
 
-    <div class="extra-sidebar" id="home">
+    <div class="extra-sidebar" id="sidebar">
         <div class="sidebar-content">
             <div class="sidebar-title">
                 <h3>DASHBOARD</h3>
                 <i class="bi bi-text-right"></i>
             </div>
-            <!--
-            <div class="search-container">
-                <input type="text" id="sidebar-search" placeholder="Search">
-                <i class="bi bi-search"></i>
-            </div>
-            -->
             <ul>
                 <li><a href="{{ route('home.office_staff') }}" id="home">Home</a></li>
-
-                <li><a href="{{ route('office_staff.os_dashboard') }}">Digitized Report</a></li>
+                <li><a href="{{ route('office_staff.os_dashboard') }}" id="report">Digitized Report</a></li>
                 <li>
-                    <a href="#" class="more-dropdown-toggle">Digitized Documents <i class="bi bi-chevron-right"></i></a>
+                    <a href="#" class="dropdown-toggle" id="digitized">Digitized Documents <i class="bi bi-chevron-right"></i></a>
+                    
                     <ul class="more-dropdown-menu">
-                        <li><a href="{{ route('office_staff.documents.memorandum') }}"><i class="bi bi-card-heading" id="memo-icon"></i> Memorandum</a></li>
-                        <li><a href="staff_admin_orders.html">Administrative Order</a></li>
-                        <li><a href="staff_mrsp.html"><i class="bi bi-calendar-event-fill"></i> Monthly Report Service Personnel</a></li>
-                        <li><a href="staff_cms.html"><i class="bi bi-receipt-cutoff"></i> Claim Monitoring Sheet</a></li>
-                        <li><a href="staff_audit.html"><i class="bi bi-credit-card-2-front-fill"></i> Audited Documents</a></li>
+                        <li><a href="{{ route ('office_staff.documents.memorandum') }}" id="memorandum">Memorandum</a></li>
+                        <li><a href="staff_admin_orders.html" id="admin_order">Administrative Order</a></li>
+                        <li><a href="staff_mrsp.html" id="mrsp">Monthly Report Service Personnel</a></li>
+                        <li><a href="staff_cms.html" id="cms">Claim Monitoring Sheet</a></li>
+                        <li><a href="staff_audit.html" id="audit">Audited Documents</a></li>
                     </ul>
+
                 </li>
+                
             </ul>
-            
             <ul>
-                <li><a href="{{ route('office_staff.os_notification') }}">Notifications</a></li>
-                <li><a href="{{ route('office_staff.os_upload_document') }}">Upload</a></li>
+                <li><a href="{{ route ('office_staff.os_notification') }}" id="announcements-icon">Notifications</a></li>
+                <li><a href="{{ route ('office_staff.os_upload_document') }}" id="upload">Upload</a></li>
                 <li><a href="{{ route('office_staff.documents.os_all_docs') }}" id="search">Search</a></li>
+                
             </ul>
             <div class="profile-content">
                 <ul>
-                    <li><a href="{{ route('logout') }}"><i class="bi bi-door-open-fill"></i> Logout</a></li>
-                    <li><a href="{{ route('profile') }}">Profile</a></li>
+                    <li><a href="{{ route('logout') }}">Logout</a></li>
+                    <li><a href="{{ route ('office_staff.os_account') }}" id="account">Profile</a></li>
                 </ul>
             </div>
         </div>
@@ -115,7 +111,7 @@
                 <img src="{{ asset ('images/document-logo.png') }}" alt="Documents Logo">
                 <p>See Documents Here</p>
             </div>
-            <div class="container square" id="upload-shortcut">
+            <div class="container square" id="upload-shortcut" href="{{ route('office_staff.os_upload_document') }}">
                 <img src="{{ asset ('images/upload-logo.png') }}" alt="Upload Logo">
                 <p>Upload Documents Here</p>
             </div>
@@ -162,119 +158,42 @@
             </div>
         </section>
 
-        <section class="dashboard-overview">
-            <div class="documents">
-                <div class="documents-content">
-                    <div class="document-card">
-                        <iframe src="{{ Storage::url('CERTIFICATION.pdf') }}" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="staff_view.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="staff_edit.html">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
+    <section class="dashboard-overview">
+    <div class="documents">
+        @foreach($documents as $document)
+        <div class="documents-content">
+            <div class="document-card">
+                <iframe src="{{ Storage::url($document->file_path) }}" width="100%" height="200px"></iframe>
+            </div>                        
+            <div class="content">
+                <div class="row">
+                    <div class="column left">
+                        <h3>{{ $document->document_name }}</h3>
+                        <p>{{ $document->description }}</p>
+                    </div>
+                    <div class="column right">
+                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
+                        <div class="dropdown-more">
+                            <a href="{{ route('view-document', $document->id) }}">View</a>
+                            <a href="{{ route('download-document', $document->id) }}">Download</a>
+                            <a href="{{ route('edit-document', $document->id) }}">Edit</a>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="documents">
-                <div class="documents-content">
-                    <div class="document-card">
-                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="staff_view.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="staff_edit.html">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
-                        </div>
-                    </div>
+                <div class="upload-date">
+                    <p>Date Uploaded: {{ $document->upload_date }}</p>
                 </div>
             </div>
-            <div class="documents">
-                <div class="documents-content">
-                    <div class="document-card">
-                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="staff_view.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="staff_edit.html">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="documents">
-                <div class="documents-content">
-                    <div class="document-card">
-                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="view-document.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="edit-document.html">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Repeat the document block for more entries -->
-        </section>
-    </main>
+        </div>
+        @endforeach
+    </div>
+</section>
+</main>
 
     <footer>
         <div class="footer-content">
             <p>&copy; DATOS 2024 Bicol University. All Rights Reserved.</p>
-            <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p>
+            <!-- <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p> -->
         </div>
     </footer>
 

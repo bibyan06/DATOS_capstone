@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="{{ asset('css/os/staff_page.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
-    
+   
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+   
     <!-- JavaScript Files -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -165,8 +168,7 @@
                     ondragleave="handleDragLeave(event)">
                     <i class="bi bi-cloud-arrow-up-fill upload-icon"></i>
                     <p>Select File or Drag and drop files to upload</p>
-                    <p>or</p>
-                    <input type="file" id="file-input" name="file_upload[]" multiple hidden accept=".pdf">
+                    <input type="file" id="file-input" name="file" hidden accept=".pdf" required>
                     <button class="select-files" onclick="document.getElementById('file-input').click()">Select File</button>
                     <p>*Supported format: PDF</p>
                     <h6>Maximum file size: 5MB</h6>
@@ -177,175 +179,184 @@
                     </div>
                 </div>
                 <div class="form-section">
-                <form id="upload-form" action="{{ route('office_staff.os_upload_document') }}" method="POST" enctype="multipart/form-data">
+                     <!-- Display error messages here -->
+                     @if ($errors->any())
+                        <div class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    @if (session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
+
+                    @if (session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+
+                <form id="uploadDocumentForm" action="{{route('office_staff.os_upload_document')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="document-number">Document Number</label>
-                        <input type="number" id="document-number" name="document_number" value="{{ old('document_number') }}" required>
+                        <input type="text" id="document-number" name="document_number" class="form-control" placeholder="Enter Document Number">
                     </div>
                     <div class="form-group">
                         <label for="document-name">Document Name</label>
-                        <input type="text" id="document-name" name="document_name" value="{{ old('document_name') }}" required>
+                        <input type="text" id="document-name" name="document_name" class="form-control" placeholder="Enter Document Name">
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea id="description" name="description" required>{{ old('description') }}</textarea>
+                        <textarea id="description" name="description" class="form-control" rows="3" placeholder="Enter Document Description"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="category">Category</label>
-                        <select id="category" name="category_id" required>
-                            <option value="">Select Category</option>
-                            <option value="1">Memorandum</option>
-                            <option value="2">Audited Disbursement Voucher</option>
-                            <option value="3">Claim Monitoring Sheet</option>
-                            <option value="4">Monthly Report Service of Personnel</option>
+                        <label for="category_name">Category</label>
+                        <select name="category_name" id="category_name" class="form-control">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->category_name }}">{{ $category->category_name }}</option>
+                            @endforeach
                         </select>
-                        <input type="text" id="other-category" name="other-category" placeholder="Please specify other category">
+                        <!-- @error('category_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror -->
                     </div>
+
                     <div class="form-group">
-                        <label for="document-tags">Document Tags</label>
-                        <input type="text" id="document-tags" name="document_tags" required>
+                        <label for="tags">Tags</label>
+                        <input type="text" id="tags" name="tags" class="form-control" placeholder="Enter Tags (comma-separated)">
                     </div>
-                    <button type="submit" class="submit-btn">Upload Document</button>
+
+                    <button type="submit" class="submit-btn">Upload Document</button>                
                 </form>
-
-            </div>
-        </div>
-    </main>
-
-    <!-- Success Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="successModalLabel">Success</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Your document has been uploaded successfully.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
     <script src="{{ asset('js/os/staff_upload.js') }}"></script>
     <script src="{{ asset ('js/os/staff_page.js') }}"></script>
 
     <script>
-        $(document).ready(function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const successParam = urlParams.get('success');
+    document.getElementById('uploadDocumentForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
 
-            if (successParam === 'true') {
-                // Show the success modal
-                $('#successModal').modal('show');
+        const fileInput = document.getElementById('file-input');
+        const file = fileInput.files[0];
 
-                // Remove the 'success' parameter to prevent the modal from showing on page reload
-                history.replaceState({}, document.title, window.location.pathname);
-            }
+        if (file && file.type === 'application/pdf' && file.size <= 5242880) { // 5MB = 5242880 bytes
+            var formData = new FormData(this);
 
-            $('#file-input').on('change', function () {
-                const files = $(this)[0].files;
-                const fileList = $('#file-list');
+            // Explicitly append the file to the FormData object
+            formData.append('file', file);
 
-                fileList.empty(); // Clear previous list
-
-                for (let i = 0; i < files.length; i++) {
-                    const fileName = files[i].name;
-                    const fileItem = `<li>${fileName}</li>`;
-                    fileList.append(fileItem);
+            fetch("{{ route('office_staff.os_upload_document') }}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 }
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const fileInput = document.getElementById('file-input');
-            const fileList = document.getElementById('file-list');
-            const allowedTypes = ['application/pdf'];
-            const maxSize = 5 * 1024 * 1024; // 5MB in bytes
-
-            function handleFileSelect(files) {
-                fileList.innerHTML = ''; // Clear the file list
-
-                files.forEach((file, index) => {
-                    console.log('Processing file:', file); // Debug: check each file
-                    if (!allowedTypes.includes(file.type)) {
-                        Swal.fire('Error', 'Only PDF files are allowed.', 'error');
-                        return;
-                    }
-
-                    if (file.size > maxSize) {
-                        Swal.fire('Error', 'File size must be less than 5MB.', 'error');
-                        return;
-                    }
-
-                    const listItem = document.createElement('li');
-                    listItem.classList.add('standby-file');
-                    listItem.innerHTML = `
-                        <i class="bi bi-file-earmark-pdf-fill"></i>
-                        <span>${file.name}</span>
-                        <button class="delete-button" data-index="${index}">X</button>
-                    `;
-                    fileList.appendChild(listItem);
-                });
-            }
-
-            function handleFileDrop(event) {
-                event.preventDefault(); // Prevent the default behavior (open in new tab)
-                document.getElementById('upload-area').classList.remove('drag-over');
-                const files = Array.from(event.dataTransfer.files);
-                handleFileSelect(files);
-            }
-
-            function handleFileInputChange(event) {
-                const files = Array.from(event.target.files);
-                handleFileSelect(files);
-            }
-
-            function handleDragOver(event) {
-                event.preventDefault(); // Prevent the default behavior
-                event.stopPropagation(); // Stop the event from propagating further
-                document.getElementById('upload-area').classList.add('drag-over');
-            }
-
-            function handleDragLeave(event) {
-                event.preventDefault(); // Prevent the default behavior
-                document.getElementById('upload-area').classList.remove('drag-over');
-            }
-
-            function deleteFile(event) {
-                const index = event.target.getAttribute('data-index');
-                const dataTransfer = new DataTransfer();
-                const files = Array.from(fileInput.files);
-
-                files.forEach((file, i) => {
-                    if (i != index) {
-                        dataTransfer.items.add(file);
-                    }
-                });
-
-                fileInput.files = dataTransfer.files;
-                handleFileSelect(dataTransfer.files);
-            }
-
-            document.getElementById('upload-area').addEventListener('drop', handleFileDrop);
-            document.getElementById('upload-area').addEventListener('dragover', handleDragOver);
-            document.getElementById('upload-area').addEventListener('dragleave', handleDragLeave);
-            fileInput.addEventListener('change', handleFileInputChange);
-
-            // Use event delegation to handle delete button clicks
-            fileList.addEventListener('click', function (event) {
-                if (event.target.classList.contains('delete-button')) {
-                    deleteFile(event);
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: data.message,
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload(); // Reload the page to reset the form
+                    });
+                } else if (data.error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error,
+                        confirmButtonText: 'OK'
+                    });
                 }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong. Please try again.',
+                    confirmButtonText: 'OK'
+                });
             });
-        });
- 
-    </script>
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid file',
+                text: 'Please upload a valid PDF file of up to 5MB.',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+
+
+    function handleDrop(event) {
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+        handleFiles(files);
+    }
+
+    function handleDragOver(event) {
+        event.preventDefault();
+        document.getElementById('upload-area').classList.add('drag-over');
+    }
+
+    function handleDragLeave(event) {
+        document.getElementById('upload-area').classList.remove('drag-over');
+    }
+
+    function handleFiles(files) {
+    const fileList = document.getElementById('file-list');
+    const maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        // Validate the file type (must be PDF)
+        if (file.type !== "application/pdf") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid File Type',
+                text: 'Only PDF files are allowed!',
+                confirmButtonText: 'OK'
+            });
+            continue;
+        }
+
+        // Validate the file size (must be less than 5MB)
+        if (file.size > maxFileSize) {
+            Swal.fire({
+                icon: 'error',
+                title: 'File Too Large',
+                text: 'The file size must not exceed 5MB!',
+                confirmButtonText: 'OK'
+            });
+            continue;
+        }
+
+        // Display the file in the uploaded files section
+        const listItem = document.createElement('li');
+        listItem.className = 'standby-file';
+        listItem.innerHTML = `
+            <i class="bi bi-file-earmark-pdf-fill"></i>
+            <span>${file.name}</span>
+            <button class="delete-button" onclick="removeFile(this)">&times;</button>
+        `;
+        fileList.appendChild(listItem);
+    }
+}
+
+    document.getElementById('file-input').addEventListener('change', (event) => {
+        handleFiles(event.target.files);
+    });
+</script>
+
 </body>
 </html>

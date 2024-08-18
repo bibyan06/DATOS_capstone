@@ -62,43 +62,37 @@
         </div>
     </nav>
 
-    <div class="extra-sidebar" id="home">
+    <div class="extra-sidebar" id="sidebar">
         <div class="sidebar-content">
             <div class="sidebar-title">
                 <h3>DASHBOARD</h3>
                 <i class="bi bi-text-right"></i>
             </div>
-            <!--
-            <div class="search-container">
-                <input type="text" id="sidebar-search" placeholder="Search">
-                <i class="bi bi-search"></i>
-            </div>
-            -->
             <ul>
                 <li><a href="{{ route('home.office_staff') }}" id="home">Home</a></li>
-
-                <li><a href="{{ route('office_staff.os_dashboard') }}">Digitized Report</a></li>
+                <li><a href="{{ route('office_staff.os_dashboard') }}" id="report">Digitized Report</a></li>
                 <li>
-                    <a href="#" class="more-dropdown-toggle">Digitized Documents <i class="bi bi-chevron-right"></i></a>
+                    <a href="#" class="dropdown-toggle" id="digitized">Digitized Documents <i class="bi bi-chevron-right"></i></a>
+                    
                     <ul class="more-dropdown-menu">
-                        <li><a href="{{ route('office_staff.documents.memorandum') }}"><i class="bi bi-card-heading" id="memo-icon"></i> Memorandum</a></li>
-                        <li><a href="staff_admin_orders.html">Administrative Order</a></li>
-                        <li><a href="staff_mrsp.html"><i class="bi bi-calendar-event-fill"></i> Monthly Report Service Personnel</a></li>
-                        <li><a href="staff_cms.html"><i class="bi bi-receipt-cutoff"></i> Claim Monitoring Sheet</a></li>
-                        <li><a href="staff_audit.html"><i class="bi bi-credit-card-2-front-fill"></i> Audited Documents</a></li>
+                        <li><a href="{{ route ('office_staff.documents.memorandum') }}" id="memorandum">Memorandum</a></li>
+                        <li><a href="staff_admin_orders.html" id="admin_order">Administrative Order</a></li>
+                        <li><a href="staff_mrsp.html" id="mrsp">Monthly Report Service Personnel</a></li>
+                        <li><a href="staff_cms.html" id="cms">Claim Monitoring Sheet</a></li>
+                        <li><a href="staff_audit.html" id="audit">Audited Documents</a></li>
                     </ul>
-                </li>
+                </li>            
             </ul>
-            
             <ul>
-                <li><a href="{{ route('office_staff.os_notification') }}">Notifications</a></li>
-                <li><a href="{{ route('office_staff.os_upload_document') }}">Upload</a></li>
+                <li><a href="{{ route ('office_staff.os_notification') }}" id="announcements-icon">Notifications</a></li>
+                <li><a href="{{ route ('office_staff.os_upload_document') }}" id="upload">Upload</a></li>
                 <li><a href="{{ route('office_staff.documents.os_all_docs') }}" id="search">Search</a></li>
+                
             </ul>
             <div class="profile-content">
                 <ul>
-                    <li><a href="{{ route('logout') }}"><i class="bi bi-door-open-fill"></i> Logout</a></li>
-                    <li><a href="{{ route('profile') }}">Profile</a></li>
+                    <li><a href="{{ route('logout') }}">Logout</a></li>
+                    <li><a href="{{ route ('office_staff.os_account') }}" id="account">Profile</a></li>
                 </ul>
             </div>
         </div>

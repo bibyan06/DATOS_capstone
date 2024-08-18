@@ -18,7 +18,7 @@ class AdminController extends Controller
         return view('admin.admin_account');
     }
 
-    public function upload_document()
+    public function admin_upload_document()
     {
         return view('admin.admin_upload_document');
     }

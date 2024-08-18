@@ -98,7 +98,8 @@
             <li>
                 <a href="#" class="pending-dropdown-toggle" id="digitized">Pendings <i class="bi bi-chevron-right"></i></a>
                 <ul class="pending-dropdown">
-                    <li><a href="{{ route ('admin.documents.approved_docs') }}" id="approval">Approval</a></li>
+                    <li><a href="{{ route ('admin.documents.approved_docs') }}" id="approval">Approved</a></li>
+                    <li><a href="{{ route ('admin.documents.review_docs') }}" id="request">Review</a></li>
                     <li><a href="{{ route ('admin.documents.request_docs') }}" id="request">Request</a></li>
                 </ul>
             </li>
@@ -196,7 +197,7 @@
 <footer>
     <div class="footer-content">
         <p>&copy; DATOS 2024 Bicol University. All Rights Reserved.</p>
-        <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p>
+        <!-- <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p> -->
     </div>
 </footer>
 

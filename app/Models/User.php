@@ -105,4 +105,27 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Employee::class, 'employee_id', 'employee_id');
     }
+
+    public function getRoleAttribute()
+    {
+        if (substr($this->employee_id, 0, 2) === '01') {
+            return '01';  // Admin
+        } elseif (substr($this->employee_id, 0, 2) === '02') {
+            return '02';  // Office staff
+        } elseif (substr($this->employee_id, 0, 2) === '03') {
+            return '03';  // Dean
+        }
+        return 'user';
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function getRoleNameAttribute()
+    {
+        return $this->role ? $this->role->name : 'user';
+    }
+
 }

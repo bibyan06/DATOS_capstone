@@ -61,12 +61,12 @@
                 <h3>DASHBOARD</h3>
                 <i class="bi bi-text-right"></i>
             </div>
-            <!--
-            <div class="search-container">
-                <input type="text" id="sidebar-search" placeholder="Search">
-                <i class="bi bi-search"></i>
-            </div>
-            -->
+                <!--
+                <div class="search-container">
+                    <input type="text" id="sidebar-search" placeholder="Search">
+                    <i class="bi bi-search"></i>
+                </div>
+                -->
             <ul>
                 <li><a href="{{ route('home.admin') }}" id="home">Home</a></li>
 
@@ -82,34 +82,34 @@
                     </ul>
                 </li>
             </ul>
-            
+                
             <ul>
                 <li>
                     <a href="#" class="emp-dropdown-toggle" id="digitized">Employee <i class="bi bi-chevron-right"></i></a>
-                    <ul class="emp-dropdown-menu">
-                        <li><a href="{{ route ('admin.office_staff') }}" id="memorandum"> Office Staff</a></li>
-                        <li><a href="{{ route ('admin.college_dean') }}" id="admin_order">College Dean</a></li>
-                    </ul>
+                        <ul class="emp-dropdown-menu">
+                            <li><a href="{{ route ('admin.office_staff') }}" id="memorandum"> Office Staff</a></li>
+                            <li><a href="{{ route ('admin.college_dean') }}" id="admin_order">College Dean</a></li>
+                        </ul>
                 </li>
                 <li>
                     <a href="#" class="pending-dropdown-toggle" id="digitized">Pendings <i class="bi bi-chevron-right"></i></a>
                     <ul class="pending-dropdown">
-                        <li><a href="{{ route ('admin.documents.approved_docs') }}" id="approval">Approval</a></li>
+                        <li><a href="{{ route ('admin.documents.approved_docs') }}" id="approval">Approved</a></li>
+                        <li><a href="{{ route ('admin.documents.review_docs') }}" id="request">Review</a></li>
                         <li><a href="{{ route ('admin.documents.request_docs') }}" id="request">Request</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ route ('admin.documents.sent_docs') }}" id="announcements-icon"> Notifications</a></li>
+                <li><a href="admin_notification.html" id="announcements-icon"> Notifications</a></li>
                 <li><a href="{{ route('admin.admin_upload_document') }}" id="upload">Upload</a></li>
-                <li><a href="admin_all_documents.html" id="search">Search</a></li>
+                <li><a href="search.html" id="search">Search</a></li>
             </ul>
-            
-            <div class="profile-content">
-                <ul>
-                    <li><a href="{{ route('logout') }}"> Logout</a></li>
-                    <li><a href="{{route('admin.admin_account')}}" id="account">Profile</a></li>
-                </ul>
+                <div class="profile-content">
+                    <ul>
+                        <li><a href="{{ route('logout') }}"> Logout</a></li>
+                        <li><a href="{{route('admin.admin_account')}}" id="account">Profile</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
     </div>
 
         

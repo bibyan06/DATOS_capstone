@@ -137,8 +137,8 @@
                         </div>
                     </div>
                     <div class="form-section">
-                        <form>
-                            <div class="form-group">
+                    <form action="{{ route('admin.documents.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf                            <div class="form-group">
                                 <label for="document-number">Document Number</label>
                                 <input type="text" id="document-number" name="document-number" required>
                             </div>

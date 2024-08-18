@@ -6,152 +6,114 @@ use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException; // Import the correct exception class
 
 class DocumentController extends Controller
 {
-    public function uploadDocument(Request $request)
+    
+    public function create()
     {
-        \Log::info('Upload Document Method Called');
-        
-        // Define allowed categories
-        $allowedCategories = ['1', '2', '3', '4']; // Example IDs
+        $categories = DB::table('category')->get(); // Fetch all categories from the 'category' table
+        return view('office_staff.os_upload_document', compact('categories'));
+    }
 
-        // Validate the form data
-        $request->validate([
-            'document_number' => 'required|numeric',
-            'document_name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'category_id' => ['required', function ($attribute, $value, $fail) use ($allowedCategories) {
-                if (!in_array($value, $allowedCategories)) {
-                    $fail('The selected category is invalid.');
-                }
-            }],
-            'file_upload' => 'required|array',
-            'file_upload.*' => 'file|mimes:pdf|max:1024', 
-            'document_tags' => 'nullable|string',
-        ]);
+    public function store(Request $request)
+    {
+        Log::info('Upload Document Method Called');
 
-        \Log::info('Request Data:', $request->all());
+        $allowedCategories = ['Memorandum', 'Audited Disbursement Voucher', 'Claim Monitoring Sheet', 
+                                'Monthly Report Service of Personnel'];
 
-        // Handle the file upload
-        $files = $request->file('file_upload');
-        $uploadedDocuments = [];
+        try {
+            $validatedData = $request->validate([
+                'document_number' => 'required|string',
+                'document_name' => 'required|string',
+                'description' => 'nullable|string',
+                'category_name' => 'required|exists:category,category_name',
+                'file' => 'required|mimes:pdf|max:5120',
+                'document_tags' => 'nullable|string',
+            ]);
 
-        foreach ($files as $file) {
-            $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
-            $filePath = $file->storeAs('documents', $fileName, 'public');
-            \Log::info('Uploaded File Path:', ['file_path' => $filePath]);
+            Log::info('Validation passed:', $validatedData);
 
-            // Save the document record to the database
-            $document = new Document();
-            $document->document_number = $request->document_number;
-            $document->document_name = $request->document_name;
-            $document->description = $request->description;
-            $document->category_id = $request->category_id;
-            $document->file_path = $filePath;
-            $document->document_status = 'pending'; // Set status to pending initially
-            $document->upload_date = now();
-            $document->uploaded_by = Auth::id();
+            if ($request->hasFile('file')) {
+                $path = $request->file('file')->store('documents');
+                Log::info('File uploaded to: ' . $path);
 
-            if ($document->save()) {
-                \Log::info('Document saved successfully:', ['document' => $document]);
+                $document = new Document();
+                $document->document_number = $validatedData['document_number'];
+                $document->document_name = $validatedData['document_name'];
+                $document->description = $validatedData['description'] ?? null;
+                $document->category_name = $validatedData['category_name'];
+                $document->file_path = $path;
+                $document->document_status = 'pending';
+                $document->upload_date = now();
+                $authenticatedUser = Auth::user();
+                if ($authenticatedUser) {
+                    $document->uploaded_by = $authenticatedUser->first_name . ' ' . $authenticatedUser->last_name;
+                } else {
+                    $document->uploaded_by = 'Unknown User';
+                }                DB::transaction(function () use ($document) {
+                    $document->save();
+                });
 
-                // Handle tags
-                if ($request->document_tags) {
-                    $tags = explode(',', $request->document_tags);
-                    foreach ($tags as $tagName) {
-                        $tag = Tag::firstOrCreate(['tag_name' => trim($tagName)]);
-                        $document->tags()->attach($tag);
+                Log::info('Document saved successfully with ID: ' . $document->id);
+
+                if ($request->has('document_tags')) {
+                    $tags = explode(',', $request->input('document_tags'));
+                    foreach ($tags as $tag) {
+                        $tagModel = Tag::firstOrCreate(['tag_name' => trim($tag)]);
+                        $document->tags()->attach($tagModel);
                     }
                 }
 
-                $uploadedDocuments[] = $document;
-            } else {
-                \Log::error('Failed to save document.');
                 return response()->json([
-                    'success' => false,
-                    'message' => 'File upload failed.'
-                ], 400);
+                    'message' => 'Document uploaded and pending review.'
+                ], 200);
+
+            } else {
+                Log::warning('No file was uploaded with the request.');
+                return response()->json(['error' => 'Please upload a file.'], 422);
             }
+
+        } catch (ValidationException $e) {
+            Log::error('Validation failed', ['errors' => $e->errors()]);
+            return response()->json(['error' => 'Validation failed.', 'details' => $e->errors()], 422);
+
+        } catch (\Exception $e) {
+            Log::error('Error saving document: ' . $e->getMessage());
+            return response()->json(['error' => 'Document upload failed.'], 500);
         }
-
-        // Return success response
-        return response()->json([
-            'success' => true,
-            'message' => 'Document uploaded successfully.',
-            'documents' => $uploadedDocuments
-        ]);
-    }
-    public function showUploadForm()
-    {
-        return view('admin.admin_upload_document');
-    }
-    
-    // public function store(Request $request)
-    // {
-    //     // Validate and handle file upload
-    //     $request->validate([
-    //         'document_name' => 'required|string',
-    //         'description' => 'nullable|string',
-    //         'category_id' => 'required|integer',
-    //         'file' => 'required|file|mimes:pdf|max:5120',
-    //     ]);
-
-    //     $file = $request->file('file');
-    //     $filePath = $file->store('documents'); // Store the file
-
-    //     Document::create([
-    //         'document_name' => $request->input('document_name'),
-    //         'description' => $request->input('description'),
-    //         'category_id' => $request->input('category_id'),
-    //         'file_path' => $filePath,
-    //         'document_status' => 'pending', // Initially mark as pending
-    //         'upload_date' => now(),
-    //         'uploaded_by' => auth()->user()->id,
-    //     ]);
-
-    //     return redirect()->route('admin.documents.review_docs')->with('success', 'Document uploaded and pending review.');
-    // }
-
-    public function showReviewDocs()
-    {
-        // Fetch documents with 'pending' status
-        $documents = Document::where('document_status', 'pending')->get();
-        return view('admin.documents.review_docs', compact('documents'));
     }
 
-    public function reviewDocument(Request $request, $id)
+
+    public function approve($id)
     {
         $document = Document::findOrFail($id);
-        $action = $request->input('action');
-
-        if ($action == 'approve') {
-            $document->document_status = 'approved';
-        } elseif ($action == 'decline') {
-            $document->document_status = 'declined';
-        } else {
-            // Handle invalid action case
-            return redirect()->route('admin.documents.review_docs')->with('error', 'Invalid action.');
-        }
-
+        $document->document_status = 'approved';
         $document->save();
 
-        // Redirect based on the action
-        if ($document->document_status == 'approved') {
-            return redirect()->route('admin.documents.approved_docs')->with('success', 'Document approved successfully.');
-        } else {
-            return redirect()->route('admin.documents.review_docs')->with('success', 'Document declined successfully.');
-        }
+        return redirect()->route('documents.review_docs')
+            ->with('success', 'Document approved successfully.');
     }
 
-    public function showApprovedDocs()
+    public function decline($id)
     {
-        // Fetch documents with 'approved' status
+        $document = Document::findOrFail($id);
+        $document->document_status = 'declined';
+        $document->save();
+
+        return redirect()->route('documents.review_docs')
+            ->with('error', 'Document declined.');
+    }
+
+    public function showRecentDocuments()
+    {
         $documents = Document::where('document_status', 'approved')->get();
-        return view('admin.documents.approved_docs', compact('documents'));
+        return view('your_view_name', compact('documents'));
     }
 
 }
