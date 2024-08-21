@@ -94,6 +94,7 @@
                     <a href="#" class="pending-dropdown-toggle" id="digitized">Pendings <i class="bi bi-chevron-right"></i></a>
                     <ul class="pending-dropdown">
                         <li><a href="{{ route ('admin.documents.approved_docs') }}" id="approval">Approved</a></li>
+                        <li><a href="{{ route ('admin.documents.declined_docs') }}" id="decline">Declined</a></li>
                         <li><a href="{{ route ('admin.documents.review_docs') }}" id="request">Review</a></li>
                         <li><a href="{{ route ('admin.documents.request_docs') }}" id="request">Request</a></li>
                     </ul>
@@ -133,7 +134,7 @@
                                 <th>Category</th>
                                 <th>Status</th>
                                 <th>Date Uploaded</th>
-                                <th>Employee Name</th>
+                                <th>Uploaded by</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -149,9 +150,16 @@
                                         <td>{{ $document->upload_date }}</td>
                                         <td>{{ $document->uploaded_by }}</td>
                                         <td>
-                                            <a href="{{ route('documents.approve', $document->document_id) }}" class="btn btn-success">Approve</a>
-                                            <a href="{{ route('documents.decline', $document->document_id) }}" class="btn btn-danger">Decline</a>
-                                        </td>
+                                        <form action="{{ route('admin.documents.approve', $document->document_id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success">Approve</button>
+                                        </form>
+
+                                        <form action="{{ route('admin.documents.decline', $document->document_id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Decline</button>
+                                        </form>                                        
+                                    </td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -164,13 +172,6 @@
             </div>
         </main>
     </div>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; DATOS 2024 Bicol University. All Rights Reserved.</p>
-            <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p>
-        </div>
-    </footer>
 
     <script src="{{ asset('js/approved.js') }}"></script>
     <script src="{{ asset ('js/admin_page.js') }}"></script>

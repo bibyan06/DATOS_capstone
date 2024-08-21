@@ -80,13 +80,14 @@ Route::get('/office_staff/documents/edit_docs', [OfficeStaffController::class, '
 // Route for admin side 
 Route::get('/admin/admin_dashboard', [AdminController::class, 'dashboard'])->name('admin.admin_dashboard');
 Route::get('/admin/admin_account', [AdminController::class, 'admin_account'])->name('admin.admin_account');
-Route::post('/admin/admin_upload_document', [AdminController::class, 'admin_upload_document'])->name('admin.admin_upload_document');
+Route::get('/admin/admin_upload_document', [AdminController::class, 'admin_upload_document'])->name('admin.admin_upload_document');
 Route::get('/admin/admin_view_document', [AdminController::class, 'view_document'])->name('admin.admin_view_document');
 Route::get('/admin/college_dean', [AdminController::class, 'college_dean'])->name('admin.college_dean');
 Route::get('/admin/office_staff', [AdminController::class, 'office_staff'])->name('admin.office_staff');
 
 Route::get('/admin/documents/review_docs', [AdminController::class, 'review_docs'])->name('admin.documents.review_docs');
 Route::get('/admin/documents/approved_docs', [AdminController::class, 'approved_docs'])->name('admin.documents.approved_docs');
+Route::get('/admin/documents/declined_docs', [AdminController::class, 'declined_docs'])->name('admin.documents.declined_docs');
 Route::get('/admin/documents/edit_docs', [AdminController::class, 'edit_docs'])->name('admin.documents.edit_docs');
 Route::get('/admin/documents/memorandum', [AdminController::class, 'memorandum'])->name('admin.documents.memorandum');
 Route::get('/admin/documents/request_docs', [AdminController::class, 'request_docs'])->name('admin.documents.request_docs');
@@ -116,11 +117,22 @@ Route::get('/office_staff/os_upload_document', [DocumentController::class, 'crea
 // Route to handle the form submission (uploading the document)
 Route::post('/office_staff/os_upload_document', [DocumentController::class, 'store']);
 
+Route::get('/admin/admin_upload_document', [DocumentController::class, 'create_admin'])->name('admin.admin_upload_document');
+
+// Route to handle the form submission (uploading the document)
+Route::post('/admin/admin_upload_document', [DocumentController::class, 'store']);
+
+
+
 // Route to approve a document
-Route::post('/admin/documents/approve_docs/{id}', [DocumentController::class, 'approve'])->name('documents.approve');
+Route::post('/admin/documents/approve_docs/{id}', [DocumentController::class, 'approve'])->name('admin.documents.approve');
+Route::get('/admin/documents/approved_docs', [DocumentController::class, 'showApprovedDocuments'])->name('admin.documents.approved_docs');
+Route::get('/home/office_staff/documents-overview', [DocumentController::class, 'showOfficeStaffDocumentsOverview'])->name('home.office_staff.documents_overview');
+Route::get('/home/admin/documents-overview', [DocumentController::class, 'showAdminDocumentsOverview'])->name('home.admin.documents_overview');
+
 
 // Route to decline a document
-Route::post('/admin/documents/decline_docs/{id}', [DocumentController::class, 'decline'])->name('documents.decline');
+Route::post('/admin/documents/declined_docs/{id}', [DocumentController::class, 'decline'])->name('admin.documents.decline');
 
 
 // Route for logout

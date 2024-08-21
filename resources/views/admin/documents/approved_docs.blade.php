@@ -94,6 +94,7 @@
                     <a href="#" class="pending-dropdown-toggle" id="digitized">Pendings <i class="bi bi-chevron-right"></i></a>
                     <ul class="pending-dropdown">
                         <li><a href="{{ route ('admin.documents.approved_docs') }}" id="approval">Approved</a></li>
+                        <li><a href="{{ route ('admin.documents.declined_docs') }}" id="decline">Declined</a></li>
                         <li><a href="{{ route ('admin.documents.review_docs') }}" id="request">Review</a></li>
                         <li><a href="{{ route ('admin.documents.request_docs') }}" id="request">Request</a></li>
                     </ul>
@@ -114,7 +115,7 @@
     <main id="dashboard-content">
         <section class="title">
             <div class="title-content">
-                <h3>Approval Documents</h3>
+                <h3>Approved Documents</h3>
                 <div class="date-time">
                     <i class="bi bi-calendar2-week-fill"></i>
                     <p id="current-date-time"></p>
@@ -124,40 +125,38 @@
 
         <div id="dashboard-section">
             <div class="dashboard-container">
-                <table>
-                    <thead>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Document Number</th>
+                        <th>Document Name</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Date Uploaded</th>
+                        <th>Uploaded by</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($documents as $document)
                         <tr>
-                            <th>Document Number</th>
-                            <th>Document Name</th>
-                            <th>Description</th>
-                            <th>Date Uploaded</th>
-                            <th>Uploaded By</th>
+                            <td>{{ $document->document_number }}</td>
+                            <td>{{ $document->document_name }}</td>
+                            <td>{{ $document->description }}</td>
+                            <td>{{ $document->category_name }}</td>
+                            <td>{{ $document->document_status }}</td>
+                            <td>{{ $document->upload_date }}</td>
+                            <td>{{ $document->uploaded_by }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($documents as $document)
-                            @if($document->document_status == 'approved')
-                                <tr>
-                                    <td>{{ $document->document_number }}</td>
-                                    <td>{{ $document->document_name }}</td>
-                                    <td>{{ $document->description }}</td>
-                                    <td>{{ $document->upload_date }}</td>
-                                    <td>{{ $document->uploaded_by }}</td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
+                    @endforeach
+                </tbody>
+            </table>
+            @if($documents->isEmpty())
+                <p>No approved documents available.</p>
+            @endif
             </div>
         </div>
     </main>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; DATOS 2024 Bicol University. All Rights Reserved.</p>
-            <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p>
-        </div>
-    </footer>
 
     <script src="{{ asset('js/approved.js') }}"></script>
     <script src="{{ asset ('js/admin_page.js') }}"></script>

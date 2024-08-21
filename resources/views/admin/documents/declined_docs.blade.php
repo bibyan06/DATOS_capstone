@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College Dean View</title>
-    <link rel="stylesheet" href="{{ asset ('css/dean.css') }}">
-    <link rel="stylesheet" href="{{ asset ('css/admin_page.css') }}">
+    <title>Approved Documents</title>
+    <link rel="stylesheet" href="{{ asset('css/approved.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin_page.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 </head>
@@ -50,7 +50,6 @@
                     <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill"></i></div>
                     <div class="icon-container" data-target="#sidebar"><img src="{{ asset ('images/boy-1.png') }}" alt="Profile Icon" class="profile-pic"></div>
                 </div>
-                
             </div>
         </div>
     </nav>
@@ -116,79 +115,51 @@
     <main id="dashboard-content">
         <section class="title">
             <div class="title-content">
-                <h3>College Dean List</h3>
-                <div class="title-container">
-                    
-                    <div class="show-dean">
-                        <h5>Show</h5>
-                        <input type="number" id="entry-number" class="option-text" min="1" value="1">
-                        <h5>Entries</h5>
-                    </div>    
-                    <div class="dean-search-bar">
-                        <input type="text" class="search-text" placeholder="Search College Dean">
-                        <div class="icon"><i class="bi bi-search"></i></div>
-                    </div>
-                    <div class="add-account">
-                        <button type="button" onclick="showPopupForm()" class="btn">Add Account</button>
-                    </div>
-                </div>    
-            </div>
-        </section>         
-            <div id="dashboard-section">
-                <div class="dashboard-container">
-                    
+                <h3>Declined Documents</h3>
+                <div class="date-time">
+                    <i class="bi bi-calendar2-week-fill"></i>
+                    <p id="current-date-time"></p>
                 </div>
             </div>
-            <div id="overlay" class="overlay"></div>
-            <div id="popup-form" class="popup-form">
-                <h2>Add College Dean</h2>
-                <form id="dean-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="last-name">Last Name</label>
-                            <input type="text" id="last-name" name="last-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="first-name">First Name</label>
-                            <input type="text" id="first-name" name="first-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="middle-name">Middle Name</label>
-                            <input type="text" id="middle-name" name="middle-name">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password">
-                        </div>
-                        <div class="form-group">
-                            <label for="employee-id">Employee ID</label>
-                            <input type="text" id="employee-id" name="employee-id">
-                        </div>
-                    </div>
-                    <div class="form-buttons">
-                        <button type="button" id="cancel-btn" onclick="hidePopupForm()">Cancel</button>
-                        <button type="button" id="add-account-btn" onclick="addAccount()">Add Account</button>
-                    </div>
-                </form>
-            </div>
-    </main>
-    <footer>
-        <div class="footer-content">
-            <p>&copy; DATOS 2024 Bicol University. All Rights Reserved.</p>
-            <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p>
-        </div>
-    </footer>
+        </section>
 
+        <div id="dashboard-section">
+            <div class="dashboard-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Document Number</th>
+                        <th>Document Name</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Date Uploaded</th>
+                        <th>Uploaded by</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($documents as $document)
+                        <tr>
+                            <td>{{ $document->document_number }}</td>
+                            <td>{{ $document->document_name }}</td>
+                            <td>{{ $document->description }}</td>
+                            <td>{{ $document->category_name }}</td>
+                            <td>{{ $document->document_status }}</td>
+                            <td>{{ $document->upload_date }}</td>
+                            <td>{{ $document->uploaded_by }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @if($documents->isEmpty())
+                <p>No approved documents available.</p>
+            @endif
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ asset('js/approved.js') }}"></script>
     <script src="{{ asset ('js/admin_page.js') }}"></script>
-    <script src="{{ asset ('js/college_dean.js') }}"></script>
-    
+
 </body>
 </html>

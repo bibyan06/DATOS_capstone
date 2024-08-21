@@ -52,6 +52,13 @@ class AdminController extends Controller
         return view('admin.documents.approved_docs', compact('documents'));
     }
 
+    public function declined_docs()
+    {
+        // Fetch documents with 'approved' status
+        $documents = Document::where('document_status', 'declined')->get();
+        return view('admin.documents.declined_docs', compact('documents'));
+    }
+
     public function edit_docs()
     {
         return view('admin.documents.edit_docs');

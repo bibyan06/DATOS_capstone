@@ -93,6 +93,7 @@
                 <a href="#" class="pending-dropdown-toggle" id="digitized">Pendings <i class="bi bi-chevron-right"></i></a>
                 <ul class="pending-dropdown">
                     <li><a href="{{ route ('admin.documents.approved_docs') }}" id="approval">Approved</a></li>
+                    <li><a href="{{ route ('admin.documents.declined_docs') }}" id="decline">Declined</a></li>
                     <li><a href="{{ route ('admin.documents.review_docs') }}" id="request">Review</a></li>
                     <li><a href="{{ route ('admin.documents.request_docs') }}" id="request">Request</a></li>
                 </ul>

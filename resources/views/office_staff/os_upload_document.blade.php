@@ -174,10 +174,11 @@
                     <h6>Maximum file size: 5MB</h6>
                 </div>
                     <div class="uploaded-files">
-                        <h4>Uploaded File</h4>
+                        <h4>File Selected</h4>
                         <ul id="file-list"></ul>
                     </div>
                 </div>
+                
                 <div class="form-section">
                      <!-- Display error messages here -->
                      @if ($errors->any())
@@ -232,6 +233,7 @@
                 </div>
             </div>
         </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 

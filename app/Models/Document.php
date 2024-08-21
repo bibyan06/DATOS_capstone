@@ -10,6 +10,8 @@ class Document extends Model
     use HasFactory;
     public $timestamps = false;
 
+    protected $primaryKey = 'document_id'; 
+
     protected $table = 'documents';
     protected $fillable = [
         'document_number',

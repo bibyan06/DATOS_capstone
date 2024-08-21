@@ -92,7 +92,9 @@
                 <li>
                     <a href="#" class="pending-dropdown-toggle" id="digitized">Pendings <i class="bi bi-chevron-right"></i></a>
                     <ul class="pending-dropdown">
-                        <li><a href="{{ route ('admin.documents.approved_docs') }}" id="approval">Approval</a></li>
+                        <li><a href="{{ route ('admin.documents.approved_docs') }}" id="approval">Approved</a></li>
+                        <li><a href="{{ route ('admin.documents.declined_docs') }}" id="decline">Declined</a></li>
+                        <li><a href="{{ route ('admin.documents.review_docs') }}" id="request">Review</a></li>
                         <li><a href="{{ route ('admin.documents.request_docs') }}" id="request">Request</a></li>
                     </ul>
                 </li>
@@ -123,7 +125,7 @@
                 <p>See Documents Here</p>
             </div>
             <div class="container square" id="upload-shortcut">
-                <img src="images/upload-logo.png" alt="Upload Logo">
+                <img src="{{ asset ('images/upload-logo.png') }}" alt="Upload Logo">
                 <p>Upload Documents Here</p>
             </div>
             <div class="container rectangle" id="notifications">
@@ -131,7 +133,7 @@
                 <div class="notification-content">
                     <div class="notification-list">
                         <div class="notification-item">
-                            <img src="images/boy-2.png" alt="Profile Icon" class="profile-icon-notif">
+                            <img src="{{ asset ('images/boy-2.png')}}" alt="Profile Icon" class="profile-icon-notif">
                             <div class="notification-content-item">
                                 <span class="sender-name">DATOS</span>
                                 <span class="document-title">New Memorandum Available</span>
@@ -139,7 +141,7 @@
                             <i class="bi bi-envelope-fill mail-icon"></i>
                         </div>
                         <div class="notification-item">
-                            <img src="images/girl-1.png" alt="Profile Icon" class="profile-icon-notif">
+                            <img src="{{ asset ('images/girl-1.png') }}" alt="Profile Icon" class="profile-icon-notif">
                             <div class="notification-content-item">
                                 <span class="sender-name">DATOS</span>
                                 <span class="document-title">Audited Disbursement Voucher</span>
