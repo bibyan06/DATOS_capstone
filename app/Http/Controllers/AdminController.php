@@ -48,14 +48,14 @@ class AdminController extends Controller
     public function approved_docs()
     {
         // Fetch documents with 'approved' status
-        $documents = Document::where('document_status', 'approved')->get();
+        $documents = Document::where('document_status', 'Approved')->get();
         return view('admin.documents.approved_docs', compact('documents'));
     }
 
     public function declined_docs()
     {
         // Fetch documents with 'approved' status
-        $documents = Document::where('document_status', 'declined')->get();
+        $documents = Document::where('document_status', 'Declined')->get();
         return view('admin.documents.declined_docs', compact('documents'));
     }
 
@@ -104,26 +104,28 @@ class AdminController extends Controller
         $document = Document::findOrFail($id);
         $action = $request->input('action');
 
-        if ($action == 'approve') {
-            $document->document_status = 'approved';
-        } elseif ($action == 'decline') {
-            $document->document_status = 'declined';
+        if ($action == 'Approve') {
+            $document->document_status = 'Approved';
+        } elseif ($action == 'Decline') {
+            $document->document_status = 'Declined';
         }
 
         $document->save();
 
         // Redirect based on the action
-        if ($document->document_status == 'approved') {
+        if ($document->document_status == 'Approved') {
             return redirect()->route('admin.documents.approved_docs')->with('success', 'Document approved successfully.');
         } else {
             return redirect()->route('admin.documents.review_docs')->with('success', 'Document declined successfully.');
         }
     }
 
-    public function showAdminHome()
+    public function adminHome()
     {
-        $user = Auth::user();
-        dd($user); // Debugging line to dump the user data
-        return view('admin', compact('user'));
+        // Fetch the documents from the database
+        $documents = Document::where('document_status', 'Approved')->get();
+
+        // Pass the documents to the view
+        return view('home.admin', compact('documents'));
     }
 }

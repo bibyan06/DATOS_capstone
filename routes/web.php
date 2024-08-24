@@ -12,9 +12,8 @@ use App\Http\Controllers\DeanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\RoleController;
-use App\Http\Middleware\CheckEmployeeId;
-use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 use App\Models\User;
 
 // Redirect the root URL to the login page
@@ -52,7 +51,7 @@ Route::get('/home/admin', function () {
 })->name('home.admin');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('home.admin');
+    Route::get('/home/admin', [HomeController::class, 'adminHome'])->name('home.admin');
     Route::get('/home/office_staff', [HomeController::class, 'officeStaffHome'])->name('home.office_staff');
     Route::get('/home/dean', [HomeController::class, 'deanHome'])->name('home.dean');
 });
@@ -88,7 +87,7 @@ Route::get('/admin/office_staff', [AdminController::class, 'office_staff'])->nam
 Route::get('/admin/documents/review_docs', [AdminController::class, 'review_docs'])->name('admin.documents.review_docs');
 Route::get('/admin/documents/approved_docs', [AdminController::class, 'approved_docs'])->name('admin.documents.approved_docs');
 Route::get('/admin/documents/declined_docs', [AdminController::class, 'declined_docs'])->name('admin.documents.declined_docs');
-Route::get('/admin/documents/edit_docs', [AdminController::class, 'edit_docs'])->name('admin.documents.edit_docs');
+// Route::get('/admin/documents/edit_docs', [AdminController::class, 'edit_docs'])->name('admin.documents.edit_docs');
 Route::get('/admin/documents/memorandum', [AdminController::class, 'memorandum'])->name('admin.documents.memorandum');
 Route::get('/admin/documents/request_docs', [AdminController::class, 'request_docs'])->name('admin.documents.request_docs');
 Route::get('/admin/documents/sent_docs', [AdminController::class, 'sent_docs'])->name('admin.documents.sent_docs');
@@ -127,13 +126,28 @@ Route::post('/admin/admin_upload_document', [DocumentController::class, 'store']
 // Route to approve a document
 Route::post('/admin/documents/approve_docs/{id}', [DocumentController::class, 'approve'])->name('admin.documents.approve');
 Route::get('/admin/documents/approved_docs', [DocumentController::class, 'showApprovedDocuments'])->name('admin.documents.approved_docs');
-Route::get('/home/office_staff/documents-overview', [DocumentController::class, 'showOfficeStaffDocumentsOverview'])->name('home.office_staff.documents_overview');
-Route::get('/home/admin/documents-overview', [DocumentController::class, 'showAdminDocumentsOverview'])->name('home.admin.documents_overview');
-
+// Route::get('/home/office_staff/documents-overview', [DocumentController::class, 'showOfficeStaffDocumentsOverview'])->name('home.office_staff.documents_overview');
+route::get('/home/admin', [AdminController::class, 'adminHome'])->name('home.admin');
 
 // Route to decline a document
 Route::post('/admin/documents/declined_docs/{id}', [DocumentController::class, 'decline'])->name('admin.documents.decline');
 
+// Route to serve documents
+Route::get('/document/{filename}', function ($filename) {
+    $path = storage_path('app/documents/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    return response()->file($path);
+})->name('document.serve');
+
+//Route to view document
+Route::get('/admin/documents/view_docs/{document_id}', [DocumentController::class, 'show'])->name('admin.documents.view_docs');
+
+//Route to update document
+Route::get('/admin/documents/edit_docs/{document_id}', [DocumentController::class, 'update'])->name('admin.documents.edit_docs');
 
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');

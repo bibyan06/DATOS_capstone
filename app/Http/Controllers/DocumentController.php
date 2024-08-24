@@ -135,23 +135,34 @@ class DocumentController extends Controller
     {
         // Fetch all approved documents
         $documents = Document::where('document_status', 'approved')->get();
-
         return view('admin.documents.approved_docs', compact('documents'));
     }
 
-    public function showOfficeStaffDocumentsOverview()
+    //To show/view the documents
+    public function show($document_id)
     {
-        // Fetch all approved documents for office staff
-        $documents = Document::where('document_status', 'approved')->get();
+        $document = Document::findOrFail($document_id);
 
-        return view('home.office_staff.documents-overview', compact('documents'));
+        if (!$document) {
+            abort(404, 'Document not found.');
+        }
+    
+        return view('admin.documents.view_docs', compact('document'));
     }
 
-    public function showAdminDocumentsOverview()
+    public function update(Request $request, $document_id)
     {
-        // Fetch all approved documents for admin
-        $documents = Document::where('document_status', 'approved')->get();
+        $request->validate([
+            'document_name' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
 
-        return view('home.admin.documents-overview', compact('documents'));
-}
+        $document = Document::findOrFail($document_id);
+        $document->document_name = $request->input('document_name');
+        $document->description = $request->input('description');
+        $document->save();
+
+        return redirect()->route('admin.documents.edit_docs', $document_id)->with('success', 'Document updated successfully.');
+    }
+
 }

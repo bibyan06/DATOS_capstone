@@ -171,123 +171,50 @@
             </div>
         </section>
 
+        <!-- Recent Documents -->
         <section class="dashboard-overview">
-            <div class="documents">
+            @if($documents->isEmpty())
+                <p>No approved documents available.</p>
+            @else
+                @foreach($documents as $document)
                 <div class="documents-content">
                     <div class="document-card">
-                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="admin_view.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="admin_edit.html">Edit</a>
+                        <!-- Use iframe to display the PDF -->
+                        <iframe src="{{ route('document.serve', basename($document->file_path)) }}" frameborder="0"></iframe>
+                        <div class="content">
+                            <div class="row">
+                                <div class="column left">
+                                    <h3>{{ $document->document_name }}</h3>
+                                    <p>{{ Str::limit($document->description, 100) }}</p>
+                                </div>
+                                <div class="column right">
+                                    <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
+                                    <div class="dropdown-more">
+                                        <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" class="view-btn">View</a>
+                                        <a href="{{ route('document.serve', basename($document->file_path)) }}" download>Download</a>
+                                        <a href="{{ route('admin.documents.edit_docs', $document->document_id) }}">Edit</a>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="upload-date">
+                                <p>Date Uploaded: {{ \Carbon\Carbon::parse($document->upload_date)->format('F j, Y') }}</p>
+                            </div>
                         </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
-                        </div>
-                    </div>
+                    </div>  
                 </div>
-            </div>
-            <div class="documents">
-                <div class="documents-content">
-                    <div class="document-card">
-                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="admin_view.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="admin_edit.html">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="documents">
-                <div class="documents-content">
-                    <div class="document-card">
-                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="admin_view.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="admin_edit.html">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="documents">
-                <div class="documents-content">
-                    <div class="document-card">
-                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="view-document.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="edit-document.html">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Repeat the document block for more entries -->
-        </section>
+                @endforeach
+            @endif
+        </section>     
     </main>
 
     <footer>
         <div class="footer-content">
             <p>&copy; DATOS 2024 Bicol University. All Rights Reserved.</p>
-            <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p>
+            <!-- <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p> -->
         </div>
     </footer>
 
     <script src="{{ asset ('js/admin_page.js') }}"></script>
-    <script src="{{ asset ('js/admin_home.js') }}"></script>
+    <script src="{{ asset ('js/home.js') }}"></script>
 </body>
 </html>

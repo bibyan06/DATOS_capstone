@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin_page.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <header>
@@ -152,12 +153,12 @@
                                         <td>
                                         <form action="{{ route('admin.documents.approve', $document->document_id) }}" method="POST" style="display:inline;">
                                             @csrf
-                                            <button type="submit" class="btn btn-success">Approve</button>
+                                            <button type="submit" class="btn btn-success approve-btn">Approve</button>
                                         </form>
 
                                         <form action="{{ route('admin.documents.decline', $document->document_id) }}" method="POST" style="display:inline;">
                                             @csrf
-                                            <button type="submit" class="btn btn-danger">Decline</button>
+                                            <button type="submit" class="btn btn-danger decline-btn">Decline</button>
                                         </form>                                        
                                     </td>
                                     </tr>
@@ -172,6 +173,58 @@
             </div>
         </main>
     </div>
+
+    <script>
+        // Approve Button
+        document.querySelectorAll('.approve-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                // Prevent the default form submission
+                event.preventDefault();
+
+                const documentId = this.closest('form').action.split('/').pop(); // Get document ID from form action URL
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You are about to approve this document!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, approve it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit the form programmatically after confirmation
+                        this.closest('form').submit();
+                    }
+                });
+            });
+        });
+
+        // Decline Button
+        document.querySelectorAll('.decline-btn').forEach(button => {
+            button.addEventListener('click', function(event) {
+                // Prevent the default form submission
+                event.preventDefault();
+
+                const documentId = this.closest('form').action.split('/').pop(); // Get document ID from form action URL
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You are about to decline this document!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, decline it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit the form programmatically after confirmation
+                        this.closest('form').submit();
+                    }
+                });
+            });
+        });
+    </script>
 
     <script src="{{ asset('js/approved.js') }}"></script>
     <script src="{{ asset ('js/admin_page.js') }}"></script>

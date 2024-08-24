@@ -164,20 +164,21 @@
                     @csrf
                     <div class="form-group">
                         <label for="document-number">Document Number</label>
-                        <input type="text" id="document-number" name="document_number" class="form-control" placeholder="Enter Document Number">
+                        <input type="text" id="document-number" name="document_number" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="document-name">Document Name</label>
-                        <input type="text" id="document-name" name="document_name" class="form-control" placeholder="Enter Document Name">
+                        <input type="text" id="document-name" name="document_name" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea id="description" name="description" class="form-control" rows="3" placeholder="Enter Document Description"></textarea>
+                        <textarea id="description" name="description" class="form-control" rows="3"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="category_name">Category</label>
                         <select name="category_name" id="category_name" class="form-control">
                             @foreach($categories as $category)
+                            <!-- <option value="">Select Category</option> -->
                                 <option value="{{ $category->category_name }}">{{ $category->category_name }}</option>
                             @endforeach
                         </select>

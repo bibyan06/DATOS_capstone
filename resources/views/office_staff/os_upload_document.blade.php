@@ -215,6 +215,7 @@
                         <label for="category_name">Category</label>
                         <select name="category_name" id="category_name" class="form-control">
                             @foreach($categories as $category)
+                                <!-- <option value="">Select Category</option> -->
                                 <option value="{{ $category->category_name }}">{{ $category->category_name }}</option>
                             @endforeach
                         </select>
