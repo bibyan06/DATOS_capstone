@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Document</title>
-    <link rel="stylesheet" href="{{asset ('css/edit_document.css') }}">
+    <link rel="stylesheet" href="{{asset ('css/edit_docs.css') }}">
     <link rel="stylesheet" href="{{ asset ('css/admin_page.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
@@ -21,7 +21,7 @@
                 <i class="bi bi-search"></i>
             </div>
             <div class="profile-icon">
-                <img src="images/user-circle-solid-24.png" alt="Profile Icon" id="profile-icon">
+                <img src="{{ asset ('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
                 <div class="dropdown-menu" id="profile-dropdown">
                     <a href="head_account.html"><i class="bi bi-person-circle" id="account-icon"> </i>Account</a>
                     <a href="#"><i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout</a>
@@ -116,28 +116,36 @@
         <div class="documents-content">
             <div class="doc-container">
                 <div class="view-documents">
-                    <form action="{{ route('admin.documents.edit_docs', $document->document_id) }}" method="POST">
-                        @csrf
-                        @method('GET')
 
+                 <!-- Display success message if present -->
+                 @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('admin.documents.update', $document->document_id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
                         <div class="doc-description">
-                            <a href="#" class="back-icon" onclick="showBackPopup()">
+                            <a href="#" class="back-icon" onclick="confirmBack(event)">
                                 <i class="bi bi-arrow-return-left"></i>
                             </a>                        
                             <h5 class="file-title">Title:</h5>
-                            <input type="text" name="document_name" class="document_name form-control" value="{{ old('document_name', $document->document_name) }}" required>
-                            <h3 class="issued_date">{{ \Carbon\Carbon::parse($document->upload_date)->format('F j, Y') }}</h3>
+                                <input type="text" name="document_name" class="document_name form-control" value="{{ old('document_name', $document->document_name) }}" required>
+                            <h5>Date Uploaded:</h5>
+                                <h3 class="issued_date">{{ \Carbon\Carbon::parse($document->upload_date)->format('F j, Y') }}</h3>
                             <div class="description">
                                 <h5>Description:</h5>
                                 <textarea name="description" class="description form-control" rows="5" required>{{ old('description', $document->description) }}</textarea>
                             </div>
                         </div>
                         <div class="viewing-btn">
-                            <button type="submit" class="save-btn">Save Changes</button>
-                            <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" class="cancel-btn">Cancel</a>
+                            <button type="button" class="save-btn">Save Changes</button>
+                            <button href="{{ route('admin.documents.view_docs', $document->document_id) }}" class="cancel-btn" style="background-color: red;"  onclick="confirmBack(event)">Cancel</button>
                         </div>
                         <div class="doc-file">
-                             <iframe src="{{ route('document.serve', basename($document->file_path)) }}" frameborder="0"></iframe>
+                             <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0&zoom=126" frameborder="0"></iframe>
                         </div>
                     </form>
                 </div>
@@ -145,21 +153,63 @@
         </div>
     </main>
 
-            <!-- Popup message for back icon -->
-            <div id="back-popup" class="popup-message">
-                <p>Are you sure you want to go back?</p>
-                <button onclick="confirmBack()">Yes</button>
-                <button onclick="hideBackPopup()">No</button>
-            </div>
-
-    
     <footer>
         <div class="footer-content">
             <p>© 2023 Bicol University. All rights reserved.</p>
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset ('js/edit_document.js') }}"></script>
     <script src="{{ asset ('js/admin_page.js') }}"></script>
+
+
+    <script>
+        function confirmBack(event) {
+            event.preventDefault(); // Prevent default anchor behavior
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You will lose any unsaved changes!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{ route('admin.documents.view_docs', $document->document_id) }}";
+                }
+            });
+        }
+
+        document.querySelector('.save-btn').addEventListener('click', function(event) {
+            event.preventDefault(); 
+
+            Swal.fire({
+                title: 'Save changes?',
+                text: "Are you sure you want to save these changes?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, save it',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Your changes have been saved.',
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        event.target.closest('form').submit();
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

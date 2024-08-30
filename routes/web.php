@@ -144,10 +144,11 @@ Route::get('/document/{filename}', function ($filename) {
 })->name('document.serve');
 
 //Route to view document
-Route::get('/admin/documents/view_docs/{document_id}', [DocumentController::class, 'show'])->name('admin.documents.view_docs');
+Route::get('/admin/documents/view_docs/{document_id}', [DocumentController::class, 'view'])->name('admin.documents.view_docs');
 
 //Route to update document
-Route::get('/admin/documents/edit_docs/{document_id}', [DocumentController::class, 'update'])->name('admin.documents.edit_docs');
+Route::get('/admin/documents/edit_docs/{document_id}', [DocumentController::class, 'edit'])->name('admin.documents.edit_docs');
+Route::put('/admin/documents/update/{document_id}', [DocumentController::class, 'update'])->name('admin.documents.update');
 
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');

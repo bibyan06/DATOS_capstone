@@ -139,7 +139,7 @@ class DocumentController extends Controller
     }
 
     //To show/view the documents
-    public function show($document_id)
+    public function view($document_id)
     {
         $document = Document::findOrFail($document_id);
 
@@ -148,6 +148,12 @@ class DocumentController extends Controller
         }
     
         return view('admin.documents.view_docs', compact('document'));
+    }
+
+    public function edit($document_id)
+    {
+        $document = Document::find($document_id);
+        return view('admin.documents.edit_docs', compact('document'));
     }
 
     public function update(Request $request, $document_id)
@@ -162,7 +168,20 @@ class DocumentController extends Controller
         $document->description = $request->input('description');
         $document->save();
 
-        return redirect()->route('admin.documents.edit_docs', $document_id)->with('success', 'Document updated successfully.');
+        return redirect()->route('admin.documents.view_docs', $document_id)
+                         ->with('success', 'Document updated successfully.');
     }
+
+
+    public function serve($filename)
+{
+    $file = storage_path('app/documents/' . $filename);
+
+    if (file_exists($file)) {
+        return response()->download($file);
+    }
+
+    return abort(404);
+}
 
 }

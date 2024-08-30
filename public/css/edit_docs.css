@@ -20,7 +20,7 @@ main {
 }
 
 .documents-content {
-    padding: 20px;
+    margin-left: 3rem;
 }
 
 .doc-container {
@@ -190,4 +190,8 @@ textarea.description {
 
 .popup-message button:hover {
     background-color: #989AA0;
+}
+
+.cancel-btn{
+    background-color: red;
 }

@@ -132,10 +132,12 @@
                     </div>
                     <div class="viewing-btn">
                         <button class="edit-btn" onclick="location.href='{{ route('admin.documents.edit_docs', $document->document_id) }}'">Edit</button>
-                        <button class="download-btn" onclick="downloadDocument()">Download</button>
+                        <button class="download-btn">
+                            <a  style="color:#FEFEFF; text-decoration:none;" href="{{ route('document.serve', basename($document->file_path)) }}" download>Download</a>
+                        </button>
                     </div>
                     <div class="doc-file">
-                        <iframe src="{{ route('document.serve', basename($document->file_path)) }}" frameborder="0"></iframe>
+                        <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0&zoom=126" frameborder="0"></iframe>
                     </div>
                 </div>
             </div>
