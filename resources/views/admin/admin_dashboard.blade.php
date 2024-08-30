@@ -120,80 +120,82 @@
     <main id="dashboard-content">
         <div class="reports-container">
             <div class="report">
-                <h1>10</h1>
-                <h4>Total Document</h4>
+                <h1>{{ $totalDocuments }}</h1>
+                <h4>Total Documents</h4>
             </div>
             <div class="report">
-                <h1>10</h1>
-                <h4>Total Employee</h4>
+                <h1>{{ $totalEmployees }}</h1>
+                <h4>Total Employees</h4>
             </div>
         </div>
 
         <main id="dashboard-content">
         <div class="reports-container">
             <div class="report">
-                <h1>10</h1>
+                <h1>{{ $claimMonitoringSheetCount }}</h1>
                 <h4>Claim Monitoring Sheet</h4>
             </div>
             <div class="report">
-                <h1>23</h1>
-                <h4>Memorandom</h4>
+                <h1>{{ $memorandumCount }}</h1>
+                <h4>Memorandum</h4>
             </div>
             <div class="report">
-                <h1>18</h1>
+                <h1>{{ $mrspCount }}</h1>
                 <h4>MRSP</h4>
             </div>
             <div class="report">
-                <h1>27</h1>
-                <h4>Administrative Order</h4>
+                <h1>{{ $auditedDVCount }}</h1>
+                <h4>Audited Disbursement Voucher</h4>
             </div>
         </div>
     
         <div id="dashboard-section">
             <div class="dashboard-container">
                 <div class="dashboard-title">
-                    <h2>Digitized Documents</h2>
+                    <h2>Document Report</h2>
                     <div class="search">
-                        <select>
+                        <select id="category-filter">
                             <option value="" disabled selected>Select Document</option>
-                            <option value="doc1">Memorandum</option>
-                            <option value="doc2">Audited Disbursement Voucher</option>
-                            <option value="doc3">Monthly Report Service of Personnel</option>
-                            <option value="doc4">Claim Monitoring Sheet</option>
+                            <option value="" selected>All</option>
+                            <option value="Memorandum">Memorandum</option>
+                            <option value="Audited Disbursement Voucher">Audited Disbursement Voucher</option>
+                            <option value="Monthly Report Service of Personnel">Monthly Report Service of Personnel</option>
+                            <option value="Claim Monitoring Sheet">Claim Monitoring Sheet</option>
                         </select>
                     </div>
                 </div>
-                <div class="documents">
-                    <div class="document">
-                        <div class="file-container"></div>
-                        <div class="document-description">
-                            <h3>Office Memorandum No. 84</h3>
-                            <p>Date Updated: April 2, 2024</p>
-                            <p>Details of the memorandum go here.</p>
-                        </div>
-                    </div>
-                    <div class="document">
-                        <div class="file-container"></div>
-                        <div class="document-description">
-                            <h3>Office Memorandum No. 84</h3>
-                            <p>Date Updated: April 2, 2024</p>
-                            <p>Details of the memorandum go here.</p>
-                        </div>
-                    </div>
-                    <div class="document">
-                        <div class="file-container"></div>
-                        <div class="document-description">
-                            <h3>Office Memorandum No. 84</h3>
-                            <p>Date Updated: April 2, 2024</p>
-                            <p>Details of the memorandum go here.</p>
-                        </div>
-                    </div>
-                    <!-- Add more documents as needed -->
-                </div>
-            </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Document Number</th>
+                            <th>Document Name</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Date Uploaded</th>
+                            <th>Uploaded by</th>
+                        </tr>
+                    </thead>
+                    <tbody id="documents-table">
+                        @foreach($documents as $document)
+                            <tr data-category="{{ $document->category_name }}">
+                                <td>{{ $document->document_number }}</td>
+                                <td>{{ $document->document_name }}</td>
+                                <td>{{ $document->description }}</td>
+                                <td>{{ $document->category_name }}</td>
+                                <td>{{ $document->document_status }}</td>
+                                <td>{{ $document->upload_date }}</td>
+                                <td>{{ $document->uploaded_by }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @if($documents->isEmpty())
+                    <p>No documents available.</p>
+                @endif
         </div>
-    </main>
-</div>
+    </div>
+</main>
 
 <footer>
     <div class="footer-content">

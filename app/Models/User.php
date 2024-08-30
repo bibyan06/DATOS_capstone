@@ -128,4 +128,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role ? $this->role->name : 'user';
     }
 
+    public function documents()
+    {
+        return $this->hasMany(Document::class, 'uploaded_by');
+    }
+
 }

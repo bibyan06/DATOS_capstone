@@ -4,17 +4,13 @@ main {
   padding:20px;
   transition: margin-left 0.3s ease, padding-left 0.3s ease;
   margin-left: 50px;
-
-  
 }
-
 
 #main-content {
   flex: 1; 
   margin-left: 250px;
   box-sizing: border-box; 
   height: 100vh;
-
 }
 
 .reports-container {
@@ -43,13 +39,10 @@ main {
   color: #333;
 }
 
-
-
 #dashboard-section {
   margin-top: 40px;
 
 }
-
 
 .dashboard-container {
   background-color: #fff;
@@ -111,6 +104,20 @@ main {
   color: #666;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  font-size: 12px;
+  font-family: 'Poppins';
+}
+th {
+  background-color: #f2f2f2;
+}
 
 .profile-icon {
   position: relative;

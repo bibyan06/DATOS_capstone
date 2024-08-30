@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Document;
+use App\Models\Employee;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -128,4 +130,59 @@ class AdminController extends Controller
         // Pass the documents to the view
         return view('home.admin', compact('documents'));
     }
+
+    public function adminDashboard()
+    {
+        // Count the total number of approved documents
+        $totalDocuments = Document::where('document_status', 'approved')->count();
+
+        // Count the total number of employees
+        $totalEmployees = Employee::count();
+
+        // Pass these values to the view
+        return view('admin.admin_dashboard', compact('totalDocuments', 'totalEmployees'));
+    }
+
+    public function category_count()
+    {
+        // Fetch totals for the dashboard
+        $totalDocuments = Document::count();
+        $totalEmployees = User::count();
+
+        // Fetch counts by document category
+        $claimMonitoringSheetCount = Document::where('category_name', 'Claim Monitoring Sheet')->where('document_status', 'approved')->count();
+        $memorandumCount = Document::where('category_name', 'Memorandum')->where('document_status', 'approved')->count();
+        $mrspCount = Document::where('category_name', 'Monthly Report Service of Personnel')->where('document_status', 'approved')->count();
+        $auditedDVCount = Document::where('category_name', 'Audited Disbursement Voucher')->where('document_status', 'approved')->count();
+
+        return view('admin.admin_dashboard', compact(
+            'totalDocuments', 'totalEmployees',
+            'claimMonitoringSheetCount', 'memorandumCount', 'mrspCount', 'auditedDVCount'
+        ));
+    }
+
+    public function display_uploaded_docs()
+    {
+        $currentUserName = Auth::user()->first_name . ' ' . Auth::user()->last_name;
+        $documents = Document::where('uploaded_by', $currentUserName)->get();
+
+        // Additional data for the dashboard (e.g., counts)
+        $totalDocuments = Document::count();
+        $totalEmployees = Employee::count();
+        $claimMonitoringSheetCount = Document::where('category_name', 'claim_monitoring_sheet')->count();
+        $memorandumCount = Document::where('category_name', 'memorandum')->count();
+        $mrspCount = Document::where('category_name', 'mrsp')->count();
+        $auditedDVCount = Document::where('category_name', 'audited_DV')->count();
+
+        return view('admin.admin_dashboard', compact(
+            'documents',
+            'totalDocuments',
+            'totalEmployees',
+            'claimMonitoringSheetCount',
+            'memorandumCount',
+            'mrspCount',
+            'auditedDVCount'
+        ));
+    }
+
 }

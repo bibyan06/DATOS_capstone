@@ -150,6 +150,11 @@ Route::get('/admin/documents/view_docs/{document_id}', [DocumentController::clas
 Route::get('/admin/documents/edit_docs/{document_id}', [DocumentController::class, 'edit'])->name('admin.documents.edit_docs');
 Route::put('/admin/documents/update/{document_id}', [DocumentController::class, 'update'])->name('admin.documents.update');
 
+//Route to count the total documents and employees
+Route::get('/admin/admin_dashboard', [AdminController::class, 'adminDashboard'])->name('admin.admin_dashboard');
+route::get('/admin/admin_dashboard', [AdminController::class, 'category_count'])->name('admin.admin_dashboard');
+Route::get('/admin/admin_dashboard', [AdminController::class, 'display_uploaded_docs'])->name('admin.admin_dashboard');
+
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');
 

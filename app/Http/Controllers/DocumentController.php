@@ -174,14 +174,14 @@ class DocumentController extends Controller
 
 
     public function serve($filename)
-{
-    $file = storage_path('app/documents/' . $filename);
+    {
+        $file = storage_path('app/documents/' . $filename);
 
-    if (file_exists($file)) {
-        return response()->download($file);
+        if (file_exists($file)) {
+            return response()->download($file);
+        }
+
+        return abort(404);
     }
-
-    return abort(404);
-}
 
 }
