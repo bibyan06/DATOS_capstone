@@ -70,7 +70,7 @@
             <section class="welcome-section">
                 <div class="welcome-message">
                     <h2>Welcome back, Dean!</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Streamlining document management and access for all Administrative Service Division Office personnel.</p>
                 </div>
                 <div class="current-time">
                     <h3>10:30 AM</h3>

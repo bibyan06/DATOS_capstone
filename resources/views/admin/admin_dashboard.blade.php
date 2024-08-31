@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin_page.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
 </head>
 <body>
 <header>
@@ -130,7 +131,7 @@
         </div>
 
         <main id="dashboard-content">
-        <div class="reports-container">
+        <!-- <div class="reports-container">
             <div class="report">
                 <h1>{{ $claimMonitoringSheetCount }}</h1>
                 <h4>Claim Monitoring Sheet</h4>
@@ -147,7 +148,7 @@
                 <h1>{{ $auditedDVCount }}</h1>
                 <h4>Audited Disbursement Voucher</h4>
             </div>
-        </div>
+        </div> -->
     
         <div id="dashboard-section">
             <div class="dashboard-container">
@@ -172,8 +173,10 @@
                             <th>Description</th>
                             <th>Category</th>
                             <th>Status</th>
+                            <th>Remark</th>
                             <th>Date Uploaded</th>
                             <th>Uploaded by</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="documents-table">
@@ -183,9 +186,17 @@
                                 <td>{{ $document->document_name }}</td>
                                 <td>{{ $document->description }}</td>
                                 <td>{{ $document->category_name }}</td>
-                                <td>{{ $document->document_status }}</td>
+                                <td>
+                                    <x-status-label :status="$document->document_status" />
+                                </td>
+                                <td>{{ $document->remark}}</td>
                                 <td>{{ $document->upload_date }}</td>
                                 <td>{{ $document->uploaded_by }}</td>
+                                <td>
+                                <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" title="View Document">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

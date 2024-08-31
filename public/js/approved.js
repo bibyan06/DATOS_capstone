@@ -23,3 +23,21 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTime();
     setInterval(updateTime, 1000); // Update every second
 });
+
+
+// Decline Button
+document.querySelectorAll('.decline-btn').forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const documentId = this.dataset.documentId;
+        const formAction = `{{ url('admin/documents/decline') }}/${documentId}`;
+
+        // Set the action for the form
+        const declineForm = document.getElementById('decline-form');
+        declineForm.action = formAction;
+
+        // Show the modal
+        $('#remarkModal').modal('show');
+    });
+});

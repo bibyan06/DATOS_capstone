@@ -155,6 +155,9 @@ Route::get('/admin/admin_dashboard', [AdminController::class, 'adminDashboard'])
 route::get('/admin/admin_dashboard', [AdminController::class, 'category_count'])->name('admin.admin_dashboard');
 Route::get('/admin/admin_dashboard', [AdminController::class, 'display_uploaded_docs'])->name('admin.admin_dashboard');
 
+Route::get('/admin/office_staff', [AdminController::class, 'showOfficeStaff'])->name('admin.office_staff');
+
+
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');
 

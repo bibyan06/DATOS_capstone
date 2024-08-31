@@ -133,18 +133,21 @@
                         <th>Description</th>
                         <th>Category</th>
                         <th>Status</th>
+                        <th>Remark</th>
                         <th>Date Uploaded</th>
                         <th>Uploaded by</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($documents as $document)
-                        <tr>
                             <td>{{ $document->document_number }}</td>
                             <td>{{ $document->document_name }}</td>
                             <td>{{ $document->description }}</td>
                             <td>{{ $document->category_name }}</td>
-                            <td>{{ $document->document_status }}</td>
+                            <td>
+                                <x-status-label :status="$document->document_status" />
+                            </td>
+                            <td>{{ $document->remark}}</td>
                             <td>{{ $document->upload_date }}</td>
                             <td>{{ $document->uploaded_by }}</td>
                         </tr>

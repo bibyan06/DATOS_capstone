@@ -129,7 +129,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Document Number</th>
+                                <!-- <th>Document Number</th> -->
                                 <th>Document Name</th>
                                 <th>Description</th>
                                 <th>Category</th>
@@ -141,13 +141,15 @@
                         </thead>
                         <tbody>
                             @foreach($documents as $document)
-                                @if($document->document_status == 'pending')
+                                @if($document->document_status == 'Pending')
                                     <tr>
-                                        <td>{{ $document->document_number }}</td>
+                                        <!-- <td>{{ $document->document_number }}</td> -->
                                         <td>{{ $document->document_name }}</td>
                                         <td>{{ $document->description }}</td>
                                         <td>{{ $document->category_name }}</td>
-                                        <td>{{ $document->document_status }}</td>
+                                        <td>
+                                            <x-status-label :status="$document->document_status" />
+                                        </td>
                                         <td>{{ $document->upload_date }}</td>
                                         <td>{{ $document->uploaded_by }}</td>
                                         <td>
@@ -155,11 +157,7 @@
                                             @csrf
                                             <button type="submit" class="btn btn-success approve-btn">Approve</button>
                                         </form>
-
-                                        <form action="{{ route('admin.documents.decline', $document->document_id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger decline-btn">Decline</button>
-                                        </form>                                        
+                                        <button type="button" class="btn btn-danger decline-btn" data-document-id="{{ $document->document_id }}">Decline</button>                                        
                                     </td>
                                     </tr>
                                 @endif
@@ -172,28 +170,23 @@
                 </div>
             </div>
         </main>
-    </div>
-
+   
     <script>
         // Approve Button
         document.querySelectorAll('.approve-btn').forEach(button => {
             button.addEventListener('click', function(event) {
-                // Prevent the default form submission
                 event.preventDefault();
-
-                const documentId = this.closest('form').action.split('/').pop(); // Get document ID from form action URL
 
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "You are about to approve this document!",
+                    text: "You are about to approve this document",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, approve it!'
+                    confirmButtonText: 'Yes'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Submit the form programmatically after confirmation
                         this.closest('form').submit();
                     }
                 });
@@ -203,29 +196,41 @@
         // Decline Button
         document.querySelectorAll('.decline-btn').forEach(button => {
             button.addEventListener('click', function(event) {
-                // Prevent the default form submission
                 event.preventDefault();
 
-                const documentId = this.closest('form').action.split('/').pop(); // Get document ID from form action URL
-
+                const documentId = this.getAttribute('data-document-id');
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You are about to decline this document!",
-                    icon: 'warning',
+                    title: 'Decline Document',
+                    input: 'textarea',
+                    inputLabel: 'Remark',
+                    inputPlaceholder: 'Enter your remark here...',
+                    inputAttributes: {
+                        'aria-label': 'Enter your remark here'
+                    },
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, decline it!'
+                    confirmButtonText: 'Submit Decline',
+                    cancelButtonText: 'Cancel',
+                    preConfirm: (remark) => {
+                        if (!remark) {
+                            Swal.showValidationMessage('Remark is required');
+                        }
+                        return { remark: remark };
+                    }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Submit the form programmatically after confirmation
-                        this.closest('form').submit();
+                        const declineForm = document.createElement('form');
+                        declineForm.method = 'POST';
+                        declineForm.action = `/admin/documents/declined_docs/${documentId}`;
+                        declineForm.innerHTML = '@csrf <input type="hidden" name="remark" value="' + result.value.remark + '">';
+                        document.body.appendChild(declineForm);
+                        declineForm.submit();
                     }
                 });
             });
         });
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/approved.js') }}"></script>
     <script src="{{ asset ('js/admin_page.js') }}"></script>
 </body>

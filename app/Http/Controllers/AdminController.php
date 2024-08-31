@@ -43,7 +43,7 @@ class AdminController extends Controller
     public function review_docs()
     {
         // Fetch documents with 'pending' status
-        $documents = Document::where('document_status', 'pending')->get();
+        $documents = Document::where('document_status', 'Pending')->get();
         return view('admin.documents.review_docs', compact('documents'));
     }
 
@@ -183,6 +183,15 @@ class AdminController extends Controller
             'mrspCount',
             'auditedDVCount'
         ));
+    }
+
+    public function showOfficeStaff()
+    {
+        // Retrieve all office staff from the employee table
+        $officeStaff = Employee::where('employee_id', 'like', '02%')->get();
+
+        // Pass the data to the view
+        return view('admin.office_staff', ['officeStaff' => $officeStaff]);
     }
 
 }

@@ -130,18 +130,38 @@
                 </div>    
             </div>
         </section>         
-            <div id="dashboard-section">
-                <div class="dashboard-container">
-                    
-                </div>
+        <div id="dashboard-section">
+            <div class="dashboard-container">
+                @if($officeStaff->isEmpty())
+                    <p>No office staff found.</p>
+                @else
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Employee ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($officeStaff as $staff)
+                                <tr>
+                                    <!-- <td>{{ $staff->id }}</td> -->
+                                    <td>{{ $staff->first_name }} {{ $staff->last_name }}</td>
+                                    <td>{{ $staff->employee_id }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
             </div>
+        </div>
     </main>
 
 
     <footer>
         <div class="footer-content">
             <p>&copy; DATOS 2024 Bicol University. All Rights Reserved.</p>
-            <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p>
+            <!-- <p>Contact us: <a href="mailto:datos.bu@gmail.com">datos.bu@gmail.com</a></p> -->
         </div>
     </footer>
 

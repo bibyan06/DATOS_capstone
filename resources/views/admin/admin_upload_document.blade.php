@@ -142,7 +142,7 @@
                     </div>
                 </div>
 
-                    <<div class="form-section">
+                <div class="form-section">
                      <!-- Display error messages here -->
                      @if ($errors->any())
                         <div class="alert alert-danger">
@@ -278,46 +278,64 @@
         document.getElementById('upload-area').classList.remove('drag-over');
     }
 
+    // <!-- Inside the handleFiles function -->
     function handleFiles(files) {
-    const fileList = document.getElementById('file-list');
-    const maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
+        const fileInput = document.getElementById('file-input');
+        const fileList = document.getElementById('file-list');
 
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+        // Clear the previous file list
+        fileList.innerHTML = '';
 
-        // Validate the file type (must be PDF)
-        if (file.type !== "application/pdf") {
-            Swal.fire({
-                icon: 'error',
-                title: 'Invalid File Type',
-                text: 'Only PDF files are allowed!',
-                confirmButtonText: 'OK'
-            });
-            continue;
+        // Loop through the selected files
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+
+            // Check if the file is a PDF and under 5MB
+            if (file.type === 'application/pdf' && file.size <= 5242880) {
+                // Create a list item for the file
+                const listItem = document.createElement('li');
+                listItem.classList.add('file-item');
+
+                // Add the PDF icon
+                const icon = document.createElement('i');
+                icon.classList.add('bi', 'bi-file-earmark-pdf-fill', 'pdf-icon');
+
+                // Add file name text
+                const fileName = document.createElement('span');
+                fileName.textContent = file.name;
+
+                // Add a delete button next to the file name
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'X';
+                deleteButton.classList.add('delete-btn');
+                deleteButton.addEventListener('click', function() {
+                    // Remove the file from the input
+                    fileInput.value = '';
+                    // Remove the list item from the UI
+                    listItem.remove();
+                });
+
+                // Append icon, file name, and delete button to the list item
+                listItem.appendChild(icon);
+                listItem.appendChild(fileName);
+                listItem.appendChild(deleteButton);
+                
+                // Append the list item to the file list
+                fileList.appendChild(listItem);
+
+                // Manually set the selected file in the file input
+                fileInput.files = files;
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid file',
+                    text: 'Please upload a valid PDF file of up to 5MB.',
+                    confirmButtonText: 'OK'
+                });
+            }
         }
-
-        // Validate the file size (must be less than 5MB)
-        if (file.size > maxFileSize) {
-            Swal.fire({
-                icon: 'error',
-                title: 'File Too Large',
-                text: 'The file size must not exceed 5MB!',
-                confirmButtonText: 'OK'
-            });
-            continue;
-        }
-
-        // Display the file in the uploaded files section
-        const listItem = document.createElement('li');
-        listItem.className = 'standby-file';
-        listItem.innerHTML = `
-            <i class="bi bi-file-earmark-pdf-fill"></i>
-            <span>${file.name}</span>
-            <button class="delete-button" onclick="removeFile(this)">&times;</button>
-        `;
-        fileList.appendChild(listItem);
     }
-}
+
 
     document.getElementById('file-input').addEventListener('change', (event) => {
         handleFiles(event.target.files);

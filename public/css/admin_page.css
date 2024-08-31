@@ -22,11 +22,6 @@ html, body {
     flex-direction: column;
 }
 
-footer {
-    margin-top: auto;
-}
-
-
 /* Header Styles */
 header {
     height: 60px;
@@ -606,7 +601,34 @@ footer {
 }
 
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+  
+th, td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+    font-size: 12px;
+    color: black;
+    font-family: 'Poppins';
+}
 
+th {
+    background-color: #FF731E;
+    opacity: 87%;
+}
+
+.status-approved {
+    color: green;
+}
+.status-declined {
+    color: red;
+}
+.status-pending {
+    color: orange;
+}
 
 
 

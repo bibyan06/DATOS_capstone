@@ -128,7 +128,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Document Number</th>
+                        <!-- <th>Document Number</th> -->
                         <th>Document Name</th>
                         <th>Description</th>
                         <th>Category</th>
@@ -140,11 +140,13 @@
                 <tbody>
                     @foreach($documents as $document)
                         <tr>
-                            <td>{{ $document->document_number }}</td>
+                            <!-- <td>{{ $document->document_number }}</td> -->
                             <td>{{ $document->document_name }}</td>
                             <td>{{ $document->description }}</td>
                             <td>{{ $document->category_name }}</td>
-                            <td>{{ $document->document_status }}</td>
+                            <td>
+                                <x-status-label :status="$document->document_status" />
+                            </td>
                             <td>{{ $document->upload_date }}</td>
                             <td>{{ $document->uploaded_by }}</td>
                         </tr>
