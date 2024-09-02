@@ -56,8 +56,32 @@ class OfficeStaffController extends Controller
     if (strpos($user->employee_id, '02') !== 0) {
         abort(403, 'Unauthorized action.');
     }
-
     // Proceed with the action
+    }
+
+    public function showApprovedDocuments()
+    {
+        // Fetch all approved documents
+        $documents = Document::where('document_status', 'Approved')->get();
+        return view('office_staff.documents.os_all_docs', compact('documents'));
+    }
+
+    public function showAllDocs(Request $request)
+    {
+        // Debugging: Log the received category
+        \Log::info('Category: ' . $request->category);
+
+        $query = Document::query();
+
+        if ($request->has('category_name') && !empty($request->category)) {
+            // Debugging: Log the query
+            \Log::info('Filtering by category: ' . $request->category);
+            $query->where('category_name', $request->category);
+        }
+
+        $documents = $query->where('document_status', 'Approved')->get();
+
+        return view('office_staff.documents.os_all_docs', compact('documents'));
     }
 
     public function showHomePage()

@@ -702,6 +702,21 @@ footer {
     color: #888;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+    font-size: 12px;
+    color: black;
+    font-family: 'Poppins';
+}
+th {
+    background-color: #FF731E;
+}
 
 
 

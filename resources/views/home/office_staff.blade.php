@@ -167,7 +167,7 @@
                 <div class="documents-content">
                     <div class="document-card">
                         <!-- Use iframe to display the PDF -->
-                        <iframe src="{{ route('document.serve', basename($document->file_path)) }}" frameborder="0"></iframe>
+                        <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0" width="100%" frameborder="0"></iframe>
                         <div class="content">
                             <div class="row">
                                 <div class="column left">

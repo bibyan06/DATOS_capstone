@@ -1,12 +1,9 @@
-/* Main Section */
-/* Main Section */
-/* Main Section */
+
 main {
     flex-grow: 1;
     padding:20px;
     margin-left: 50px;
 }
-
 
 #main-content {
    flex: 1; /* Allows main content to grow and fill available space */
@@ -44,7 +41,6 @@ main {
     padding-left: 20px;
 }
 
-/* Search Bar Styles */
 /* Search Bar Styles */
 .memorandum-search-bar {
     display: flex;
@@ -84,7 +80,7 @@ main {
     flex-shrink: 0; /* Prevent shrinking */
 }
 
-.option-text {
+#category-filter {
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
     border: 1px solid #DDDDDD;
@@ -92,6 +88,7 @@ main {
     padding: 5px;
     height: 30px;
 }
+
 /* Dashboard Section */
 #dashboard-section {
     margin-top: 40px;
@@ -102,6 +99,10 @@ main {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: space-between; 
 }
 
 .documents {
@@ -119,6 +120,9 @@ main {
     width: calc(33% - 20px);
     display: block;
     position: relative;
+    flex: 1 1 calc(33.333% - 20px); /* 3 items per row with a gap of 20px */
+    box-sizing: border-box;
+    overflow: hidden; 
 }
 
 
@@ -177,7 +181,6 @@ main {
     display: block;
 }
 
-
 .row {
     display: flex;
     justify-content: space-between;
@@ -197,13 +200,13 @@ main {
 
 .column.right a {
     text-decoration: none;
-    color: #007bff;
+    /* color: #007bff; */
     position: relative;
 }
 
-.column.right a:hover {
+/* .column.right a:hover {
     text-decoration: underline;
-}
+} */
 
 .document-card {
     background-color: #fff;

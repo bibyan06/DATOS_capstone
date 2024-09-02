@@ -122,10 +122,10 @@ Route::get('/admin/admin_upload_document', [DocumentController::class, 'create_a
 Route::post('/admin/admin_upload_document', [DocumentController::class, 'store']);
 
 
-
 // Route to approve a document
 Route::post('/admin/documents/approve_docs/{id}', [DocumentController::class, 'approve'])->name('admin.documents.approve');
 Route::get('/admin/documents/approved_docs', [DocumentController::class, 'showApprovedDocuments'])->name('admin.documents.approved_docs');
+Route::get('/office_staff/documents/os_all_docs', [OfficeStaffController::class, 'showApprovedDocuments'])->name('office_staff.documents.os_all_docs');
 // Route::get('/home/office_staff/documents-overview', [DocumentController::class, 'showOfficeStaffDocumentsOverview'])->name('home.office_staff.documents_overview');
 route::get('/home/admin', [AdminController::class, 'adminHome'])->name('home.admin');
 
@@ -163,9 +163,10 @@ Route::get('/admin/admin_dashboard', [AdminController::class, 'display_uploaded_
 Route::get('/office_staff/os_dashboard', [OfficeStaffController::class, 'display_uploaded_docs'])->name('office_staff.os_dashboard');
 Route::get('/office_staff/os_dashboard', [OfficeStaffController::class, 'category_count'])->name('office_staff.os_dashboard');
 
-
 Route::get('/admin/office_staff', [AdminController::class, 'showOfficeStaff'])->name('admin.office_staff');
 
+//Route for Search function 
+route::get('/office_staff/documents/os_all_docs', [OfficeStaffController::class, 'showAllDocs'])->name('office_staff.documents.os_all_docs');
 
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');

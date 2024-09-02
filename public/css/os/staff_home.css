@@ -371,13 +371,13 @@ main {
 
 .column.right a {
     text-decoration: none;
-    color: #007bff;
+    /* color: #007bff; */
     position: relative;
 }
 
-.column.right a:hover {
+/* .column.right a:hover {
     text-decoration: underline;
-}
+} */
 
 /* General dropdown styling */
 .dropdown-more {
@@ -393,10 +393,11 @@ main {
 
 /* Remove underline and set color for dropdown links */
 .dropdown-more a {
-
-    color: #fd7e14; /* Set link color */
-    display: block; /* Make the links block-level elements */
-    padding: 5px 10px; /* Add some padding */
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+    color: #5B5B5D;
+    font-size: 14px;/
 }
 
 /* Add hover effect for dropdown links */

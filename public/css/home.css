@@ -335,12 +335,19 @@ main {
 }
 
 .document-card {
-    background-color: #fff;
+    /* background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
     overflow: hidden;
     /* width: 100%;
     height: 180px; Fixed height for the card */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: calc(33% - 20px);
+    display: block;
+    position: relative;
 }
 
 
