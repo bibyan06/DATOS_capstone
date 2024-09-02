@@ -502,3 +502,12 @@ footer {
     color: #888;
 }
 
+.status-approved {
+    color: green;
+}
+.status-declined {
+    color: red;
+}
+.status-pending {
+    color: orange;
+}

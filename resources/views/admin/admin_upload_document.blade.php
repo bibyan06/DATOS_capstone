@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Document</title>
+    <title>Admin Upload Document</title>
     <link rel="stylesheet" href="{{ asset ('css/upload_document.css')}}">
     <link rel="stylesheet" href="{{ asset ('css/admin_page.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 </head>
+
 <body>
     <header>
         <div class="header-content">
@@ -217,7 +219,7 @@
             // Explicitly append the file to the FormData object
             formData.append('file', file);
 
-            fetch("{{ route('office_staff.os_upload_document') }}", {
+            fetch("{{ route('admin.admin_upload_document') }}", {
                 method: "POST",
                 body: formData,
                 headers: {

@@ -11,15 +11,7 @@ body {
     background-color: #E9ECF4;
     display: flex;
     flex-direction: column;
-    flex: 1;
     min-height: 100vh;
-}
-
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
 }
 
 /* Header Styles */
@@ -290,6 +282,10 @@ header {
     margin-top:5px;
 }
 
+.logout:hover{
+    color:red;
+}
+
 
 /* Maintain hover state on sidebar items */
 /* Default Sidebar Link Styling */
@@ -300,6 +296,7 @@ header {
     color: #333;
     text-decoration: none;
     transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 6px;
 }
 
 /* Hover Effect */
@@ -363,7 +360,7 @@ header {
     width:220px; /* Adjust width as needed */
     position: absolute;
     left: 250px; /* Align the dropdown menu next to the extra-sidebar */
-    top: 219px; /* Adjust top as needed */
+    top: 200px; /* Adjust top as needed */
     background-color: #FFFFFF; /* Same background as sidebar */
     z-index: 1600; /* Ensure it appears above other content */
     opacity: 0; /* Start hidden */
@@ -400,101 +397,6 @@ header {
     transform: rotate(90deg);
 }
 
-.emp-dropdown-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    padding: 10px 20px; /* Adjust padding as needed */
-    color: #333;
-}
-
-.emp-dropdown-menu {
-    display: none;
-    width:220px; /* Adjust width as needed */
-    position: absolute;
-    left: 250px; /* Align the dropdown menu next to the extra-sidebar */
-    top: 265px; /* Adjust top as needed */
-    background-color: #FFFFFF; /* Same background as sidebar */
-    z-index: 1600; /* Ensure it appears above other content */
-    opacity: 0; /* Start hidden */
-    transform: translateY(-10px); /* Slide up initially */
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Add shadow for better visibility */
-}
-
-.emp-dropdown-active {
-    display: block;
-    opacity: 1; /* Fade in */
-    transform: translateY(0); /* Slide down */
-}
-
-.emp-dropdown-menu li a {
-    font-size: 14px; /* Adjust font size */
-    padding: 10px 20px;
-    color: #333;
-    text-decoration: none;
-    display: block;
-}
-
-.emp-dropdown-menu li a:hover {
-    background-color: #f0f0f0; /* Add hover effect */
-    
-
-}
-
-.emp-dropdown-active .bi-chevron-right {
-    transform: rotate(90deg);
-}
-
-
-
-.pending-dropdown-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    padding: 10px 20px; /* Adjust padding as needed */
-    color: #333;
-}
-
-.pending-dropdown {
-    display: none;
-    width:220px; /* Adjust width as needed */
-    position: absolute;
-    left: 250px; /* Align the dropdown menu next to the extra-sidebar */
-    top: 320px; /* Adjust top as needed */
-    background-color: #FFFFFF; /* Same background as sidebar */
-    z-index: 1600; /* Ensure it appears above other content */
-    opacity: 0; /* Start hidden */
-    transform: translateY(-10px); /* Slide up initially */
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Add shadow for better visibility */
-}
-
-.pending-dropdown-active {
-    display: block;
-    opacity: 1; /* Fade in */
-    transform: translateY(0); /* Slide down */
-}
-
-.pending-dropdown li a {
-    font-size: 14px; /* Adjust font size */
-    padding: 10px 20px;
-    color: #333;
-    text-decoration: none;
-    display: block;
-}
-
-.pending-dropdown li a:hover {
-    background-color: #f0f0f0; /* Add hover effect */
-    
-
-}
-
-.pending-dropdown-active .bi-chevron-right {
-    transform: rotate(90deg);
-}
 
 .profile-content {
     position: absolute;
@@ -600,26 +502,6 @@ footer {
     color: #888;
 }
 
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-  
-th, td {
-    border: 1px solid #dddddd;
-    text-align: center;
-    padding: 8px;
-    font-size: 12px;
-    color: black;
-    font-family: 'Poppins';
-}
-
-th {
-    background-color: #FF731E;
-    opacity: 87%;
-}
-
 .status-approved {
     color: green;
 }
@@ -629,59 +511,3 @@ th {
 .status-pending {
     color: orange;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

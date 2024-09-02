@@ -144,16 +144,25 @@ Route::get('/document/{filename}', function ($filename) {
 })->name('document.serve');
 
 //Route to view document
-Route::get('/admin/documents/view_docs/{document_id}', [DocumentController::class, 'view'])->name('admin.documents.view_docs');
+Route::get('/admin/documents/view_docs/{document_id}', [AdminController::class, 'view'])->name('admin.documents.view_docs');
+Route::get('/office_staff/documents/os_view_docs/{document_id}', [OfficeStaffController::class, 'view'])->name('office_staff.documents.os_view_docs');
+
 
 //Route to update document
-Route::get('/admin/documents/edit_docs/{document_id}', [DocumentController::class, 'edit'])->name('admin.documents.edit_docs');
-Route::put('/admin/documents/update/{document_id}', [DocumentController::class, 'update'])->name('admin.documents.update');
+Route::get('/admin/documents/edit_docs/{document_id}', [AdminController::class, 'edit'])->name('admin.documents.edit_docs');
+Route::put('/admin/documents/update/{document_id}', [AdminController::class, 'update'])->name('admin.documents.update');
+
+Route::get('/office_staff/documents/edit_docs/{document_id}', [OfficeStaffController::class, 'edit'])->name('office_staff.documents.edit_docs');
+Route::put('/office_staff/documents/update/{document_id}', [OfficeStaffController::class, 'update'])->name('office_staff.documents.update');
+
 
 //Route to count the total documents and employees
 Route::get('/admin/admin_dashboard', [AdminController::class, 'adminDashboard'])->name('admin.admin_dashboard');
-route::get('/admin/admin_dashboard', [AdminController::class, 'category_count'])->name('admin.admin_dashboard');
+Route::get('/admin/admin_dashboard', [AdminController::class, 'category_count'])->name('admin.admin_dashboard');
 Route::get('/admin/admin_dashboard', [AdminController::class, 'display_uploaded_docs'])->name('admin.admin_dashboard');
+Route::get('/office_staff/os_dashboard', [OfficeStaffController::class, 'display_uploaded_docs'])->name('office_staff.os_dashboard');
+Route::get('/office_staff/os_dashboard', [OfficeStaffController::class, 'category_count'])->name('office_staff.os_dashboard');
+
 
 Route::get('/admin/office_staff', [AdminController::class, 'showOfficeStaff'])->name('admin.office_staff');
 

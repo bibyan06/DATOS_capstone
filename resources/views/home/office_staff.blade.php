@@ -128,7 +128,7 @@
                             <i class="bi bi-envelope-fill mail-icon"></i>
                         </div>
                         <div class="notification-item">
-                            <img src="images/girl-1.png" alt="Profile Icon" class="profile-icon-notif">
+                            <img src="{{ asset ('images/girl-1.png') }}" alt="Profile Icon" class="profile-icon-notif">
                             <div class="notification-content-item">
                                 <span class="sender-name">DATOS</span>
                                 <span class="document-title">Audited Disbursement Voucher</span>
@@ -136,7 +136,7 @@
                             <i class="bi bi-envelope-fill mail-icon"></i>
                         </div>
                         <div class="notification-item">
-                            <img src="images/boy-2.png" alt="Profile Icon" class="profile-icon-notif">
+                            <img src="{{ asset ('images/boy-2.png')}}" alt="Profile Icon" class="profile-icon-notif">
                             <div class="notification-content-item">
                                 <span class="sender-name">DATOS</span>
                                 <span class="document-title">Claim Monitoring Sheet</span>
@@ -158,37 +158,41 @@
             </div>
         </section>
 
-    <section class="dashboard-overview">
-    <div class="documents">
-        @foreach($documents as $document)
-        <div class="documents-content">
-            <div class="document-card">
-                <iframe src="{{ Storage::url($document->file_path) }}" width="100%" height="200px"></iframe>
-            </div>                        
-            <div class="content">
-                <div class="row">
-                    <div class="column left">
-                        <h3>{{ $document->document_name }}</h3>
-                        <p>{{ $document->description }}</p>
-                    </div>
-                    <div class="column right">
-                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                        <div class="dropdown-more">
-                            <a href="{{ route('view-document', $document->id) }}">View</a>
-                            <a href="{{ route('download-document', $document->id) }}">Download</a>
-                            <a href="{{ route('edit-document', $document->id) }}">Edit</a>
+     <!-- Recent Documents -->
+     <section class="dashboard-overview">
+            @if($documents->isEmpty())
+                <p>No approved documents available.</p>
+            @else
+                @foreach($documents as $document)
+                <div class="documents-content">
+                    <div class="document-card">
+                        <!-- Use iframe to display the PDF -->
+                        <iframe src="{{ route('document.serve', basename($document->file_path)) }}" frameborder="0"></iframe>
+                        <div class="content">
+                            <div class="row">
+                                <div class="column left">
+                                    <h3>{{ $document->document_name }}</h3>
+                                    <p>{{ Str::limit($document->description, 100) }}</p>
+                                </div>
+                                <div class="column right">
+                                    <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
+                                    <div class="dropdown-more">
+                                        <a href="{{ route('office_staff.documents.os_view_docs', $document->document_id) }}" class="view-btn">View</a>
+                                        <a href="{{ route('document.serve', basename($document->file_path)) }}" download>Download</a>
+                                        <a href="{{ route('office_staff.documents.edit_docs', $document->document_id) }}">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="upload-date">
+                                <p>Date Uploaded: {{ \Carbon\Carbon::parse($document->upload_date)->format('F j, Y') }}</p>
+                            </div>
                         </div>
-                    </div>
+                    </div>  
                 </div>
-                <div class="upload-date">
-                    <p>Date Uploaded: {{ $document->upload_date }}</p>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
-</section>
-</main>
+                @endforeach
+            @endif
+        </section>     
+    </main>
 
     <footer>
         <div class="footer-content">

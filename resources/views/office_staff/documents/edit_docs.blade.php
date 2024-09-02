@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <header>
+<header>
         <div class="header-content">
             <div class="left-header">
                 <img src="{{ asset('images/Bicol_University.png') }}" alt="Bicol University Logo" class="logo">
@@ -22,36 +22,46 @@
                 <i class="bi bi-search"></i>
             </div>
             <div class="profile-icon">
-                <img src="{{ asset ('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
+                <img src="{{ asset('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
+                <div class="dropdown-menu" id="profile-dropdown">
+                    <a href="{{ route('office_staff.os_account') }}"><i class="bi bi-person-circle" id="account-icon"></i>Account</a>
+                    <a href="{{ route('logout') }}" 
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
+                    </a>
+                </div>
             </div>
         </div>
     </header>
 
-    
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+
     <nav class="navbar">
         <div class="navbar-content">
             <div class="logo-container">
-                <img src="{{ asset ('images/sidebar-logo.png') }}" alt="Bicol University Logo" class="nav-logo">
+                <img src=" {{ asset ('images/sidebar-logo.png') }}" alt="Bicol University Logo" class="nav-logo">
             </div>
             <ul class="nav-icons">
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-house-fill" id="home-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-file-earmark-fill" id="digitized-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-bell-fill" id="notification"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-cloud-arrow-up-fill" id="upload-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-search" id="search-icon"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-house-fill" id="home-icon"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-file-earmark-fill"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-bell-fill"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-cloud-arrow-up-fill"></i></div></li>
+                <li><div class="icon-container" data-target="#home"><i class="bi bi-search"></i></div></li>
             </ul>
             <div class="profile-settings">
                 <div class="profile-settings">
-                    <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill"></i></div>
-                    <div class="icon-container" data-target="#sidebar"><img src="{{ asset ('images/boy-1.png') }}" alt="Profile Icon" class="profile-pic"></div>
+                    <div class="icon-container" data-target="#home"><i class="bi bi-door-open-fill"></i></div>
+                    <div class="icon-container" data-target="#home"><img src="{{ asset ('images/boy-1.png') }}" alt="Profile Icon" class="profile-pic"></div>
                 </div>
                 
             </div>
         </div>
     </nav>
 
-    <div class="extra-sidebar" id="home">
+    <div class="extra-sidebar" id="sidebar">
         <div class="sidebar-content">
             <div class="sidebar-title">
                 <h3>DASHBOARD</h3>
@@ -59,27 +69,30 @@
             </div>
             <ul>
                 <li><a href="{{ route('home.office_staff') }}" id="home">Home</a></li>
-                <li><a href="{{ route('office_staff.os_dashboard') }}">Digitized Report</a></li>
+                <li><a href="{{ route('office_staff.os_dashboard') }}" id="report">Digitized Report</a></li>
                 <li>
-                    <a href="#" class="more-dropdown-toggle">Digitized Documents <i class="bi bi-chevron-right"></i></a>
+                    <a href="#" class="dropdown-toggle" id="digitized">Digitized Documents <i class="bi bi-chevron-right"></i></a>
+                    
                     <ul class="more-dropdown-menu">
-                        <li><a href="{{ route('office_staff.documents.memorandum') }}"><i class="bi bi-card-heading" id="memo-icon"></i> Memorandum</a></li>
-                        <li><a href="staff_admin_orders.html">Administrative Order</a></li>
-                        <li><a href="staff_mrsp.html"><i class="bi bi-calendar-event-fill"></i> Monthly Report Service Personnel</a></li>
-                        <li><a href="staff_cms.html"><i class="bi bi-receipt-cutoff"></i> Claim Monitoring Sheet</a></li>
-                        <li><a href="staff_audit.html"><i class="bi bi-credit-card-2-front-fill"></i> Audited Documents</a></li>
+                        <li><a href="{{ route ('office_staff.documents.memorandum') }}" id="memorandum">Memorandum</a></li>
+                        <li><a href="staff_admin_orders.html" id="admin_order">Administrative Order</a></li>
+                        <li><a href="staff_mrsp.html" id="mrsp">Monthly Report Service Personnel</a></li>
+                        <li><a href="staff_cms.html" id="cms">Claim Monitoring Sheet</a></li>
+                        <li><a href="staff_audit.html" id="audit">Audited Documents</a></li>
                     </ul>
-                </li>
+
+                </li>           
             </ul>
             <ul>
-                <li><a href="{{ route('office_staff.os_notification') }}">Notifications</a></li>
-                <li><a href="{{ route('office_staff.os_upload_document') }}">Upload</a></li>
+                <li><a href="{{ route ('office_staff.os_notification') }}" id="announcements-icon">Notifications</a></li>
+                <li><a href="{{ route ('office_staff.os_upload_document') }}" id="upload">Upload</a></li>
                 <li><a href="{{ route('office_staff.documents.os_all_docs') }}" id="search">Search</a></li>
+                
             </ul>
             <div class="profile-content">
                 <ul>
-                    <li><a href="{{ route('logout') }}"><i class="bi bi-door-open-fill"></i> Logout</a></li>
-                    <li><a href="{{ route('profile') }}">Profile</a></li>
+                    <li><a href="{{ route('logout') }}">Logout</a></li>
+                    <li><a href="{{ route ('office_staff.os_account') }}" id="account">Profile</a></li>
                 </ul>
             </div>
         </div>
@@ -89,45 +102,99 @@
         <div class="documents-content">
             <div class="doc-container">
                 <div class="view-documents">
-                    <div class="doc-description">
-                        <a href="#" class="back-icon" onclick="showBackPopup()">
-                            <i class="bi bi-arrow-return-left"></i>
-                        </a>                        
-                        <h5 class="file-title">Title:</h5>
-                            <input type="text" class="document_name" value="Administrative Order No. 331 Series of 2023">
-                        <h5 class="issued_date">Issued Date:</h5>
-                            <input type="text" class="issued_date" value="June 2, 2023">
-                        <div class="description">
-                            <h5>Description:</h5>
-                                <textarea class="description">
-                                In view of the University's continued quest for quality management system and to ensure the highest level of efficiency and effectiveness in the performance of office transactions at the office of the University President, you are hereby designated as Senior Staff at the Presidential Management Staff Office and University Documents and Records Controller on concurrent capacity effective 02 May 2023 until revoked by a subsequent issuance from this Office in accordance with the existing Civil Service rules and regulations.
-                                </textarea>
+
+                 <!-- Display success message if present -->
+                 @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
                         </div>
-                    </div>
+                    @endif
+
+                    <form action="{{ route('office_staff.documents.update', $document->document_id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                        <div class="doc-description">
+                            <a href="#" class="back-icon" onclick="confirmBack(event)">
+                                <i class="bi bi-arrow-return-left"></i>
+                            </a>                        
+                            <h5 class="file-title">Title:</h5>
+                                <input type="text" name="document_name" class="document_name form-control" value="{{ old('document_name', $document->document_name) }}" required>
+                            <h5>Date Uploaded:</h5>
+                                <h3 class="issued_date">{{ \Carbon\Carbon::parse($document->upload_date)->format('F j, Y') }}</h3>
+                            <div class="description">
+                                <h5>Description:</h5>
+                                <textarea name="description" class="description form-control" rows="5" required>{{ old('description', $document->description) }}</textarea>
+                            </div>
+                        </div>
                         <div class="viewing-btn">
-                            <button class="cancel-btn" onclick="cancelEditing()">Cancel</button>
-                            <button class="save-btn" onclick="saveChanges()">Save Changes</button>
+                            <button type="button" class="save-btn">Save Changes</button>
+                            <button href="{{ route('office_staff.documents.os_view_docs', $document->document_id) }}" class="cancel-btn" style="background-color: red;"  onclick="confirmBack(event)">Cancel</button>
                         </div>
                         <div class="doc-file">
-                            <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0&zoom=125" width="100%" height="600px"></iframe>
+                             <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0&zoom=126" frameborder="0"></iframe>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
+        </div>
     </main>
-            <!-- Popup message for back icon -->
-        <div id="back-popup" class="popup-message">
-            <p>Are you sure you want to go back?</p>
-            <button onclick="confirmBack()">Yes</button>
-            <button onclick="hideBackPopup()">No</button>
-        </div>  
+           
     <footer>
         <div class="footer-content">
             <p>© 2023 Bicol University. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="js/os/staff_edit.js"></script>
-    <script src="js/os/staff_page.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset ('js/edit_document.js') }}"></script>
+    <script src="{{ asset ('js/os/staff_page.js') }}"></script>
+
+    <script>
+        function confirmBack(event) {
+            event.preventDefault(); // Prevent default anchor behavior
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You will lose any unsaved changes!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{ route('office_staff.documents.os_view_docs', $document->document_id) }}";
+                }
+            });
+        }
+
+        document.querySelector('.save-btn').addEventListener('click', function(event) {
+            event.preventDefault(); 
+
+            Swal.fire({
+                title: 'Save changes?',
+                text: "Are you sure you want to save these changes?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, save it',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Your changes have been saved.',
+                        icon: 'success',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        event.target.closest('form').submit();
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

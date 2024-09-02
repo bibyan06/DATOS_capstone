@@ -134,7 +134,7 @@ class AdminController extends Controller
     public function adminDashboard()
     {
         // Count the total number of approved documents
-        $totalDocuments = Document::where('document_status', 'approved')->count();
+        $totalDocuments = Document::where('document_status', 'Approved')->count();
 
         // Count the total number of employees
         $totalEmployees = Employee::count();
@@ -143,6 +143,40 @@ class AdminController extends Controller
         return view('admin.admin_dashboard', compact('totalDocuments', 'totalEmployees'));
     }
 
+    public function view($document_id)
+    {
+        $document = Document::findOrFail($document_id);
+
+        if (!$document) {
+            abort(404, 'Document not found.');
+        }
+    
+        return view('admin.documents.view_docs', compact('document'));
+    }
+
+    public function edit($document_id)
+    {
+        $document = Document::find($document_id);
+        return view('admin.documents.edit_docs', compact('document'));
+    }
+
+    public function update(Request $request, $document_id)
+    {
+        $request->validate([
+            'document_name' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        $document = Document::findOrFail($document_id);
+        $document->document_name = $request->input('document_name');
+        $document->description = $request->input('description');
+        $document->save();
+
+        return redirect()->route('admin.documents.view_docs', $document_id)
+                         ->with('success', 'Document updated successfully.');
+    }
+
+
     public function category_count()
     {
         // Fetch totals for the dashboard
@@ -150,10 +184,10 @@ class AdminController extends Controller
         $totalEmployees = User::count();
 
         // Fetch counts by document category
-        $claimMonitoringSheetCount = Document::where('category_name', 'Claim Monitoring Sheet')->where('document_status', 'approved')->count();
+        $claimMonitoringSheetCount = Document::where('category_name', 'Claim Monitoring Sheet')->where('document_status', 'Approved')->count();
         $memorandumCount = Document::where('category_name', 'Memorandum')->where('document_status', 'approved')->count();
-        $mrspCount = Document::where('category_name', 'Monthly Report Service of Personnel')->where('document_status', 'approved')->count();
-        $auditedDVCount = Document::where('category_name', 'Audited Disbursement Voucher')->where('document_status', 'approved')->count();
+        $mrspCount = Document::where('category_name', 'Monthly Report Service of Personnel')->where('document_status', 'Approved')->count();
+        $auditedDVCount = Document::where('category_name', 'Audited Disbursement Voucher')->where('document_status', 'Approved')->count();
 
         return view('admin.admin_dashboard', compact(
             'totalDocuments', 'totalEmployees',
@@ -163,12 +197,13 @@ class AdminController extends Controller
 
     public function display_uploaded_docs()
     {
-        $currentUserName = Auth::user()->first_name . ' ' . Auth::user()->last_name;
-        $documents = Document::where('uploaded_by', $currentUserName)->get();
+        // Fetch all documents from the documents table
+        $documents = Document::all();
 
         // Additional data for the dashboard (e.g., counts)
         $totalDocuments = Document::count();
         $totalEmployees = Employee::count();
+        
         $claimMonitoringSheetCount = Document::where('category_name', 'claim_monitoring_sheet')->count();
         $memorandumCount = Document::where('category_name', 'memorandum')->count();
         $mrspCount = Document::where('category_name', 'mrsp')->count();
@@ -184,6 +219,7 @@ class AdminController extends Controller
             'auditedDVCount'
         ));
     }
+
 
     public function showOfficeStaff()
     {

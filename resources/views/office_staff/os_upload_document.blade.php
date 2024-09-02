@@ -5,71 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Office Staff Upload Document</title>
-
-    <!-- CSS Files -->
     <link rel="stylesheet" href="{{ asset('css/os/staff_upload.css') }}">
     <link rel="stylesheet" href="{{ asset('css/os/staff_page.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
-   
-    <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-   
-    <!-- JavaScript Files -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Internal Styles -->
-    <style>
-        .document_number {
-            width: 30px;
-        }
-
-        .standby-files {
-            margin-top: 20px;
-        }
-
-        .standby-file {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            position: relative;
-        }
-
-        .standby-file i {
-            margin-right: 10px;
-        }
-
-        .delete-button {
-            position: absolute;
-            right: 10px;
-            cursor: pointer;
-            color: red;
-            font-size: 20px; /* Adjust size as needed */
-            display: inline-block; /* Ensure it’s displayed */
-            background: transparent;
-            border: none;
-            font-family: 'Arial', sans-serif; /* Ensure proper font family */
-        }
-
-        .file-preview {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .file-preview img {
-            max-height: 50px;
-            margin-right: 10px;
-        }
-
-        .upload-area.drag-over {
-            border: 2px dashed #007bff;
-            background-color: #f0f8ff;
-        }
-    </style>
 </head>
 
 <body>
@@ -158,8 +97,7 @@
                 <h3>Upload Document</h3>
             </div>
         </section>
-
-        <div class="dashboard-container">
+            <div class="dashboard-container">
             <div class="upload-section">
                 <div class="upload-box">
                 <div class="upload-area" id="upload-area" 
@@ -178,7 +116,7 @@
                         <ul id="file-list"></ul>
                     </div>
                 </div>
-                
+
                 <div class="form-section">
                      <!-- Display error messages here -->
                      @if ($errors->any())
@@ -197,25 +135,25 @@
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
-                <form id="uploadDocumentForm" action="{{route('office_staff.os_upload_document')}}" method="POST" enctype="multipart/form-data">
+                <form id="uploadDocumentForm" action="{{route('admin.admin_upload_document')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="document-number">Document Number</label>
-                        <input type="text" id="document-number" name="document_number" class="form-control" placeholder="Enter Document Number">
+                        <input type="text" id="document-number" name="document_number" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="document-name">Document Name</label>
-                        <input type="text" id="document-name" name="document_name" class="form-control" placeholder="Enter Document Name">
+                        <input type="text" id="document-name" name="document_name" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea id="description" name="description" class="form-control" rows="3" placeholder="Enter Document Description"></textarea>
+                        <textarea id="description" name="description" class="form-control" rows="3"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="category_name">Category</label>
                         <select name="category_name" id="category_name" class="form-control">
                             @foreach($categories as $category)
-                                <!-- <option value="">Select Category</option> -->
+                            <!-- <option value="">Select Category</option> -->
                                 <option value="{{ $category->category_name }}">{{ $category->category_name }}</option>
                             @endforeach
                         </select>
@@ -238,7 +176,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
-    <script src="{{ asset('js/os/staff_upload.js') }}"></script>
+    <script src="{{ asset('js/upload_document.js') }}"></script>
     <script src="{{ asset ('js/os/staff_page.js') }}"></script>
 
     <script>
@@ -299,7 +237,6 @@
         }
     });
 
-
     function handleDrop(event) {
         event.preventDefault();
         const files = event.dataTransfer.files;
@@ -315,46 +252,63 @@
         document.getElementById('upload-area').classList.remove('drag-over');
     }
 
+    // <!-- Inside the handleFiles function -->
     function handleFiles(files) {
-    const fileList = document.getElementById('file-list');
-    const maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
+        const fileInput = document.getElementById('file-input');
+        const fileList = document.getElementById('file-list');
 
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+        // Clear the previous file list
+        fileList.innerHTML = '';
 
-        // Validate the file type (must be PDF)
-        if (file.type !== "application/pdf") {
-            Swal.fire({
-                icon: 'error',
-                title: 'Invalid File Type',
-                text: 'Only PDF files are allowed!',
-                confirmButtonText: 'OK'
-            });
-            continue;
+        // Loop through the selected files
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+
+            // Check if the file is a PDF and under 5MB
+            if (file.type === 'application/pdf' && file.size <= 5242880) {
+                // Create a list item for the file
+                const listItem = document.createElement('li');
+                listItem.classList.add('file-item');
+
+                // Add the PDF icon
+                const icon = document.createElement('i');
+                icon.classList.add('bi', 'bi-file-earmark-pdf-fill', 'pdf-icon');
+
+                // Add file name text
+                const fileName = document.createElement('span');
+                fileName.textContent = file.name;
+
+                // Add a delete button next to the file name
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'X';
+                deleteButton.classList.add('delete-btn');
+                deleteButton.addEventListener('click', function() {
+                    // Remove the file from the input
+                    fileInput.value = '';
+                    // Remove the list item from the UI
+                    listItem.remove();
+                });
+
+                // Append icon, file name, and delete button to the list item
+                listItem.appendChild(icon);
+                listItem.appendChild(fileName);
+                listItem.appendChild(deleteButton);
+                
+                // Append the list item to the file list
+                fileList.appendChild(listItem);
+
+                // Manually set the selected file in the file input
+                fileInput.files = files;
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid file',
+                    text: 'Please upload a valid PDF file of up to 5MB.',
+                    confirmButtonText: 'OK'
+                });
+            }
         }
-
-        // Validate the file size (must be less than 5MB)
-        if (file.size > maxFileSize) {
-            Swal.fire({
-                icon: 'error',
-                title: 'File Too Large',
-                text: 'The file size must not exceed 5MB!',
-                confirmButtonText: 'OK'
-            });
-            continue;
-        }
-
-        // Display the file in the uploaded files section
-        const listItem = document.createElement('li');
-        listItem.className = 'standby-file';
-        listItem.innerHTML = `
-            <i class="bi bi-file-earmark-pdf-fill"></i>
-            <span>${file.name}</span>
-            <button class="delete-button" onclick="removeFile(this)">&times;</button>
-        `;
-        fileList.appendChild(listItem);
     }
-}
 
     document.getElementById('file-input').addEventListener('change', (event) => {
         handleFiles(event.target.files);

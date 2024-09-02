@@ -151,40 +151,6 @@ class DocumentController extends Controller
         return view('admin.documents.approved_docs', compact('documents'));
     }
 
-    //To show/view the documents
-    public function view($document_id)
-    {
-        $document = Document::findOrFail($document_id);
-
-        if (!$document) {
-            abort(404, 'Document not found.');
-        }
-    
-        return view('admin.documents.view_docs', compact('document'));
-    }
-
-    public function edit($document_id)
-    {
-        $document = Document::find($document_id);
-        return view('admin.documents.edit_docs', compact('document'));
-    }
-
-    public function update(Request $request, $document_id)
-    {
-        $request->validate([
-            'document_name' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
-
-        $document = Document::findOrFail($document_id);
-        $document->document_name = $request->input('document_name');
-        $document->description = $request->input('description');
-        $document->save();
-
-        return redirect()->route('admin.documents.view_docs', $document_id)
-                         ->with('success', 'Document updated successfully.');
-    }
-
 
     public function serve($filename)
     {
