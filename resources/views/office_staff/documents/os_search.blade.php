@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bicol University Home</title>
+    <title>View All Documents</title>
     <link rel="stylesheet" href="{{ asset ('css/all_docs.css') }}">
     <link rel="stylesheet" href="{{ asset ('css/os/staff_page.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -17,9 +17,12 @@
                 <h1>BICOL <span>UNIVERSITY</span></h1>
             </div>
             <div class="search-container">
-                <input type="text" id="sidebar-search" placeholder="Search">
+                <input type="text" id="sidebar-search" placeholder="Search" autocomplete="off">
+                <datalist id="searchDropdown"></datalist>
                 <i class="bi bi-search"></i>
+                <div id="suggestions-container" class="suggestions-container"></div>
             </div>
+
             <div class="profile-icon">
                 <img src="{{ asset ('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
             </div>
@@ -73,7 +76,7 @@
             <ul>
                 <li><a href="{{ route('office_staff.os_notification') }}">Notifications</a></li>
                 <li><a href="{{ route('office_staff.os_upload_document') }}">Upload</a></li>
-                <li><a href="{{ route('office_staff.documents.os_all_docs') }}" id="search">Search</a></li>
+                <li><a href="{{ route('office_staff.documents.os_search') }}" id="search">Search</a></li>
             </ul>
             <div class="profile-content">
                 <ul>
@@ -109,7 +112,7 @@
             </div>
         </div>
 
-        <div class="dashboard-container">
+        <div class="dashboard-container" id="documents-container">
         @forelse($documents as $document)
             <div class="document">
                 <div class="file-container">
@@ -151,11 +154,12 @@
 
     <script>
     document.getElementById('category-filter').addEventListener('change', function() {
-            let selectedCategory = this.value;
+        let selectedCategory = this.value;
 
-            // Redirect to the filtered documents page
-            window.location.href = `{{ route('office_staff.documents.os_all_docs') }}?category=${selectedCategory}`;
-        });
+        // Redirect to the filtered documents page
+        window.location.href = `{{ route('office_staff.documents.os_search') }}?category=${selectedCategory}`;
+    });
+
     </script>
     
     <script src="{{ asset ('js/os/staff_page.js') }}"></script>

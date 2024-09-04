@@ -440,6 +440,33 @@ header {
     margin: 5px;
 }
 
+.suggestions-container {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    width: 100%;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none; /* Hidden by default */
+    z-index: 1000;
+}
+
+.suggestions-container .suggestion-item {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+.suggestions-container .suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestions-container .suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+
 
 footer {
     background-color: #f9f9f9;

@@ -31,9 +31,9 @@ class OfficeStaffController extends Controller
         return view('office_staff.documents.memorandum');
     }
 
-    public function os_all_docs()
+    public function search()
     {
-        return view('office_staff.documents.os_all_docs');
+        return view('office_staff.documents.os_search');
     }
     public function os_view_docs()
     {
@@ -59,11 +59,28 @@ class OfficeStaffController extends Controller
     // Proceed with the action
     }
 
+    public function searchDocument(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Search for documents by name
+        $documents = Document::where('document_name', 'LIKE', "%{$query}%")
+            ->orWhereHas('tags', function ($q) use ($query) {
+                $q->where('tag_name', 'LIKE', "%{$query}%");
+            })
+            ->with('tags')
+            ->get();
+
+        // Return the search results as JSON
+        return response()->json($documents);
+    }
+
+
     public function showApprovedDocuments()
     {
         // Fetch all approved documents
         $documents = Document::where('document_status', 'Approved')->get();
-        return view('office_staff.documents.os_all_docs', compact('documents'));
+        return view('office_staff.documents.os_search', compact('documents'));
     }
 
     public function showAllDocs(Request $request)
@@ -73,7 +90,7 @@ class OfficeStaffController extends Controller
 
         $query = Document::query();
 
-        if ($request->has('category_name') && !empty($request->category)) {
+        if ($request->has('category') && !empty($request->category)) {
             // Debugging: Log the query
             \Log::info('Filtering by category: ' . $request->category);
             $query->where('category_name', $request->category);
@@ -81,8 +98,9 @@ class OfficeStaffController extends Controller
 
         $documents = $query->where('document_status', 'Approved')->get();
 
-        return view('office_staff.documents.os_all_docs', compact('documents'));
+        return view('office_staff.documents.os_search', compact('documents'));
     }
+
 
     public function showHomePage()
     {

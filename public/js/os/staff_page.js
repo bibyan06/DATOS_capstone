@@ -38,3 +38,46 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+document.addEventListener('click', function(e) {
+    let suggestionsContainer = document.getElementById('suggestions-container');
+    if (!suggestionsContainer.contains(e.target) && e.target !== document.getElementById('header-search')) {
+        suggestionsContainer.style.display = 'none'; // Hide suggestions when clicking outside
+    }
+});
+
+document.getElementById('sidebar-search').addEventListener('input', function() {
+    let query = this.value;
+
+    if (query.length >= 1) { // Start searching after 1 character
+        fetch(`{{ route('office_staff.documents.os_search') }}?query=${query}`, {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            let suggestionsContainer = document.getElementById('suggestions-container');
+            suggestionsContainer.innerHTML = ''; // Clear previous suggestions
+            
+            if (data.length > 0) {
+                data.forEach(document => {
+                    let suggestionHtml = `
+                        <div class="suggestion-item">
+                            <span>${document.document_name}</span>
+                        </div>
+                    `;
+                    suggestionsContainer.insertAdjacentHTML('beforeend', suggestionHtml);
+                });
+                suggestionsContainer.style.display = 'block'; // Show suggestions
+            } else {
+                suggestionsContainer.innerHTML = '<p>No matches found.</p>';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    } else {
+        document.getElementById('suggestions-container').style.display = 'none'; // Hide suggestions if query is empty
+    }
+});
+

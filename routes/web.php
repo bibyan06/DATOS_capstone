@@ -71,7 +71,7 @@ Route::get('/office_staff/os_account', [OfficeStaffController::class, 'os_accoun
 Route::get('/office_staff/os_upload_document', [OfficeStaffController::class, 'os_upload_document'])->name('office_staff.os_upload_document');
 Route::get('/office_staff/os_notification', [OfficeStaffController::class, 'os_notification'])->name('office_staff.os_notification');
 Route::get('/office_staff/documents/memorandum', [OfficeStaffController::class, 'memorandum'])->name('office_staff.documents.memorandum');
-Route::get('/office_staff/documents/os_all_docs', [OfficeStaffController::class, 'os_all_docs'])->name('office_staff.documents.os_all_docs');
+Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'search'])->name('office_staff.documents.os_search');
 Route::get('/office_staff/documents/os_view_docs', [OfficeStaffController::class, 'os_view_docs'])->name('office_staff.documents.os_view_docs');
 Route::get('/office_staff/documents/edit_docs', [OfficeStaffController::class, 'edit_docs'])->name('office_staff.documents.edit_docs');
 
@@ -125,7 +125,7 @@ Route::post('/admin/admin_upload_document', [DocumentController::class, 'store']
 // Route to approve a document
 Route::post('/admin/documents/approve_docs/{id}', [DocumentController::class, 'approve'])->name('admin.documents.approve');
 Route::get('/admin/documents/approved_docs', [DocumentController::class, 'showApprovedDocuments'])->name('admin.documents.approved_docs');
-Route::get('/office_staff/documents/os_all_docs', [OfficeStaffController::class, 'showApprovedDocuments'])->name('office_staff.documents.os_all_docs');
+Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'showApprovedDocuments'])->name('office_staff.documents.os_search');
 // Route::get('/home/office_staff/documents-overview', [DocumentController::class, 'showOfficeStaffDocumentsOverview'])->name('home.office_staff.documents_overview');
 route::get('/home/admin', [AdminController::class, 'adminHome'])->name('home.admin');
 
@@ -165,8 +165,11 @@ Route::get('/office_staff/os_dashboard', [OfficeStaffController::class, 'categor
 
 Route::get('/admin/office_staff', [AdminController::class, 'showOfficeStaff'])->name('admin.office_staff');
 
-//Route for Search function 
-route::get('/office_staff/documents/os_all_docs', [OfficeStaffController::class, 'showAllDocs'])->name('office_staff.documents.os_all_docs');
+//Route for Filtering documents 
+route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'showAllDocs'])->name('office_staff.documents.os_search');
+
+//Route for Search function
+Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'searchDocument'])->name('documents.os_search');
 
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');

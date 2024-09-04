@@ -150,6 +150,7 @@ class DocumentController extends Controller
         $documents = Document::where('document_status', 'approved')->get();
         return view('admin.documents.approved_docs', compact('documents'));
     }
+    
 
 
     public function serve($filename)
