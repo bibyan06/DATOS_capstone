@@ -71,7 +71,6 @@ Route::get('/office_staff/os_account', [OfficeStaffController::class, 'os_accoun
 Route::get('/office_staff/os_upload_document', [OfficeStaffController::class, 'os_upload_document'])->name('office_staff.os_upload_document');
 Route::get('/office_staff/os_notification', [OfficeStaffController::class, 'os_notification'])->name('office_staff.os_notification');
 Route::get('/office_staff/documents/memorandum', [OfficeStaffController::class, 'memorandum'])->name('office_staff.documents.memorandum');
-Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'search'])->name('office_staff.documents.os_search');
 Route::get('/office_staff/documents/os_view_docs', [OfficeStaffController::class, 'os_view_docs'])->name('office_staff.documents.os_view_docs');
 Route::get('/office_staff/documents/edit_docs', [OfficeStaffController::class, 'edit_docs'])->name('office_staff.documents.edit_docs');
 
@@ -169,7 +168,7 @@ Route::get('/admin/office_staff', [AdminController::class, 'showOfficeStaff'])->
 route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'showAllDocs'])->name('office_staff.documents.os_search');
 
 //Route for Search function
-Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'searchDocument'])->name('documents.os_search');
+Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'searchDocuments'])->name('office_staff.documents.os_search');
 
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');

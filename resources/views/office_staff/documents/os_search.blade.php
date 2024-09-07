@@ -8,6 +8,28 @@
     <link rel="stylesheet" href="{{ asset ('css/os/staff_page.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <style>
+        /* Add styles for search results */
+        .search-results-container {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid #ccc;
+            z-index: 1000;
+        }
+        .search-result-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .search-result-item:hover {
+            background: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -20,8 +42,7 @@
                 <input type="text" id="sidebar-search" placeholder="Search" autocomplete="off">
                 <datalist id="searchDropdown"></datalist>
                 <i class="bi bi-search"></i>
-                <div id="suggestions-container" class="suggestions-container"></div>
-            </div>
+                <div id="search-results-container" class="search-results-container"></div>            </div>
 
             <div class="profile-icon">
                 <img src="{{ asset ('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
@@ -152,6 +173,9 @@
         </div>
     </footer>
 
+    <script src="{{ asset ('js/os/staff_page.js') }}"></script>
+    <script src="{{ asset ('js/all_docs.js') }}"></script>
+    
     <script>
     document.getElementById('category-filter').addEventListener('change', function() {
         let selectedCategory = this.value;
@@ -160,9 +184,43 @@
         window.location.href = `{{ route('office_staff.documents.os_search') }}?category=${selectedCategory}`;
     });
 
+    // const searchRoute = "{{ route('office_staff.documents.os_search') }}";
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('sidebar-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const query = this.value;
+
+                fetch(`${searchRoute}?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        // Render search results in the DOM
+                        const suggestionsContainer = document.getElementById('suggestions-container');
+                        suggestionsContainer.innerHTML = ''; // Clear previous suggestions
+
+                        if (data.length) {
+                            data.forEach(doc => {
+                                const suggestionItem = document.createElement('div');
+                                suggestionItem.className = 'suggestion-item';
+                                suggestionItem.textContent = doc.document_name;
+                                suggestionItem.addEventListener('click', function() {
+                                    window.location.href = `{{ route('office_staff.documents.os_view_docs', '') }}/${doc.document_id}`;
+                                });
+                                suggestionsContainer.appendChild(suggestionItem);
+                            });
+                        } else {
+                            suggestionsContainer.innerHTML = '<p>No results found</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        }
+    });
     </script>
     
-    <script src="{{ asset ('js/os/staff_page.js') }}"></script>
-    <script src="{{ asset ('js/all_docs.js') }}"></script>
 </body>
 </html>

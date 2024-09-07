@@ -47,6 +47,7 @@ document.addEventListener('click', function(e) {
 });
 
 document.getElementById('sidebar-search').addEventListener('input', function() {
+    console.log('Input event triggered');
     let query = this.value;
 
     if (query.length >= 1) { // Start searching after 1 character
@@ -58,6 +59,7 @@ document.getElementById('sidebar-search').addEventListener('input', function() {
         })
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             let suggestionsContainer = document.getElementById('suggestions-container');
             suggestionsContainer.innerHTML = ''; // Clear previous suggestions
             
@@ -80,4 +82,19 @@ document.getElementById('sidebar-search').addEventListener('input', function() {
         document.getElementById('suggestions-container').style.display = 'none'; // Hide suggestions if query is empty
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const query = 'd'; // Example query, replace with dynamic value if needed
+
+    fetch(`${searchUrl}?query=${query}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // Render search results in the DOM
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+
 

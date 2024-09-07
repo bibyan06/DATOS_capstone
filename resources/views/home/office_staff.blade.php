@@ -86,7 +86,7 @@
             <ul>
                 <li><a href="{{ route ('office_staff.os_notification') }}" id="announcements-icon">Notifications</a></li>
                 <li><a href="{{ route ('office_staff.os_upload_document') }}" id="upload">Upload</a></li>
-                <li><a href="{{ route('office_staff.documents.os_search') }}" id="search">Search</a></li>
+                <li><a href="{{ route ('office_staff.documents.os_search') }}" id="search">Search</a></li>
                 
             </ul>
             <div class="profile-content">
