@@ -1,119 +1,185 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dean Home</title>
-    <link rel="stylesheet" href="{{ asset('css/os_landing_page.css') }}">
-    <link rel="stylesheet" href="{{ asset ('css/main.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
-<body>
-<header>
-        <div class="header-content">
-            <div class="left-header">
-                <img src="{{ asset('images/Bicol_University.png') }}" alt="Bicol University Logo" class="logo">
-                <h1>BICOL <span>UNIVERSITY</span></h1>
-            </div>
-            <div class="profile-icon">
-                <img src="{{ asset('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
-                <div class="dropdown-menu" id="profile-dropdown">
-                    <a href="{{ route('dean.dean_account') }}"><i class="bi bi-person-circle" id="account-icon"> </i>Account</a>
-                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
-            </div>   
-        </div>
-    </header>
+@extends('layouts.dean_layout')
 
-    <nav>
-        <div class="nav-content">
-            <div class="nav-left">
-                <a href="#" class="menu-icon" id="menu-toggle"><i class="bi bi-list"></i></a>
-                <img src="{{asset('images/datos.png')}}" alt="Nav Logo" class="nav-logo">
-                <ul>
-                    <li><a href="{{ route('home.dean') }}" id="home-link">Home</a></li>
-                    <li><a href="{{ route('dean.dean_dashboard') }}">Dashboard</a></li>
-                </ul>
-            </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Search Document">
-            </div>
-        </div>
-    </nav>
+@section('title', 'Dean Home' )
 
-    <div id="main-content">
-        <div class="sidebar" id="sidebar">
-            <ul>
-                <li>
-                    <a href="{{ route('home.dean') }}"><i class="bi bi-house-fill" id="home-icon"></i> Home</a>
-                </li>
-                <li>    
-                        <a href="{{ route('dean.dean_dashboard') }}"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i>   Dashboard</a>
-                </li>
-            </ul>
-            <div class="settings">
-                <ul><li>
-                    <a href="{{route('dean.dean_account')}}"><i class="bi bi-person-circle" id="account-icon"></i> Account</a>
-                    <a href="{{ route('logout') }}"><i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout</a>
-                </li></ul>
+@section('custom-css')
+    <link rel="stylesheet" href="{{ asset ('css/dean/dean_home.css') }}">
+@endsection
+
+@section('main-id','home-section')
+
+@section('content')
+<section class="welcome-section">
+            <div class="welcome-message">
+                <h2>Welcome Back Kent Dela Pena</h2>
+                <p>Streamlining document management and access for all Bicol University personnel.</p>
             </div>
-        </div>
+        </section>
 
-        <main id="home-section">
-            <section class="welcome-section">
-                <div class="welcome-message">
-                    <h2>Welcome back, Dean!</h2>
-                    <p>Streamlining document management and access for all Administrative Service Division Office personnel.</p>
-                </div>
-                <div class="current-time">
-                    <h3>10:30 AM</h3>
-                    <p>Monday, 13 April</p>
-                </div>
-            </section>
-
-            <section class="documents-section">
-                <h2>Recent Documents</h2>
-                <div class="documents">
-                    <div class="documents-content">
-                        <div class="document-card">
-                            <iframe src="{{ Storage::url('CERTIFICATION.pdf') }}" width="100%" height="200px"></iframe>
-                        </div>                        
-                        <div class="content">
-                            <div class="row">
-                                <div class="column left">
-                                    <h3>Office Memorandum No. 84</h3>
-                                    <p>In observance of the Holy Week...</p>
-                                </div>
-                                <div class="column right">
-                                    <a href="#"><i class="bi bi-three-dots-vertical" id="dropdownMenuButton" style="cursor: pointer;"></i></a>
-                                    <div class="dropdown-more" id="more-option">
-                                        <a href="view-document.html">View</a>
-                                        <a href="#">Download</a>
-                                        <a href="edit-document.html">Edit</a>
-                                    </div>
-                                </div>
+        <section class="shortcuts">
+            <div class="container square" id="documents-shortcut">
+                <img src="{{ asset ('images/document-logo.png') }}" alt="Documents Logo">
+                <p>See Documents Here</p>
+            </div>
+            <div class="container square" id="upload-shortcut">
+                <img src="{{ asset ('images/upload-logo.png') }}" alt="Upload Logo">
+                <p>Upload Documents Here</p>
+            </div>
+            <div class="container rectangle" id="notifications">
+                <h4>Notifications</h4>
+                <div class="notification-content">
+                    <div class="notification-list">
+                        <div class="notification-item">
+                            <img src="{{ asset ('images/boy-2.png') }}" alt="Profile Icon" class="profile-icon-notif">
+                            <div class="notification-content-item">
+                                <span class="sender-name">DATOS</span>
+                                <span class="document-title">New Memorandum Available</span>
                             </div>
-                            <div class="upload-date">
-                                <p>Date Uploaded: April 2, 2024</p>
+                            <i class="bi bi-envelope-fill mail-icon"></i>
+                        </div>
+                        <div class="notification-item">
+                            <img src="images/girl-1.png" alt="Profile Icon" class="profile-icon-notif">
+                            <div class="notification-content-item">
+                                <span class="sender-name">DATOS</span>
+                                <span class="document-title">Audited Disbursement Voucher</span>
                             </div>
+                            <i class="bi bi-envelope-fill mail-icon"></i>
+                        </div>
+                        <div class="notification-item">
+                            <img src="images/boy-2.png" alt="Profile Icon" class="profile-icon-notif">
+                            <div class="notification-content-item">
+                                <span class="sender-name">DATOS</span>
+                                <span class="document-title">Claim Monitoring Sheet</span>
+                            </div>
+                            <i class="bi bi-envelope-fill mail-icon"></i>
                         </div>
                     </div>
                 </div>
-            </section>
-        </main>
+            </div>
+        </section>
 
-        <main id="dashboard-section">
-            <!-- Add your dashboard content here -->
-        </main>
-    </div>
+        <section class="title">
+            <div class="title-content">
+                <h3>Announcements</h3>
+                <div class="date-time">
+                    <i class="bi bi-calendar2-week-fill"></i>
+                    <p id="current-date-time"></p>
+                </div>
+            </div>
+        </section>
 
-    <script src="{{ asset('js/os_landing_page.js') }}"></script>
+        <section class="dashboard-overview">
+            <div class="documents">
+                <div class="documents-content">
+                    <div class="document-card">
+                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                    </div>                        
+                    <div class="content">
+                        <div class="row">
+                            <div class="column left">
+                                <h3>Office Memorandum No. 84</h3>
+                                <p>In observance of the Holy Week...</p>
+                            </div>
+                            <div class="column right">
+                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
+                                <div class="dropdown-more">
+                                    <a href="dean_view.html">View</a>
+                                    <a href="#">Download</a>
+                                    <a href="dean_edit.html">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="upload-date">
+                            <p>Date Uploaded: April 2, 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="documents">
+                <div class="documents-content">
+                    <div class="document-card">
+                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                    </div>                        
+                    <div class="content">
+                        <div class="row">
+                            <div class="column left">
+                                <h3>Office Memorandum No. 84</h3>
+                                <p>In observance of the Holy Week...</p>
+                            </div>
+                            <div class="column right">
+                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
+                                <div class="dropdown-more">
+                                    <a href="dean_view.html">View</a>
+                                    <a href="#">Download</a>
+                                    <a href="dean_edit.html">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="upload-date">
+                            <p>Date Uploaded: April 2, 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="documents">
+                <div class="documents-content">
+                    <div class="document-card">
+                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                    </div>                        
+                    <div class="content">
+                        <div class="row">
+                            <div class="column left">
+                                <h3>Office Memorandum No. 84</h3>
+                                <p>In observance of the Holy Week...</p>
+                            </div>
+                            <div class="column right">
+                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
+                                <div class="dropdown-more">
+                                    <a href="dean_view.html">View</a>
+                                    <a href="#">Download</a>
+                                    <a href="dean_edit.html">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="upload-date">
+                            <p>Date Uploaded: April 2, 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="documents">
+                <div class="documents-content">
+                    <div class="document-card">
+                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                    </div>                        
+                    <div class="content">
+                        <div class="row">
+                            <div class="column left">
+                                <h3>Office Memorandum No. 84</h3>
+                                <p>In observance of the Holy Week...</p>
+                            </div>
+                            <div class="column right">
+                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
+                                <div class="dropdown-more">
+                                    <a href="view-document.html">View</a>
+                                    <a href="#">Download</a>
+                                    <a href="edit-document.html">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="upload-date">
+                            <p>Date Uploaded: April 2, 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat the document block for more entries -->
+        </section>
+@endsection
+
+@section('custom-js')
+    <script src="{{ asset('js/dean/dean_home.js') }}"></script>
+@endsection
+
 </body>
 </html>

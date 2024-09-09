@@ -97,6 +97,14 @@ Route::get('/admin/documents/all_docs', [AdminController::class, 'all_docs'])->n
 Route::get('/dean/dean_dashboard', [DeanController::class, 'dashboard'])->name('dean.dean_dashboard');
 Route::get('/dean/dean_account', [DeanController::class, 'dean_account'])->name('dean.dean_account');
 Route::get('/dean/dean_upload_document', [DeanController::class, 'upload_document'])->name('dean.dean_upload_document');
+Route::get('/dean/documents/dean_edit_docs', [DeanController::class, 'edit_docs'])->name('dean.documents.dean_edit_docs');
+Route::get('/dean/documents/dean_notification', [DeanController::class, 'notification'])->name('dean.documents.dean_notification');
+Route::get('/dean/documents/dean_request', [DeanController::class, 'request'])->name('dean.documents.dean_request');
+Route::get('/dean/documents/dean_search', [DeanController::class, 'search'])->name('dean.documents.dean_search');
+Route::get('/dean/documents/dean_view_docs', [DeanController::class, 'view_docs'])->name('dean.documents.dean_view_docs');
+Route::get('/dean/documents/memorandum', [DeanController::class, 'memorandum'])->name('dean.documents.memorandum');
+
+
 
 // Route for Profile 
 Route::middleware(['auth'])->group(function () {

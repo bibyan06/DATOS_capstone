@@ -31,10 +31,12 @@ class OfficeStaffController extends Controller
         return view('office_staff.documents.memorandum');
     }
 
-    public function search()
-    {
-        return view('office_staff.documents.os_search');
-    }
+    // public function search()
+    // {
+    //     return view('office_staff.documents.os_search');
+    // }
+
+
     public function os_view_docs()
     {
         return view('office_staff.documents.os_view_docs');
@@ -59,21 +61,29 @@ class OfficeStaffController extends Controller
     // Proceed with the action
     }
 
-    public function searchDocument(Request $request)
+    public function searchDocuments(Request $request)
     {
         $query = $request->input('query');
-
-        // Search for documents by name
-        $documents = Document::where('document_name', 'LIKE', "%{$query}%")
-            ->orWhereHas('tags', function ($q) use ($query) {
-                $q->where('tag_name', 'LIKE', "%{$query}%");
+    
+        // Perform the search operation only on approved documents
+        $documents = Document::where('document_status', 'Approved')
+            ->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where('document_name', 'LIKE', "%{$query}%")
+                             ->orWhereHas('tags', function ($q) use ($query) {
+                                 $q->where('tag_name', 'LIKE', "%{$query}%");
+                             });
             })
-            ->with('tags')
+            ->with(['tags' => function ($q) {
+                $q->select('tags.tag_id as tag_id', 'tag_name');
+            }])
             ->get();
-
-        // Return the search results as JSON
-        return response()->json($documents);
+    
+        // Return the search results
+        return view('office_staff.documents.os_search', compact('documents'));
     }
+    
+
+
 
 
     public function showApprovedDocuments()

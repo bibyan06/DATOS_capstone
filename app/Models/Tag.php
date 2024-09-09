@@ -9,6 +9,7 @@ class Tag extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'tag_id';
     protected $fillable = ['tag_name'];
 
     public function documents()

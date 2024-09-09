@@ -20,6 +20,40 @@ class DeanController extends Controller
         return view('dean.dean_upload_document');
     }
 
+    public function edit_docs()
+    {
+        return view('dean.documents.dean_edit_docs');
+    }
+
+    public function notification()
+    {
+        return view('dean.documents.dean_notification');
+    }
+
+    public function request()
+    {
+        return view('dean.documents.dean_request');
+    }
+
+    public function search()
+    {
+        return view('dean.documents.dean_search');
+    }
+
+    public function view_docs()
+    {
+        return view('dean.documents.dean_view_docs');
+    }
+    public function memorandum()
+    {
+        return view('dean.documents.memorandum');
+    }
+
+
+
+
+
+
     public function someMethod()
 {
     $user = auth()->user();
