@@ -83,9 +83,6 @@ class OfficeStaffController extends Controller
     }
     
 
-
-
-
     public function showApprovedDocuments()
     {
         // Fetch all approved documents

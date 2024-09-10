@@ -17,11 +17,11 @@
 
             <div class="account-profile">
                 <div class="profile-header">
-                    <img src="images/cover-photo.png" alt="header_image" class="header-image">
+                    <img src="{{ asset ('images/cover-photo.png') }}" alt="header_image" class="header-image">
                 </div>
                 <div class="profile-container">
                     <div class="profile-picture">
-                        <img src="images/boy-1.png" alt="Profile Picture">
+                        <img src="{{ asset ('images/boy-1.png') }}" alt="Profile Picture">
                     </div>
                     <div class="profile-details">
                         <h2>Kent Ar-Jay B. Dela Peña</h2>

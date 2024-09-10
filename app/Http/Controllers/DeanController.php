@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Document;
 
 use Illuminate\Http\Request;
 
@@ -49,19 +50,26 @@ class DeanController extends Controller
         return view('dean.documents.memorandum');
     }
 
-
-
-
-
-
     public function someMethod()
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    if (strpos($user->employee_id, '03') !== 0) {
-        abort(403, 'Unauthorized action.');
+        if (strpos($user->employee_id, '03') !== 0) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Proceed with the action
+    }
+    public function showHomePage()
+    {
+        $documents = Document::where('document_status', 'Approved')->get(); 
+        return view('home.dean', compact('documents'));
     }
 
-    // Proceed with the action
-}
+    public function showApprovedDocuments()
+    {
+        // Fetch all approved documents
+        $documents = Document::where('document_status', 'Approved')->get();
+        return view('dean.documents.dean_search', compact('documents'));
+    }
 }

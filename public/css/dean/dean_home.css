@@ -316,8 +316,6 @@ main {
 
 /* Document Section */
 /* CSS for Documents Section */
-/* Document Section */
-/* Document Section */
 .documents {
     width: calc(33.333% - 20px); /* Set width for three items per row, accounting for the gap */
     padding: 20px;
@@ -340,7 +338,7 @@ main {
     border-radius: 5px;
     overflow: hidden;
     width: 100%;
-    height: 180px; /* Fixed height for the card */
+    height: 256px; 
 }
 
 

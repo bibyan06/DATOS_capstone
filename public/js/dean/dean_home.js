@@ -68,10 +68,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("documents-shortcut").addEventListener("click", function() {
-        window.location.href = "dean_all_documents.html";
+        window.location.href = "{{ route ('dean.documents.dean_search') }}";
     });
 
-    document.getElementById("upload-shortcut").addEventListener("click", function() {
-        window.location.href = "dean_upload.html";
-    });
+    // document.getElementById("upload-shortcut").addEventListener("click", function() {
+    //     window.location.href = "dean_upload.html";
+    // });
 });

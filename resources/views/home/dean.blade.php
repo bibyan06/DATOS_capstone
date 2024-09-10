@@ -69,112 +69,38 @@
         </section>
 
         <section class="dashboard-overview">
-            <div class="documents">
+            @if($documents->isEmpty())
+                <p>No approved documents available.</p>
+            @else
+                @foreach($documents as $document)
                 <div class="documents-content">
                     <div class="document-card">
-                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="dean_view.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="dean_edit.html">Edit</a>
+                        <!-- Use iframe to display the PDF -->
+                        <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0" width="100%" frameborder="0"></iframe>
+                        <div class="content">
+                            <div class="row">
+                                <div class="column left">
+                                    <h3>{{ $document->document_name }}</h3>
+                                    <p>{{ Str::limit($document->description, 100) }}</p>
+                                </div>
+                                <div class="column right">
+                                    <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
+                                    <div class="dropdown-more">
+                                        <a href="{{ route('dean.documents.dean_view_docs', $document->document_id) }}" class="view-btn">View</a>
+                                        <a href="{{ route('document.serve', basename($document->file_path)) }}" download>Download</a>
+                                        <a href="{{ route('dean.documents.dean_edit_docs', $document->document_id) }}">Edit</a>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="upload-date">
+                                <p>Date Uploaded: {{ \Carbon\Carbon::parse($document->upload_date)->format('F j, Y') }}</p>
+                            </div>
                         </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
-                        </div>
-                    </div>
+                    </div>  
                 </div>
-            </div>
-            <div class="documents">
-                <div class="documents-content">
-                    <div class="document-card">
-                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="dean_view.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="dean_edit.html">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="documents">
-                <div class="documents-content">
-                    <div class="document-card">
-                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="dean_view.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="dean_edit.html">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="documents">
-                <div class="documents-content">
-                    <div class="document-card">
-                        <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
-                    </div>                        
-                    <div class="content">
-                        <div class="row">
-                            <div class="column left">
-                                <h3>Office Memorandum No. 84</h3>
-                                <p>In observance of the Holy Week...</p>
-                            </div>
-                            <div class="column right">
-                                <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                <div class="dropdown-more">
-                                    <a href="view-document.html">View</a>
-                                    <a href="#">Download</a>
-                                    <a href="edit-document.html">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="upload-date">
-                            <p>Date Uploaded: April 2, 2024</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Repeat the document block for more entries -->
-        </section>
+                @endforeach
+            @endif
+        </section> 
 @endsection
 
 @section('custom-js')

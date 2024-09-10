@@ -24,6 +24,15 @@
             </div>
             <div class="profile-icon">
                 <img src="{{ asset ('images/boy-1.png') }}" alt="Profile Icon" id="profile-icon">
+                <div class="dropdown-menu" id="profile-dropdown">
+                    <a href="{{ route('dean.dean_account') }}"><i class="bi bi-person-circle" id="account-icon"> </i>Account</a>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
             </div>
         </div>
     </header>
@@ -57,13 +66,13 @@
                 <i class="bi bi-text-right"></i>
             </div>
             <ul>
-                <li><a href="dean_page.html" id="home">Home</a></li>
+                <li><a href="{{ route ('home.dean') }}" id="home">Home</a></li>
                 
                 <li>
                     <a href="#" class="dropdown-toggle" id="digitized">Digitized Documents <i class="bi bi-chevron-right"></i></a>
                     
                     <ul class="more-dropdown-menu">
-                        <li><a href="dean_memorandum.html" id="memorandum">Memorandum</a></li>
+                        <li><a href="{{ route ('dean.documents.memorandum') }}" id="memorandum">Memorandum</a></li>
                         <li><a href="dean_dean_orders.html" id="dean_order">Administrative Order</a></li>
                         <li><a href="dean_mrsp.html" id="mrsp">Monthly Report Service Personnel</a></li>
                         <li><a href="dean_cms.html" id="cms">Claim Monitoring Sheet</a></li>
@@ -74,15 +83,15 @@
                 
             </ul>
             <ul>
-                <li><a href="dean_request.html" id="request">Request a Document</a></li>
-                <li><a href="dean_notification.html" id="announcements-icon">Notifications</a></li>
+                <li><a href="{{ route ('dean.documents.dean_request') }}" id="request">Request a Document</a></li>
+                <li><a href="{{ route ('dean.documents.dean_notification') }}" id="announcements-icon">Notifications</a></li>
                 
-                <li><a href="dean_all_documents.html" id="search">Search</a></li>
+                <li><a href="{{ route ('dean.documents.dean_search') }}" id="search">Search</a></li>
             </ul>
             <div class="profile-content">
                 <ul>
-                    <li><a href="sign-up.html">Logout</a></li>
-                    <li><a href="dean_account.html" id="account">Profile</a></li>
+                    <li><a href="{{ route('logout') }}">Logout</a></li>
+                    <li><a href="{{ route ('dean.dean_account') }}" id="account">Profile</a></li>
                 </ul>
             </div>
         </div>

@@ -114,6 +114,7 @@ Route::middleware(['auth'])->group(function () {
 //Route for recent documents 
 Route::get('/recent-documents', [DocumentController::class, 'showRecentDocuments'])->name('recent-documents');
 Route::get('/home/office_staff', [OfficeStaffController::class, 'showHomePage'])->name('home.office_staff');
+Route::get('/home/dean', [DeanController::class, 'showHomePage'])->name('home.dean');
 
 
 // Route for document upload
@@ -133,6 +134,8 @@ Route::post('/admin/admin_upload_document', [DocumentController::class, 'store']
 Route::post('/admin/documents/approve_docs/{id}', [DocumentController::class, 'approve'])->name('admin.documents.approve');
 Route::get('/admin/documents/approved_docs', [DocumentController::class, 'showApprovedDocuments'])->name('admin.documents.approved_docs');
 Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'showApprovedDocuments'])->name('office_staff.documents.os_search');
+Route::get('/dean/documents/dean_search', [DeanController::class, 'showApprovedDocuments'])->name('dean.documents.dean_search');
+
 // Route::get('/home/office_staff/documents-overview', [DocumentController::class, 'showOfficeStaffDocumentsOverview'])->name('home.office_staff.documents_overview');
 route::get('/home/admin', [AdminController::class, 'adminHome'])->name('home.admin');
 
