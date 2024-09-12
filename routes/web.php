@@ -180,6 +180,7 @@ route::get('/office_staff/documents/os_search', [OfficeStaffController::class, '
 
 //Route for Search function
 Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'searchDocuments'])->name('office_staff.documents.os_search');
+route::get('/search-documents', [DocumentController::class, 'searchDocuments'])->name('search.documents');
 
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');

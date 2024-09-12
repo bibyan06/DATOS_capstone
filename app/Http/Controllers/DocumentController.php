@@ -151,6 +151,23 @@ class DocumentController extends Controller
         return view('admin.documents.approved_docs', compact('documents'));
     }
     
+    public function searchDocuments(Request $request)
+    {
+        $query = $request->get('query', '');
+
+        // Query for approved documents matching the query in document_name or related tags
+        $documents = Document::where('document_status', 'approved')
+            ->where(function ($q) use ($query) {
+                $q->where('document_name', 'LIKE', "%{$query}%")
+                ->orWhereHas('tags', function ($q2) use ($query) {
+                    $q2->where('tag_name', 'LIKE', "%{$query}%");
+                });
+            })
+            ->get();
+
+        // Return results as JSON
+        return response()->json($documents);
+    }
 
 
     public function serve($filename)

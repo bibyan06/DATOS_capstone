@@ -46,55 +46,61 @@ document.addEventListener('click', function(e) {
     }
 });
 
-document.getElementById('sidebar-search').addEventListener('input', function() {
-    console.log('Input event triggered');
-    let query = this.value;
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('sidebar-search');
+    const searchResultsContainer = document.createElement('div');
+    searchResultsContainer.classList.add('search-results');
+    document.querySelector('.search-container').appendChild(searchResultsContainer);
 
-    if (query.length >= 1) { // Start searching after 1 character
-        fetch(`{{ route('office_staff.documents.os_search') }}?query=${query}`, {
-            headers: {
-                'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            let suggestionsContainer = document.getElementById('suggestions-container');
-            suggestionsContainer.innerHTML = ''; // Clear previous suggestions
-            
-            if (data.length > 0) {
-                data.forEach(document => {
-                    let suggestionHtml = `
-                        <div class="suggestion-item">
-                            <span>${document.document_name}</span>
-                        </div>
-                    `;
-                    suggestionsContainer.insertAdjacentHTML('beforeend', suggestionHtml);
+    searchInput.addEventListener('input', function() {
+        let query = searchInput.value.trim();
+
+        if (query.length > 0) {
+            fetch(`/search-documents?query=${query}`)
+                .then(response => {
+                    console.log('Raw response:', response);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    searchResultsContainer.innerHTML = '';  // Clear previous results
+                    if (data.length > 0) {
+                        data.forEach(doc => {
+                            const resultItem = document.createElement('div');
+                            resultItem.classList.add('search-result-item');
+                            resultItem.innerHTML = `<a href="/documents/${doc.document_id}">${doc.document_name}</a>`;
+                            searchResultsContainer.appendChild(resultItem);
+                        });
+                    } else {
+                        searchResultsContainer.innerHTML = '<p>No matching documents found.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching documents:', error);
+                    searchResultsContainer.innerHTML = '<p>There was an error fetching the documents.</p>';
                 });
-                suggestionsContainer.style.display = 'block'; // Show suggestions
-            } else {
-                suggestionsContainer.innerHTML = '<p>No matches found.</p>';
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    } else {
-        document.getElementById('suggestions-container').style.display = 'none'; // Hide suggestions if query is empty
-    }
+        } else {
+            searchResultsContainer.innerHTML = '';  // Clear results if query is empty
+        }
+    });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const query = 'd'; // Example query, replace with dynamic value if needed
 
-    fetch(`${searchUrl}?query=${query}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            // Render search results in the DOM
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-});
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     const query = 'd'; // Example query, replace with dynamic value if needed
+
+//     fetch(`${searchUrl}?query=${query}`)
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log(data);
+//             // Render search results in the DOM
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+// });
 
 
