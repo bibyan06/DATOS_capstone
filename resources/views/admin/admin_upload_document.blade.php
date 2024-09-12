@@ -96,7 +96,6 @@
  @section('custom-js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <script src="{{ asset('js/upload_document.js') }}"></script>
-@endsection
 
     <script>
     document.getElementById('uploadDocumentForm').addEventListener('submit', function(event) {
@@ -235,6 +234,8 @@
         handleFiles(event.target.files);
     });
 </script>
+@endsection
+
 
 </body>
 </html>
