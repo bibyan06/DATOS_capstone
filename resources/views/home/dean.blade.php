@@ -69,35 +69,36 @@
         </section>
 
         <section class="dashboard-overview">
+
             @if($documents->isEmpty())
                 <p>No approved documents available.</p>
             @else
                 @foreach($documents as $document)
-                <div class="documents-content">
-                    <div class="document-card">
-                        <!-- Use iframe to display the PDF -->
-                        <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0" width="100%" frameborder="0"></iframe>
-                        <div class="content">
-                            <div class="row">
-                                <div class="column left">
-                                    <h3>{{ $document->document_name }}</h3>
-                                    <p>{{ Str::limit($document->description, 100) }}</p>
-                                </div>
-                                <div class="column right">
-                                    <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
-                                    <div class="dropdown-more">
-                                        <a href="{{ route('dean.documents.dean_view_docs', $document->document_id) }}" class="view-btn">View</a>
-                                        <a href="{{ route('document.serve', basename($document->file_path)) }}" download>Download</a>
-                                        <a href="{{ route('dean.documents.dean_edit_docs', $document->document_id) }}">Edit</a>
+                    <div class="documents-content">
+                        <div class="document-card">
+                            <!-- Display the document details -->
+                            <iframe src="{{ route('document.serve', basename($document->file_path)) }}#toolbar=0" width="100%" frameborder="0"></iframe>
+                            <div class="content">
+                                <div class="row">
+                                    <div class="column left">
+                                        <h3>{{ $document->document_name }}</h3>
+                                        <p>{{ Str::limit($document->description, 100) }}</p>
+                                    </div>
+                                    <div class="column right">
+                                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical" style="cursor: pointer;"></i></a>
+                                        <div class="dropdown-more">
+                                            <a href="{{ route('dean.documents.dean_view_docs', $document->document_id) }}" class="view-btn">View</a>
+                                            <a href="{{ route('document.serve', basename($document->file_path)) }}" download>Download</a>
+                                            <a href="{{ route('dean.documents.dean_edit_docs', $document->document_id) }}">Edit</a>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="upload-date">
+                                    <p>Date Uploaded: {{ \Carbon\Carbon::parse($document->upload_date)->format('F j, Y') }}</p>
+                                </div>
                             </div>
-                            <div class="upload-date">
-                                <p>Date Uploaded: {{ \Carbon\Carbon::parse($document->upload_date)->format('F j, Y') }}</p>
-                            </div>
-                        </div>
-                    </div>  
-                </div>
+                        </div>  
+                    </div>
                 @endforeach
             @endif
         </section> 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Document;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -50,6 +51,26 @@ class DeanController extends Controller
         return view('dean.documents.memorandum');
     }
 
+    public function admin_order()
+    {
+        return view('dean.documents.admin_order');
+    }
+
+    public function mrsp()
+    {
+        return view('dean.documents.mrsp');
+    }
+
+    public function cms()
+    {
+        return view('dean.documents.cms');
+    }
+
+    public function audited_dv()
+    {
+        return view('dean.documents.audited_dv');
+    }
+
     public function someMethod()
     {
         $user = auth()->user();
@@ -72,4 +93,16 @@ class DeanController extends Controller
         $documents = Document::where('document_status', 'Approved')->get();
         return view('dean.documents.dean_search', compact('documents'));
     }
+
+    public function showDeanHome()
+    {
+        $documents = DB::table('documents')
+            ->join('category', 'documents.category_name', '=', 'category.category_name') // Join using category_name
+            ->where('category.category_name', 'Memorandum')  // Filter for memorandums
+            ->select('documents.*')  // Select all columns from the documents table
+            ->get();
+    
+        return view('home.dean', compact('documents')); // Passing 'documents' to the view
+    }
+
 }

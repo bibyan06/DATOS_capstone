@@ -52,15 +52,14 @@ document.addEventListener('DOMContentLoaded', function () {
     searchResultsContainer.classList.add('search-results');
     document.querySelector('.search-container').appendChild(searchResultsContainer);
 
-    searchInput.addEventListener('input', function() {
+    searchInput.addEventListener('input', function () {
         let query = searchInput.value.trim();
 
         if (query.length > 0) {
             fetch(`/search-documents?query=${query}`)
                 .then(response => {
-                    console.log('Raw response:', response);
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        throw new Error('Network response was not okay');
                     }
                     return response.json();
                 })
@@ -74,18 +73,36 @@ document.addEventListener('DOMContentLoaded', function () {
                             searchResultsContainer.appendChild(resultItem);
                         });
                     } else {
-                        searchResultsContainer.innerHTML = '<p>No matching documents found.</p>';
+                        // Display 'No results found' if no documents match the query
+                        searchResultsContainer.innerHTML = '<p style="color: black;">No documents found.</p>';
                     }
+                    searchResultsContainer.style.display = 'block'; // Show the results
                 })
                 .catch(error => {
                     console.error('Error fetching documents:', error);
                     searchResultsContainer.innerHTML = '<p>There was an error fetching the documents.</p>';
                 });
         } else {
-            searchResultsContainer.innerHTML = '';  // Clear results if query is empty
+            searchResultsContainer.innerHTML = '';  // Clear the results if the query is empty
+            searchResultsContainer.style.display = 'none'; // Hide the results
+        }
+    });
+
+    // Hide search results when clicking outside of the search container or the results
+    document.addEventListener('click', function (event) {
+        if (!searchInput.contains(event.target) && !searchResultsContainer.contains(event.target)) {
+            searchResultsContainer.style.display = 'none'; // Hide the search results
+        }
+    });
+
+    // Prevent hiding search results when clicking inside the search input or results container
+    searchInput.addEventListener('click', function (event) {
+        if (searchResultsContainer.innerHTML !== '') {
+            searchResultsContainer.style.display = 'block'; // Show the search results if not empty
         }
     });
 });
+
 
 
 

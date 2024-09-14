@@ -73,10 +73,10 @@
                     
                     <ul class="more-dropdown-menu">
                         <li><a href="{{ route ('dean.documents.memorandum') }}" id="memorandum">Memorandum</a></li>
-                        <li><a href="dean_dean_orders.html" id="dean_order">Administrative Order</a></li>
-                        <li><a href="dean_mrsp.html" id="mrsp">Monthly Report Service Personnel</a></li>
-                        <li><a href="dean_cms.html" id="cms">Claim Monitoring Sheet</a></li>
-                        <li><a href="dean_audit.html" id="audit">Audited Documents</a></li>
+                        <li><a href="{{ route ('dean.documents.admin_order') }}" id="admin_order">Administrative Order</a></li>
+                        <li><a href="{{ route ('dean.documents.mrsp') }}" id="mrsp">Monthly Report Service Personnel</a></li>
+                        <li><a href="{{ route ('dean.documents.cms') }}" id="cms">Claim Monitoring Sheet</a></li>
+                        <li><a href="{{ route ('dean.documents.audited_dv') }}" id="audit">Audited Documents</a></li>
                     </ul>
 
                 </li>

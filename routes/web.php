@@ -103,7 +103,10 @@ Route::get('/dean/documents/dean_request', [DeanController::class, 'request'])->
 Route::get('/dean/documents/dean_search', [DeanController::class, 'search'])->name('dean.documents.dean_search');
 Route::get('/dean/documents/dean_view_docs', [DeanController::class, 'view_docs'])->name('dean.documents.dean_view_docs');
 Route::get('/dean/documents/memorandum', [DeanController::class, 'memorandum'])->name('dean.documents.memorandum');
-
+Route::get('/dean/documents/admin_order', [DeanController::class, 'admin_order'])->name('dean.documents.admin_order');
+Route::get('/dean/documents/mrsp', [DeanController::class, 'mrsp'])->name('dean.documents.mrsp');
+Route::get('/dean/documents/cms', [DeanController::class, 'cms'])->name('dean.documents.cms');
+Route::get('/dean/documents/audited_dv', [DeanController::class, 'audited_dv'])->name('dean.documents.audited_dv');
 
 
 // Route for Profile 
@@ -176,7 +179,9 @@ Route::get('/office_staff/os_dashboard', [OfficeStaffController::class, 'categor
 Route::get('/admin/office_staff', [AdminController::class, 'showOfficeStaff'])->name('admin.office_staff');
 
 //Route for Filtering documents 
-route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'showAllDocs'])->name('office_staff.documents.os_search');
+Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'showAllDocs'])->name('office_staff.documents.os_search');
+Route::get('/home/dean', [DeanController::class, 'showDeanHome'])->name('home.dean');
+
 
 //Route for Search function
 Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'searchDocuments'])->name('office_staff.documents.os_search');

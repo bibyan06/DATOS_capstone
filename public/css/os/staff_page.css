@@ -315,13 +315,14 @@ header {
 
 
 
-/* Search Container Styles 
+/* Search Container Styles  */
 .search-container {
-    width: 100%;
-    margin: 20px 0;
+    width: 250px; /* Adjust width as needed */
     display: flex;
     align-items: center;
     position: relative;
+    float: right; /* Move to the right */
+    margin-right: 30px; /* Adjust margin as needed */
 }
 
 #sidebar-search {
@@ -337,11 +338,42 @@ header {
 
 .search-container i {
     position: absolute;
-    left: 10px;
+    left: 10px; /* Adjust icon positioning */
     font-size: 16px;
     color: #888;
 }
-*/
+
+.search-results {
+    position: absolute;
+    top: 100%; /* Position below the search input */
+    left: 0;
+    background-color: white;
+    /* border: 1px solid #ddd; */
+    max-height: 300px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 10;
+    margin-top: 5px;
+}
+
+.search-result-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-result-item a {
+    text-decoration: none;
+    color: #333;
+}
+
+.search-result-item:hover {
+    background-color: #f0f0f0;
+}
+
+.no-results {
+    color: black;
+}
+
 
 /* Additional CSS for the dropdown */
 
@@ -501,30 +533,6 @@ footer {
     text-decoration: underline;
     color: #0056b3;
 }
-.search-results {
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ddd;
-    max-height: 300px;
-    overflow-y: auto;
-    width: 100%;
-    z-index: 10;
-}
-
-.search-result-item {
-    padding: 10px;
-    cursor: pointer;
-}
-
-.search-result-item a {
-    text-decoration: none;
-    color: #333;
-}
-
-.search-result-item:hover {
-    background-color: #f0f0f0;
-}
-
 
 .status-approved {
     color: green;
