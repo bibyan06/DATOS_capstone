@@ -1,6 +1,6 @@
 @extends('layouts.admin_layout')
 
-@section('title', 'Memorandum' )
+@section('title', 'Audited Disbursement Vouchers' )
 
 @section('custom-css')
     <link rel="stylesheet" href="{{ asset ('css/documents.css') }}">
@@ -11,7 +11,7 @@
 @section('content') 
     <div class="documents-container">
         <div class="documents-title">
-            <h1>Memorandum</h1>
+            <h1>Audited Disbursement Vouchers</h1>
         </div>
         <div class="left-content">
             <div class="documents-search-bar">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 @empty
-                    <p>No approved memorandums available at the moment.</p>
+                    <p>No approved Audited Disbursement Vouchers available at the moment.</p>
                 @endforelse
             </div>
         </div>

@@ -71,6 +71,26 @@ class AdminController extends Controller
         return view('admin.documents.memorandum');
     }
 
+    public function admin_order()
+    {
+        return view('admin.documents.admin_order');
+    }
+
+    public function mrsp()
+    {
+        return view('admin.documents.mrsp');
+    }
+
+    public function cms()
+    {
+        return view('admin.documents.cms');
+    }
+
+    public function audited_dv()
+    {
+        return view('admin.documents.audited_dv');
+    }
+
     public function request_docs()
     {
         return view('admin.documents.request_docs');
@@ -220,7 +240,6 @@ class AdminController extends Controller
         ));
     }
 
-
     public function showOfficeStaff()
     {
         // Retrieve all office staff from the employee table
@@ -229,5 +248,57 @@ class AdminController extends Controller
         // Pass the data to the view
         return view('admin.office_staff', ['officeStaff' => $officeStaff]);
     }
+
+    public function showMemorandums()
+    {
+        // Assuming category_id for Memorandum is '1' or replace it with the correct value
+        $documents = Document::where('category_name', 'Memorandum')
+                            ->where('document_status', 'approved') // Show only approved documents
+                            ->get();
+
+        return view('admin.documents.memorandum', compact('documents'));
+    }
+
+    // public function showAdminOrders()
+    // {
+    //     // Assuming category_id for Memorandum is '1' or replace it with the correct value
+    //     $documents = Document::where('category_name', 'Administrative Orders')
+    //                         ->where('document_status', 'approved') // Show only approved documents
+    //                         ->get();
+
+    //     return view('admin.documents.admin_order', compact('documents'));
+    // }
+
+    public function showMrsp()
+    {
+        // Assuming category_id for Memorandum is '1' or replace it with the correct value
+        $documents = Document::where('category_name', 'Monthly Report Service Personnel')
+                            ->where('document_status', 'approved') // Show only approved documents
+                            ->get();
+
+        return view('admin.documents.mrsp', compact('documents'));
+    }
+
+    public function showCms()
+    {
+        // Assuming category_id for Memorandum is '1' or replace it with the correct value
+        $documents = Document::where('category_name', 'Claim Monitoring Sheet')
+                            ->where('document_status', 'approved') // Show only approved documents
+                            ->get();
+
+        return view('admin.documents.cms', compact('documents'));
+    }
+
+    public function showAuditedDV()
+    {
+        // Assuming category_id for Memorandum is '1' or replace it with the correct value
+        $documents = Document::where('category_name', 'Audited Disbursement Voucher')
+                            ->where('document_status', 'approved') // Show only approved documents
+                            ->get();
+
+        return view('admin.documents.audited_dv', compact('documents'));
+    }
+
+
 
 }

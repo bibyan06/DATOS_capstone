@@ -88,6 +88,10 @@ Route::get('/admin/documents/approved_docs', [AdminController::class, 'approved_
 Route::get('/admin/documents/declined_docs', [AdminController::class, 'declined_docs'])->name('admin.documents.declined_docs');
 // Route::get('/admin/documents/edit_docs', [AdminController::class, 'edit_docs'])->name('admin.documents.edit_docs');
 Route::get('/admin/documents/memorandum', [AdminController::class, 'memorandum'])->name('admin.documents.memorandum');
+Route::get('/admin/documents/admin_order', [AdminController::class, 'admin_order'])->name('admin.documents.admin_order');
+Route::get('/admin/documents/mrsp', [AdminController::class, 'mrsp'])->name('admin.documents.mrsp');
+Route::get('/admin/documents/cms', [AdminController::class, 'cms'])->name('admin.documents.cms');
+Route::get('/admin/documents/audited_dv', [AdminController::class, 'audited_dv'])->name('admin.documents.audited_dv');
 Route::get('/admin/documents/request_docs', [AdminController::class, 'request_docs'])->name('admin.documents.request_docs');
 Route::get('/admin/documents/sent_docs', [AdminController::class, 'sent_docs'])->name('admin.documents.sent_docs');
 Route::get('/admin/documents/view_docs', [AdminController::class, 'view_docs'])->name('admin.documents.view_docs');
@@ -182,10 +186,16 @@ Route::get('/admin/office_staff', [AdminController::class, 'showOfficeStaff'])->
 Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'showAllDocs'])->name('office_staff.documents.os_search');
 Route::get('/home/dean', [DeanController::class, 'showDeanHome'])->name('home.dean');
 
+//Route for Digitized Documents 
+Route::get('/admin/documents/memorandum', [AdminController::class, 'showMemorandums'])->name('admin.documents.memorandum');
+// Route::get('/admin/documents/admin_order', [AdminController::class, 'showAdminOrders'])->name('admin.documents.admin_order');
+Route::get('/admin/documents/mrsp', [AdminController::class, 'showMrsp'])->name('admin.documents.mrsp');
+Route::get('/admin/documents/cms', [AdminController::class, 'showCms'])->name('admin.documents.cms');
+Route::get('/admin/documents/audited_dv', [AdminController::class, 'showAuditedDV'])->name('admin.documents.audited_dv');
 
 //Route for Search function
 Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'searchDocuments'])->name('office_staff.documents.os_search');
-route::get('/search-documents', [DocumentController::class, 'searchDocuments'])->name('search.documents');
+Route::get('/search-documents', [DocumentController::class, 'searchDocuments'])->name('search.documents');
 
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');

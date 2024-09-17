@@ -24,7 +24,7 @@ main {
 
 
 /* Memorandum Container */
-.memorandum-container {
+.documents-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -36,7 +36,7 @@ main {
 }
 
 /* Title Styles */
-.memorandum-title h1 {
+.documents-title h1 {
     font-size: 28px;
     font-family: 'Poppins', sans-serif;
     color: #009FEA;
@@ -45,8 +45,7 @@ main {
 }
 
 /* Search Bar Styles */
-/* Search Bar Styles */
-.memorandum-search-bar {
+.documents-search-bar {
     display: flex;
     flex: 1; /* Make search bar flexible */
     margin-right: 10px; /* Add space between search bar and option */
@@ -78,7 +77,7 @@ main {
 
 
 /* Option Select */
-.memorandum-option {
+.documents-option {
     display: flex;
     align-items: center;
     flex-shrink: 0; /* Prevent shrinking */

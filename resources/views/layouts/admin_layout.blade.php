@@ -22,7 +22,7 @@
             <div class="profile-icon">
                 <img src="{{ asset('images/user-circle-solid-24.png') }}" alt="Profile Icon" id="profile-icon">
                 <div class="dropdown-menu" id="profile-dropdown">
-                    <a href="{{ route('profile') }}"><i class="bi bi-person-circle" id="account-icon"> </i>Account</a>
+                    <a href="{{ route('admin.admin_account') }}"><i class="bi bi-person-circle" id="account-icon"> </i>Account</a>
                     <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="bi bi-box-arrow-left" id="logout-icon"></i> Logout
                     </a>
@@ -79,10 +79,10 @@
                     <a href="#" class="dropdown-toggle" id="digitized">Digitized Documents <i class="bi bi-chevron-right"></i></a>
                     <ul class="more-dropdown-menu">
                         <li><a href="{{ route('admin.documents.memorandum') }}" id="memorandum"> Memorandum</a></li>
-                        <li><a href="admin_admin_orders.html" id="admin_order">Administrative Order</a></li>
-                        <li><a href="admin_mrsp.html" id="mrsp"> Monthly Report Service Personnel</a></li>
-                        <li><a href="admin_cms.html" id="cms"> Claim Monitoring Sheet</a></li>
-                        <li><a href="admin_audit.html" id="audit"> Audited Documents</a></li>
+                        <!-- <li><a href="{{ route('admin.documents.admin_order') }}" id="admin_order">Administrative Order</a></li> -->
+                        <li><a href="{{ route('admin.documents.mrsp') }}" id="mrsp"> Monthly Report Service Personnel</a></li>
+                        <li><a href="{{ route('admin.documents.cms') }}" id="cms"> Claim Monitoring Sheet</a></li>
+                        <li><a href="{{ route('admin.documents.audited_dv') }}"> Audited Documents</a></li>
                     </ul>
                 </li>
             </ul>
