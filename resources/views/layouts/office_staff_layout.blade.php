@@ -75,10 +75,10 @@
                     
                     <ul class="more-dropdown-menu">
                         <li><a href="{{ route ('office_staff.documents.memorandum') }}" id="memorandum">Memorandum</a></li>
-                        <li><a href="staff_admin_orders.html" id="admin_order">Administrative Order</a></li>
-                        <li><a href="staff_mrsp.html" id="mrsp">Monthly Report Service Personnel</a></li>
-                        <li><a href="staff_cms.html" id="cms">Claim Monitoring Sheet</a></li>
-                        <li><a href="staff_audit.html" id="audit">Audited Documents</a></li>
+                        <!-- <li><a href="staff_admin_orders.html" id="admin_order">Administrative Order</a></li> -->
+                        <li><a href="{{ route ('office_staff.documents.mrsp') }}" id="mrsp">Monthly Report Service Personnel</a></li>
+                        <li><a href="{{ route ('office_staff.documents.cms') }}" id="cms">Claim Monitoring Sheet</a></li>
+                        <li><a href="{{ route ('office_staff.documents.audited_dv') }}" id="audit">Audited Documents</a></li>
                     </ul>
                 </li>            
             </ul>

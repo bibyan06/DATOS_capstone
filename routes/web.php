@@ -193,6 +193,11 @@ Route::get('/admin/documents/mrsp', [AdminController::class, 'showMrsp'])->name(
 Route::get('/admin/documents/cms', [AdminController::class, 'showCms'])->name('admin.documents.cms');
 Route::get('/admin/documents/audited_dv', [AdminController::class, 'showAuditedDV'])->name('admin.documents.audited_dv');
 
+Route::get('/office_staff/documents/memorandum', [OfficeStaffController::class, 'showMemorandums'])->name('office_staff.documents.memorandum');
+Route::get('/office_staff/documents/mrsp', [OfficeStaffController::class, 'showMrsp'])->name('office_staff.documents.mrsp');
+Route::get('/office_staff/documents/cms', [OfficeStaffController::class, 'showCms'])->name('office_staff.documents.cms');
+Route::get('/office_staff/documents/audtied_dv', [OfficeStaffController::class, 'showAuditedDV'])->name('office_staff.documents.audited_dv');
+
 //Route for Search function
 Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'searchDocuments'])->name('office_staff.documents.os_search');
 Route::get('/search-documents', [DocumentController::class, 'searchDocuments'])->name('search.documents');

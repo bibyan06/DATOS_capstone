@@ -180,4 +180,56 @@ class OfficeStaffController extends Controller
         return view('office_staff.os_dashboard', compact('documents', 'memorandumCount', 'claimMonitoringSheetCount', 'mrspCount', 'auditedDVCount'));
     }
     
+
+
+    public function showMemorandums()
+    {
+        // Assuming category_id for Memorandum is '1' or replace it with the correct value
+        $documents = Document::where('category_name', 'Memorandum')
+                            ->where('document_status', 'approved') // Show only approved documents
+                            ->get();
+
+        return view('office_staff.documents.memorandum', compact('documents'));
+    }
+
+    // public function showAdminOrders()
+    // {
+    //     // Assuming category_id for Memorandum is '1' or replace it with the correct value
+    //     $documents = Document::where('category_name', 'Administrative Orders')
+    //                         ->where('document_status', 'approved') // Show only approved documents
+    //                         ->get();
+
+    //     return view('admin.documents.admin_order', compact('documents'));
+    // }
+
+    public function showMrsp()
+    {
+        // Assuming category_id for Memorandum is '1' or replace it with the correct value
+        $documents = Document::where('category_name', 'Monthly Report Service Personnel')
+                            ->where('document_status', 'approved') // Show only approved documents
+                            ->get();
+
+        return view('office_staff.documents.mrsp', compact('documents'));
+    }
+
+    public function showCms()
+    {
+        // Assuming category_id for Memorandum is '1' or replace it with the correct value
+        $documents = Document::where('category_name', 'Claim Monitoring Sheet')
+                            ->where('document_status', 'approved') // Show only approved documents
+                            ->get();
+
+        return view('office_staff.documents.cms', compact('documents'));
+    }
+
+    public function showAuditedDV()
+    {
+        // Assuming category_id for Memorandum is '1' or replace it with the correct value
+        $documents = Document::where('category_name', 'Audited Disbursement Voucher')
+                            ->where('document_status', 'approved') // Show only approved documents
+                            ->get();
+
+        return view('office_staff.documents.audited_dv', compact('documents'));
+    }
+
 }
