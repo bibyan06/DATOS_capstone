@@ -46,4 +46,12 @@ class Kernel extends HttpKernel
         // Custom middleware
         'role' => \App\Http\Middleware\RoleMiddleware::class,
     ];
+
+    protected $middlewareGroups = [
+        'web' => [
+            // other middleware...
+            \App\Http\Middleware\VerifyCsrfToken::class,
+        ],
+    ];
+    
 }

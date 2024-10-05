@@ -12,7 +12,12 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.admin_dashboard');
+        $documents = Document::all(); // Fetch documents from the database
+        $totalDocuments = $documents->count();
+        $totalEmployees = Employee::count(); // Assuming you also want total employees
+    
+        // Pass the data to the view
+        return view('admin.admin_dashboard', compact('documents', 'totalDocuments', 'totalEmployees'));;
     }
 
     public function admin_account()

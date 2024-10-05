@@ -20,11 +20,11 @@ class HomeController extends Controller
             if ($employee) {
                 $position = $employee->position;
 
-                if ($position == 'admin') {
+                if ($position == 'Admin') {
                     return view('home.admin');
-                } elseif ($position == 'office_staff') {
+                } elseif ($position == 'Office_staff') {
                     return view('home.office_staff');
-                } elseif ($position == 'dean') {
+                } elseif ($position == 'Dean') {
                     return view('home.dean');
                 }
             }
