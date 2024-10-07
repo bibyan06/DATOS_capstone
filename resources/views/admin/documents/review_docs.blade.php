@@ -32,6 +32,7 @@
                                 <th>Date Uploaded</th>
                                 <th>Uploaded by</th>
                                 <th>Action</th>
+                                <th>Review</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,6 +55,11 @@
                                         </form>
                                         <button type="button" class="btn btn-danger decline-btn" data-document-id="{{ $document->document_id }}">Decline</button>                                        
                                     </td>
+                                    <td>
+                                        <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" title="View Document">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -67,70 +73,75 @@
         </main>
 @endsection
    
+@section('custom-js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Approve Button
-        document.querySelectorAll('.approve-btn').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
+        document.addEventListener('DOMContentLoaded', function () {
+            // Approve Button
+            document.querySelectorAll('.approve-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You are about to approve this document",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.closest('form').submit();
-                    }
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You are about to approve this document",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.closest('form').submit();
+                        }
+                    });
                 });
             });
-        });
 
-        // Decline Button
-        document.querySelectorAll('.decline-btn').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
+            // Decline Button
+            document.querySelectorAll('.decline-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
 
-                const documentId = this.getAttribute('data-document-id');
-                Swal.fire({
-                    title: 'Decline Document',
-                    input: 'textarea',
-                    inputLabel: 'Remark',
-                    inputPlaceholder: 'Enter your remark here...',
-                    inputAttributes: {
-                        'aria-label': 'Enter your remark here'
-                    },
-                    showCancelButton: true,
-                    confirmButtonText: 'Submit Decline',
-                    cancelButtonText: 'Cancel',
-                    preConfirm: (remark) => {
-                        if (!remark) {
-                            Swal.showValidationMessage('Remark is required');
+                    const documentId = this.getAttribute('data-document-id');
+                    Swal.fire({
+                        title: 'Decline Document',
+                        input: 'textarea',
+                        inputLabel: 'Remark',
+                        inputPlaceholder: 'Enter your remark here...',
+                        inputAttributes: {
+                            'aria-label': 'Enter your remark here'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: 'Submit Decline',
+                        cancelButtonText: 'Cancel',
+                        preConfirm: (remark) => {
+                            if (!remark) {
+                                Swal.showValidationMessage('Remark is required');
+                            }
+                            return { remark: remark };
                         }
-                        return { remark: remark };
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const declineForm = document.createElement('form');
-                        declineForm.method = 'POST';
-                        declineForm.action = `/admin/documents/declined_docs/${documentId}`;
-                        declineForm.innerHTML = '@csrf <input type="hidden" name="remark" value="' + result.value.remark + '">';
-                        document.body.appendChild(declineForm);
-                        declineForm.submit();
-                    }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const declineForm = document.createElement('form');
+                            declineForm.method = 'POST';
+                            declineForm.action = `/admin/documents/declined_docs/${documentId}`;
+                            declineForm.innerHTML = `
+                                @csrf 
+                                <input type="hidden" name="remark" value="${result.value.remark}">
+                            `;
+                            document.body.appendChild(declineForm);
+                            declineForm.submit();
+                        }
+                    });
                 });
             });
         });
     </script>
-
-
-@section('custom-js')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/approved.js') }}"></script>
 @endsection
+
 
 </body>
 </html>

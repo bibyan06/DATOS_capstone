@@ -46,9 +46,9 @@ Route::post('/email/verification-notification', [EmailVerificationController::cl
 Route::get('/email/confirmed', [EmailVerificationController::class, 'verified'])->name('email.confirmed');
 
 // Routes for designated landing pages
-Route::get('/home/admin', function () {
-    return view('home.admin');
-})->name('home.admin');
+// Route::get('/home/admin', function () {
+//     return view('home.admin');
+// })->name('home.admin');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home/admin', [HomeController::class, 'adminHome'])->name('home.admin');
@@ -57,15 +57,16 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Office staff
-Route::get('/home/office_staff', function () {
-    return view('home.office_staff');
-})->name('home.office_staff');
+// Route::get('/home/office_staff', function () {
+//     return view('home.office_staff');
+// })->name('home.office_staff');
 
-Route::get('/home/dean', function () {
-    return view('home.dean');
-})->name('home.dean');
+// Route::get('/home/dean', function () {
+//     return view('home.dean');
+// })->name('home.dean');
 
 // Route for office staff side 
+Route::get('/profile', [OfficeStaffController::class, 'showProfile'])->middleware('auth')->name('office_staff.os_account');
 Route::get('/office_staff/os_dashboard', [OfficeStaffController::class, 'dashboard'])->name('office_staff.os_dashboard');
 Route::get('/office_staff/os_account', [OfficeStaffController::class, 'os_account'])->name('office_staff.os_account');
 Route::get('/office_staff/os_upload_document', [OfficeStaffController::class, 'os_upload_document'])->name('office_staff.os_upload_document');
@@ -76,12 +77,14 @@ Route::get('/office_staff/documents/edit_docs', [OfficeStaffController::class, '
 
 
 // Route for admin side 
+Route::get('/profile', [AdminController::class, 'showProfile'])->middleware('auth')->name('admin.admin_account');
 Route::get('/admin/admin_dashboard', [AdminController::class, 'dashboard'])->name('admin.admin_dashboard');
 Route::get('/admin/admin_account', [AdminController::class, 'admin_account'])->name('admin.admin_account');
 Route::get('/admin/admin_upload_document', [AdminController::class, 'admin_upload_document'])->name('admin.admin_upload_document');
 Route::get('/admin/admin_view_document', [AdminController::class, 'view_document'])->name('admin.admin_view_document');
 Route::get('/admin/college_dean', [AdminController::class, 'college_dean'])->name('admin.college_dean');
 Route::get('/admin/office_staff', [AdminController::class, 'office_staff'])->name('admin.office_staff');
+Route::get('/admin/admin_notification', [AdminController::class, 'notification'])->name('admin.admin_notification');
 
 Route::get('/admin/documents/review_docs', [AdminController::class, 'review_docs'])->name('admin.documents.review_docs');
 Route::get('/admin/documents/approved_docs', [AdminController::class, 'approved_docs'])->name('admin.documents.approved_docs');
@@ -97,6 +100,9 @@ Route::get('/admin/documents/sent_docs', [AdminController::class, 'sent_docs'])-
 Route::get('/admin/documents/view_docs', [AdminController::class, 'view_docs'])->name('admin.documents.view_docs');
 Route::get('/admin/documents/all_docs', [AdminController::class, 'all_docs'])->name('admin.documents.all_docs');
 
+Route::get('/layouts/admin_layout', [AdminController::class, 'showAdminPage'])->name('layouts.admin_layouts');
+
+
 // Route for dean side 
 Route::get('/dean/dean_dashboard', [DeanController::class, 'dashboard'])->name('dean.dean_dashboard');
 Route::get('/dean/dean_account', [DeanController::class, 'dean_account'])->name('dean.dean_account');
@@ -111,6 +117,10 @@ Route::get('/dean/documents/admin_order', [DeanController::class, 'admin_order']
 Route::get('/dean/documents/mrsp', [DeanController::class, 'mrsp'])->name('dean.documents.mrsp');
 Route::get('/dean/documents/cms', [DeanController::class, 'cms'])->name('dean.documents.cms');
 Route::get('/dean/documents/audited_dv', [DeanController::class, 'audited_dv'])->name('dean.documents.audited_dv');
+
+Route::post('/add-dean-account', [DeanController::class, 'storeDeanAccount'])->name('dean.store');
+Route::get('/admin/college_dean', [DeanController::class, 'deanList'])->name('admin.college_dean');
+
 
 
 // Route for Profile 

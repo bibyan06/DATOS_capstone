@@ -11,7 +11,7 @@
 @section('content')
 <section class="welcome-section">
             <div class="welcome-message">
-                <h2>Welcome Back Kent Dela Pena</h2>
+                <h2>Welcome back, {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}!</h2>
                 <p>Streamlining document management and access for all Bicol University personnel.</p>
             </div>
         </section>

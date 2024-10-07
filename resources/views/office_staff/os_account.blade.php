@@ -53,10 +53,11 @@
                 <span class="label">Middle Name</span>
                 <span class="value" data-field="middlename">{{ Auth::user()->middle_name }}</span>
             </div>
-            <div class="info-row">
+            <!-- <div class="info-row">
                 <span class="label">Position:</span>
                 <span class="value" data-field="office">{{ Auth::user()->position }}</span>
-            </div>
+                </div>
+            </div>  -->
             <div class="info-row">
                 <div class="label">Age:</div>
                 <div class="value" data-field="age">{{ Auth::user()->age }}</div>

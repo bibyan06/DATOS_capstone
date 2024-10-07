@@ -23,31 +23,30 @@
             @endif
 
             <div class="mt-4 flex items-center justify-between emailconfirmed-buttons" style="text-decoration:none">
-                @auth
-                    @php
-                        $user = Auth::user();
-                        $employeeId = $user->employee_id;
-                        
-                        // Redirect based on employee_id
-                        if (substr($employeeId, 0, 2) === '03') {
-                            $dashboardRoute = 'home.dean';
-                        } elseif (substr($employeeId, 0, 2) === '01') {
-                            $dashboardRoute = 'home.admin';
-                        } elseif (substr($employeeId, 0, 2) === '02') {
-                            $dashboardRoute = 'home.office_staff';
-                        } else {
-                            // Handle unknown employee_id cases
-                            $dashboardRoute = 'home'; // Or redirect to an error page or a default route
-                        }
-                    @endphp
-                    <a href="{{ route($dashboardRoute) }}" class="emailconfirmed-button verify-email-button--secondary ms-2">
-                        {{ __('Proceed') }}
-                    </a>
-                @else
-                    <a href="{{ route('login') }}" class="emailconfirmed-button verify-email-button--secondary ms-2">
-                        {{ __('Proceed to Login') }}
-                    </a>
-                @endauth
+            @auth
+                @php
+                    $user = Auth::user();
+                    $employeeId = $user->employee_id;
+
+                    // Extract the second segment (assuming the pattern is "XXYY" where YY is the second segment)
+                    $secondSegment = substr($employeeId, 2, 3); // Get characters 3 and 4
+
+                    // Redirect based on the second segment of employee_id
+                    if ($secondSegment === '003') {
+                        $dashboardRoute = 'home.dean';
+                    } elseif ($secondSegment === '001') {
+                        $dashboardRoute = 'home.admin';
+                    } elseif ($secondSegment === '002') {
+                        $dashboardRoute = 'home.office_staff';
+                    } else {
+                        // Handle unknown employee_id cases
+                        $dashboardRoute = 'login'; // Or redirect to an error page or a default route
+                    }
+                @endphp
+                <a href="{{ route($dashboardRoute) }}" class="emailconfirmed-button verify-email-button--secondary ms-2">
+                    {{ __('Proceed') }}
+                </a>
+            @endauth
             </div>
         </div>
     </div>

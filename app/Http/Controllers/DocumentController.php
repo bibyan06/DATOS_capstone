@@ -169,6 +169,26 @@ class DocumentController extends Controller
         return response()->json($documents);
     }
 
+   
+    
+    public function getPendingDocumentsCount()
+    {
+        // Fetch the count of pending documents
+        $pendingCount = Document::where('document_status', 'Pending')->count();
+
+        // Return the count
+        return $pendingCount;
+    }
+
+    public function showAdminPage()
+    {
+        // Get the pending document count
+        $pendingCount = $this->getPendingDocumentsCount();
+
+        // Pass the count to the view
+        return view('admin.admin_dashboard', ['pendingCount' => $pendingCount]);
+    }
+
 
     public function serve($filename)
     {

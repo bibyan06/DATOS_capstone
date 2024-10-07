@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -55,6 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone_number',
         'home_address',
         'email',
+        'college',
         'username',
         'password',
         'role_id',
@@ -110,20 +112,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getRoleAttribute()
     {
         if (substr($this->employee_id, 0, 2) === '01') {
-            return '01';  // Admin
+            return '001';  // Admin
         } elseif (substr($this->employee_id, 0, 2) === '02') {
-            return '02';  // Office staff
+            return '002';  // Office staff
         } elseif (substr($this->employee_id, 0, 2) === '03') {
-            return '03';  // Dean
+            return '003';  // Dean
         }
         return 'user';
     }
-
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id'); // Ensure this is the correct foreign key
     }
 
+    
     public function getRoleNameAttribute()
     {
         return $this->role ? $this->role->name : 'user';

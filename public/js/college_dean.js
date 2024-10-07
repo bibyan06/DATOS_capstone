@@ -7,43 +7,91 @@ function hidePopupForm() {
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('popup-form').style.display = 'none';
 }
-
 function addAccount() {
-    // Collecting input data
+    // Collect input data
     const lastName = document.getElementById('last-name').value;
     const firstName = document.getElementById('first-name').value;
     const middleName = document.getElementById('middle-name').value;
     const email = document.getElementById('email').value;
+    const college = document.getElementById('college').value;
     const password = document.getElementById('password').value;
     const employeeId = document.getElementById('employee-id').value;
 
-    // For now, we will just log the collected data
-    console.log("Account Details:");
-    console.log("Last Name:", lastName);
-    console.log("First Name:", firstName);
-    console.log("Middle Name:", middleName);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Employee ID:", employeeId);
+    // Debugging logs
+    console.log("Add Account button clicked.");
+    console.log("Collected form data:", { lastName, firstName, middleName, email, college, password, employeeId });
 
-    // Here, you would typically send the data to the server, e.g.:
-    // fetch('your-server-endpoint', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ lastName, firstName, middleName, email, password, employeeId }),
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     console.log('Success:', data);
-    //     // You can add success handling code here
-    // })
-    // .catch((error) => {
-    //     console.error('Error:', error);
-    //     // You can add error handling code here
-    // });
+    // Simple validation
+    if (!lastName || !firstName || !email || !password || !employeeId) {
+        console.error("Please fill in all required fields.");
+        Swal.fire({
+            title: 'Error',
+            text: 'Please fill in all required fields.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
 
-    // Hiding the popup form after adding the account
+    // Send data to server with fetch
+    fetch('/add-dean-account', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            last_name: lastName,
+            first_name: firstName,
+            middle_name: middleName,
+            email: email,
+            college: college,
+            password: password,
+            employee_id: employeeId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Server response:', data);
+        if (data.success) {
+            Swal.fire({
+                title: 'Account Added',
+                text: 'The college dean account has been added successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        } else {
+            Swal.fire({
+                title: 'Failed',
+                text: 'Failed to add account: ' + data.message,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    })
+    
+    .catch(error => {
+        Swal.fire({
+            title: 'Error',
+            text: 'An error occurred while adding the account.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        console.error('Error:', error);
+    });
+
+    
+
+    // Hide form
     hidePopupForm();
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Now the DOM is fully loaded, and the CSRF meta tag should be available
+    const csrfToken = document.querySelector('meta[name="csrf-token"]');
+    if (csrfToken) {
+        console.log('CSRF token found:', csrfToken.getAttribute('content'));
+    } else {
+        console.error('CSRF token not found');
+    }
+});

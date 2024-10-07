@@ -232,4 +232,12 @@ class OfficeStaffController extends Controller
         return view('office_staff.documents.audited_dv', compact('documents'));
     }
 
+    public function showProfile()
+    {
+        // Eager load the user's role
+        $user = User::with('role')->find(Auth::id());
+
+        return view('office_staff._account', compact('user'));
+    }
+
 }

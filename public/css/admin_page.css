@@ -744,7 +744,21 @@ th {
     background-color: #FF731E;
 }
 
+/* #pendings {
+    position: relative;
+} */
 
+#pending-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+}
 
 
 

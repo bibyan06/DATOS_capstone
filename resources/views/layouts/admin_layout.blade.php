@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @yield('custom-css')
@@ -44,7 +46,15 @@
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i></div></li>
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-file-earmark-fill" id="digitized-icon"></i></div></li>
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-people-fill" id="employees"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-hourglass-split" id="pendings"></i></div></li>
+                <li>
+                    <div class="icon-container" data-target="#sidebar">
+                        <i class="bi bi-hourglass-split" id="pendings"></i>
+                        @if(isset($pendingCount) && $pendingCount > 0)
+                            <span class="badge badge-pill badge-danger" id="pending-count">{{ $pendingCount }}</span>
+                        @endif
+                    </div>
+                </li>
+
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-bell-fill" id="notification"></i></div></li>
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-cloud-arrow-up-fill" id="upload-icon"></i></div></li>
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-search" id="search-icon"></i></div></li>
@@ -104,7 +114,8 @@
                         <li><a href="{{ route ('admin.documents.request_docs') }}" id="request">Request</a></li>
                     </ul>
                 </li>
-                <li><a href="admin_notification.html" id="announcements-icon"> Notifications</a></li>
+
+                <li><a href="{{route ('admin.admin_notification') }}" id="announcements-icon"> Notifications</a></li>
                 <li><a href="{{ route('admin.admin_upload_document') }}" id="upload">Upload</a></li>
                 <li><a href="{{ route ('office_staff.documents.os_search') }}" id="search">Search</a></li>
             </ul>

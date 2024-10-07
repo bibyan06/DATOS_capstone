@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Models\Employee;
 use App\Models\User;
+use App\Models\Role;
 
 class AdminController extends Controller
 {
@@ -43,6 +44,11 @@ class AdminController extends Controller
     public function office_staff()
     {
         return view('admin.office_staff');
+    }
+
+    public function notification()
+    {
+        return view('admin.admin_notification');
     }
 
     public function review_docs()
@@ -147,6 +153,16 @@ class AdminController extends Controller
         }
     }
 
+    public function showAdminPage()
+    {
+        // Fetch the pending document count
+        $pendingCount = Document::where('document_status', 'Pending')->count();
+
+        // Pass the pending count to the correct view (ensure the right view file is used)
+        return view('admin.admin_dashboard', compact('pendingCount')); // Adjust 'admin.dashboard' to the correct view file
+    }
+
+
     public function adminHome()
     {
         // Fetch the documents from the database
@@ -245,10 +261,19 @@ class AdminController extends Controller
         ));
     }
 
+    public function showProfile()
+    {
+        // Eager load the role with the user
+        $user = User::with('role')->find(Auth::id());
+
+        return view('admin.admin_account', compact('user'));
+    }
+
     public function showOfficeStaff()
     {
-        // Retrieve all office staff from the employee table
-        $officeStaff = Employee::where('employee_id', 'like', '02%')->get();
+        // Retrieve all office staff where the second segment of employee_id is '002'
+        $officeStaff = Employee::whereRaw("SUBSTRING_INDEX(SUBSTRING_INDEX(employee_id, '-', 2), '-', -1) = '002'")
+                                ->get();
 
         // Pass the data to the view
         return view('admin.office_staff', ['officeStaff' => $officeStaff]);

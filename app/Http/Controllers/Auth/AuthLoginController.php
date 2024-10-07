@@ -103,23 +103,45 @@ class AuthLoginController extends Controller
 
     protected function sendLoginResponse(Request $request)
     {
+        // Regenerate session
         $request->session()->regenerate();
-
         $this->clearLoginAttempts($request);
 
+        // Get the authenticated user
         $user = auth()->user();
         $employeeId = $user->employee_id;
 
-        if (Str::startsWith($employeeId, '01')) {
-            return redirect()->route('home.admin');
-        } elseif (Str::startsWith($employeeId, '02')) {
-            return redirect()->route('home.office_staff');
-        } elseif (Str::startsWith($employeeId, '03')) {
-            return redirect()->route('home.dean');
+        // Log employee ID for debugging
+        \Log::info("Employee ID during login: " . $employeeId);
+
+        // Split the employee_id by a delimiter (e.g., a dash or other character)
+        // Assuming the pattern is something like "001-XXX-XXX"
+        $segments = explode('-', $employeeId);
+
+        // Ensure the second segment exists and check it
+        if (isset($segments[1])) {
+            $secondSegment = $segments[1];
+
+            \Log::info("Second Segment: " . $secondSegment);
+
+            // Redirect based on the second segment
+            if ($secondSegment === '001') {
+                \Log::info("Redirecting to Admin Home");
+                return redirect()->route('home.admin');
+            } elseif ($secondSegment === '002') {
+                \Log::info("Redirecting to Office Staff Home");
+                return redirect()->route('home.office_staff');
+            } elseif ($secondSegment === '003') {
+                \Log::info("Redirecting to Dean Home");
+                return redirect()->route('home.dean');
+            }
         }
 
-        return redirect()->intended($this->redirectPath()); // Default fallback
+        // Default fallback if the pattern does not match
+        \Log::info("Redirecting to default /home");
+        return redirect()->intended($this->redirectPath());  // Default fallback to /home
     }
+
 
     protected function sendFailedLoginResponse(Request $request)
     {
