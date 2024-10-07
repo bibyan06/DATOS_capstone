@@ -114,7 +114,6 @@ class DeanController extends Controller
 
 
     // Function to handle the addition of a new dean account
-    // Function to handle the addition of a new dean account
     public function storeDeanAccount(Request $request)
     {
         try {
@@ -145,7 +144,7 @@ class DeanController extends Controller
                 'middle_name' => $validated['middle_name'],
                 'email' => $validated['email'],
                 'college' => $validated['college'],
-                'password' => bcrypt(value: $validated['password']),
+                'password' => bcrypt($validated['password']),
                 'employee_id' => $validated['employee_id'],
                 'role_id' => $role->id, // Save the fetched role ID
             ]);
@@ -154,14 +153,28 @@ class DeanController extends Controller
             $user->sendEmailVerificationNotification();
 
             // Create an entry in the Employee table
-            Employee::create([
+            $employee = Employee::create([
                 'employee_id' => $validated['employee_id'], // Use the validated employee_id
                 'last_name' => $user->last_name,
                 'first_name' => $user->first_name,
                 'position' => 'Dean', // Assign position as 'Dean'
             ]);
 
-            
+            // Fetch the corresponding college_id from the college table based on college name
+            $college = DB::table('college')->where('college_name', $validated['college'])->first();
+
+            if (!$college) {
+                // Handle case where the college is not found
+                \Log::error('College not found: ' . $validated['college']);
+                return response()->json(['success' => false, 'message' => 'College not found.']);
+            }
+
+            // Create an entry in the Dean table
+            DB::table('dean')->insert([
+                'user_id' => $user->user_id,     // Reference to the user_id from the users table
+                'college_id' => $college->college_id, // Reference to the college_id from the college table
+                'role_id' => $role->id,          // Reference to the role_id from the users table
+            ]);
 
             // Send success response
             return response()->json(['success' => true, 'message' => 'Dean account created successfully. Verification email sent.']);
@@ -171,6 +184,7 @@ class DeanController extends Controller
             return response()->json(['success' => false, 'message' => 'Failed to create dean account.']);
         }
     }
+
 
     public function deanList()
     {
