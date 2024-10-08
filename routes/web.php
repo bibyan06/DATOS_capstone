@@ -212,6 +212,11 @@ Route::get('/office_staff/documents/audtied_dv', [OfficeStaffController::class, 
 Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'searchDocuments'])->name('office_staff.documents.os_search');
 Route::get('/search-documents', [DocumentController::class, 'searchDocuments'])->name('search.documents');
 
+//Route for Forward function
+
+Route::get('/employees/exclude-current', [AdminController::class, 'getEmployee']);
+Route::post('/documents/forward', [AdminController::class, 'forwardDocument']);
+
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');
 

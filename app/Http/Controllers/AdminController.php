@@ -175,15 +175,17 @@ class AdminController extends Controller
     public function adminDashboard()
     {
         // Count the total number of approved documents
-        $totalDocuments = Document::where('document_status', 'Approved')->count();
+        $totalDocuments = Document::where('document_status', '=', 'Approved')->count();
 
         // Count the total number of employees
         $totalEmployees = Employee::count();
 
+        // Log or Debug the result to check the status
+        \Log::info('Total Approved Documents: ' . $totalDocuments);
+        
         // Pass these values to the view
         return view('admin.admin_dashboard', compact('totalDocuments', 'totalEmployees'));
     }
-
     public function view($document_id)
     {
         $document = Document::findOrFail($document_id);
@@ -226,7 +228,7 @@ class AdminController extends Controller
 
         // Fetch counts by document category
         $claimMonitoringSheetCount = Document::where('category_name', 'Claim Monitoring Sheet')->where('document_status', 'Approved')->count();
-        $memorandumCount = Document::where('category_name', 'Memorandum')->where('document_status', 'approved')->count();
+        $memorandumCount = Document::where('category_name', 'Memorandum')->where('document_status', 'Approved')->count();
         $mrspCount = Document::where('category_name', 'Monthly Report Service of Personnel')->where('document_status', 'Approved')->count();
         $auditedDVCount = Document::where('category_name', 'Audited Disbursement Voucher')->where('document_status', 'Approved')->count();
 
@@ -283,7 +285,7 @@ class AdminController extends Controller
     {
         // Assuming category_id for Memorandum is '1' or replace it with the correct value
         $documents = Document::where('category_name', 'Memorandum')
-                            ->where('document_status', 'approved') // Show only approved documents
+                            ->where('document_status', 'Approved') // Show only approved documents
                             ->get();
 
         return view('admin.documents.memorandum', compact('documents'));
@@ -302,8 +304,8 @@ class AdminController extends Controller
     public function showMrsp()
     {
         // Assuming category_id for Memorandum is '1' or replace it with the correct value
-        $documents = Document::where('category_name', 'Monthly Report Service Personnel')
-                            ->where('document_status', 'approved') // Show only approved documents
+        $documents = Document::where('category_name', 'Monthly Report Service of Personnel')
+                            ->where('document_status', 'Approved') 
                             ->get();
 
         return view('admin.documents.mrsp', compact('documents'));
@@ -313,7 +315,7 @@ class AdminController extends Controller
     {
         // Assuming category_id for Memorandum is '1' or replace it with the correct value
         $documents = Document::where('category_name', 'Claim Monitoring Sheet')
-                            ->where('document_status', 'approved') // Show only approved documents
+                            ->where('document_status', 'Approved') // Show only approved documents
                             ->get();
 
         return view('admin.documents.cms', compact('documents'));
@@ -323,12 +325,36 @@ class AdminController extends Controller
     {
         // Assuming category_id for Memorandum is '1' or replace it with the correct value
         $documents = Document::where('category_name', 'Audited Disbursement Voucher')
-                            ->where('document_status', 'approved') // Show only approved documents
+                            ->where('document_status', 'Approved') // Show only approved documents
                             ->get();
 
         return view('admin.documents.audited_dv', compact('documents'));
     }
 
+    //For forwarded docs
+
+    public function getEmployee()
+    {
+        $currentUserId = Auth::user()->employee_id;  // Get the employee_id of the current user
+        $employees = Employee::where('employee_id', '!=', $currentUserId)->get();  // Fetch employees except current user
+        
+        // Log employees to check the output
+        logger()->info($employees);
+
+        return response()->json($employees);  // Return employees as JSON
+    }
+
+    public function forwardDocument(Request $request)
+    {
+        // Get the document and employee IDs from the request
+        $documentId = $request->input('document_id');
+        $employeeId = $request->input('employee_id');
+        
+        // Your logic for forwarding the document (e.g., saving the forwarding record to the database)
+        // Example: DocumentForwarding::create([...]);
+
+        return response()->json(['message' => 'Document forwarded successfully!']);
+    }
 
 
 }

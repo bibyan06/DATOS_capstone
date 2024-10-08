@@ -147,7 +147,7 @@ class DocumentController extends Controller
     public function showApprovedDocuments()
     {
         // Fetch all approved documents
-        $documents = Document::where('document_status', 'approved')->get();
+        $documents = Document::where('document_status', 'Approved')->get();
         return view('admin.documents.approved_docs', compact('documents'));
     }
     
@@ -156,7 +156,7 @@ class DocumentController extends Controller
         $query = $request->get('query', '');
 
         // Query for approved documents matching the query in document_name or related tags
-        $documents = Document::where('document_status', 'approved')
+        $documents = Document::where('document_status', 'Approved')
             ->where(function ($q) use ($query) {
                 $q->where('document_name', 'LIKE', "%{$query}%")
                 ->orWhereHas('tags', function ($q2) use ($query) {

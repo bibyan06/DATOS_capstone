@@ -90,6 +90,7 @@
                                         <a href="{{ route('admin.documents.view_docs', $document->document_id) }}" class="view-btn">View</a>
                                         <a href="{{ route('document.serve', basename($document->file_path)) }}" download>Download</a>
                                         <a href="{{ route('admin.documents.edit_docs', $document->document_id) }}">Edit</a>
+                                        <a href="#" class="forward-btn" data-document-id="{{ $document->document_id }}">Forward</a>                           
                                     </div>
                                 </div>
                             </div>
@@ -107,6 +108,7 @@
 
 @section('custom-js')
     <script src="{{ asset('js/home.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 @endsection
 
 </body>

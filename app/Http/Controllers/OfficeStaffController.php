@@ -186,7 +186,7 @@ class OfficeStaffController extends Controller
     {
         // Assuming category_id for Memorandum is '1' or replace it with the correct value
         $documents = Document::where('category_name', 'Memorandum')
-                            ->where('document_status', 'approved') // Show only approved documents
+                            ->where('document_status', 'Approved') // Show only approved documents
                             ->get();
 
         return view('office_staff.documents.memorandum', compact('documents'));
@@ -206,7 +206,7 @@ class OfficeStaffController extends Controller
     {
         // Assuming category_id for Memorandum is '1' or replace it with the correct value
         $documents = Document::where('category_name', 'Monthly Report Service Personnel')
-                            ->where('document_status', 'approved') // Show only approved documents
+                            ->where('document_status', 'Approved') // Show only approved documents
                             ->get();
 
         return view('office_staff.documents.mrsp', compact('documents'));
@@ -216,7 +216,7 @@ class OfficeStaffController extends Controller
     {
         // Assuming category_id for Memorandum is '1' or replace it with the correct value
         $documents = Document::where('category_name', 'Claim Monitoring Sheet')
-                            ->where('document_status', 'approved') // Show only approved documents
+                            ->where('document_status', 'Approved') // Show only approved documents
                             ->get();
 
         return view('office_staff.documents.cms', compact('documents'));
@@ -226,7 +226,7 @@ class OfficeStaffController extends Controller
     {
         // Assuming category_id for Memorandum is '1' or replace it with the correct value
         $documents = Document::where('category_name', 'Audited Disbursement Voucher')
-                            ->where('document_status', 'approved') // Show only approved documents
+                            ->where('document_status', 'Approved') // Show only approved documents
                             ->get();
 
         return view('office_staff.documents.audited_dv', compact('documents'));
