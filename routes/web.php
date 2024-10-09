@@ -10,6 +10,7 @@ use App\Http\Controllers\OfficeStaffController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DeanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Storage;
@@ -120,6 +121,10 @@ Route::get('/dean/documents/audited_dv', [DeanController::class, 'audited_dv'])-
 
 Route::post('/add-dean-account', [DeanController::class, 'storeDeanAccount'])->name('dean.store');
 Route::get('/admin/college_dean', [DeanController::class, 'deanList'])->name('admin.college_dean');
+Route::post('/add-college', [CollegeController::class, 'store'])->name('add-college');
+Route::get('/add-college', [CollegeController::class, 'showDeanForm'])->name('add-college');
+
+
 
 
 

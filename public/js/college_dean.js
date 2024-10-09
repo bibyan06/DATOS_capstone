@@ -7,6 +7,16 @@ function hidePopupForm() {
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('popup-form').style.display = 'none';
 }
+
+function showPopupForm1() {
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('popup-form-1').style.display = 'block';
+}
+function hidePopupForm1() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('popup-form-1').style.display = 'none';
+}
+
 function addAccount() {
     // Collect input data
     const lastName = document.getElementById('last-name').value;
@@ -85,6 +95,71 @@ function addAccount() {
     // Hide form
     hidePopupForm();
 }
+
+function addCollege() {
+    // Collect input data
+    const collegeName = document.getElementById('college-name').value;
+
+    // Debugging logs
+    console.log("Add College button clicked.");
+    console.log("Collected form data:", { collegeName });
+
+    // Simple validation
+    if (!collegeName) {
+        console.error("Please fill in the required field.");
+        Swal.fire({
+            title: 'Error',
+            text: 'Please provide the college name.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+
+    // Send data to server with fetch
+    fetch('/add-college', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            college_name: collegeName
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Server response:', data);
+        if (data.success) {
+            Swal.fire({
+                title: 'College Added',
+                text: 'The college has been added successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        } else {
+            Swal.fire({
+                title: 'Failed',
+                text: 'Failed to add college: ' + data.message,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    })
+    .catch(error => {
+        Swal.fire({
+            title: 'Error',
+            text: 'An error occurred while adding the college.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        console.error('Error:', error);
+    });
+
+    // Hide form
+    hidePopupForm1();
+}
+
 
 document.addEventListener('DOMContentLoaded', function() {
     // Now the DOM is fully loaded, and the CSRF meta tag should be available

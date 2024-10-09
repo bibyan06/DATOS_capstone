@@ -24,7 +24,10 @@
                         <div class="icon"><i class="bi bi-search"></i></div>
                     </div>
                     <div class="add-account">
-                        <button type="button" onclick="showPopupForm()" class="btn">Add Account</button>
+                        <button type="button" onclick="showPopupForm()" class="account-btn">Add Account</button>
+                    </div>
+                    <div class="add-college">
+                        <button type="button" onclick="showPopupForm1()" class="college-btn">Add College</button>
                     </div>
                 </div>
             </div>
@@ -83,10 +86,16 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="college">College</label>
-                        <input type="text" id="college" name="college" required>
+                        <select id="college" name="college" required>
+                            <option value="" disabled selected>Select a College</option>
+                            @foreach($colleges as $college)
+                                <option value="{{ $college->id }}">{{ $college->college_name }}</option>
+                            @endforeach
+                        </select>
 
                     </div>
                 </div>
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="password">Password</label>
@@ -103,6 +112,23 @@
                 </div>
             </form>
         </div>
+        <!--ADD COLLEGE POP_UP-->
+        <div id="popup-form-1" class="popup-form-1">
+            <h2>Add College</h2>
+            <form id="college-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="college-name">College Name</label>
+                        <input type="text" id="college-name" name="college-name" required>
+                    </div>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" id="cancel-btn" onclick="hidePopupForm1()">Cancel</button>
+                    <button type="button" id="add-college-btn" onclick="addCollege()">Add College</button>
+                </div>
+            </form>
+        </div>
+
     </main>
 @endsection
 
