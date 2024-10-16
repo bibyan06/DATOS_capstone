@@ -62,7 +62,7 @@
         <div id="overlay" class="overlay"></div>
         <div id="popup-form" class="popup-form">
             <h2>Add College Dean</h2>
-            <form id="dean-form">
+            <form action="{{ route('dean.store') }}" method="POST">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="last-name">Last Name</label>
@@ -83,18 +83,16 @@
                         <input type="email" id="email" name="email">
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="college">College</label>
-                        <select id="college" name="college" required>
-                            <option value="" disabled selected>Select a College</option>
-                            @foreach($colleges as $college)
-                                <option value="{{ $college->id }}">{{ $college->college_name }}</option>
-                            @endforeach
-                        </select>
+                <div class="form-group">
+    <label for="college">Select College</label>
+    <select id="college" name="college_id" required>
+        <option value="" disabled selected>Select a College</option>
+        @foreach($colleges as $college)
+            <option value="{{ $college->college_id }}">{{ $college->college_name }}</option>
+        @endforeach
+    </select>
+</div>
 
-                    </div>
-                </div>
 
                 <div class="form-row">
                     <div class="form-group">

@@ -23,16 +23,16 @@ function addAccount() {
     const firstName = document.getElementById('first-name').value;
     const middleName = document.getElementById('middle-name').value;
     const email = document.getElementById('email').value;
-    const college = document.getElementById('college').value;
+    const college_id = document.getElementById('college').value;
     const password = document.getElementById('password').value;
     const employeeId = document.getElementById('employee-id').value;
 
     // Debugging logs
     console.log("Add Account button clicked.");
-    console.log("Collected form data:", { lastName, firstName, middleName, email, college, password, employeeId });
+    console.log("Collected form data:", { lastName, firstName, middleName, email, college_id, password, employeeId });
 
     // Simple validation
-    if (!lastName || !firstName || !email || !password || !employeeId) {
+    if (!lastName || !firstName || !email || !college_id || !password || !employeeId) {
         console.error("Please fill in all required fields.");
         Swal.fire({
             title: 'Error',
@@ -55,7 +55,7 @@ function addAccount() {
             first_name: firstName,
             middle_name: middleName,
             email: email,
-            college: college,
+            college_id: college_id,
             password: password,
             employee_id: employeeId
         })

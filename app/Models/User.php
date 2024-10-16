@@ -136,4 +136,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Document::class, 'uploaded_by');
     }
 
+    public function college()
+    {
+        return $this->belongsTo(College::class, 'college_id'); 
+    }
+
 }

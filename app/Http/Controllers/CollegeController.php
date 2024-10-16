@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\College; // Assuming you have a College model
+use App\Models\College; 
+use App\Models\User;
 
 class CollegeController extends Controller
 {
@@ -27,13 +28,16 @@ class CollegeController extends Controller
         }
     }
 
-    public function showDeanForm()
+    public function showCollegeDeanForm()
     {
-        // Fetch all colleges from the college table
-        $colleges = College::all();
-        
-        // Pass the list of colleges to the view
-        return view('admin.add-dean-form', compact('colleges'));
+       // Retrieve users or deans data
+       $users = User::where('role_id', '3')->get(); // Adjust the query as needed
+
+       // Retrieve the list of colleges
+       $colleges = College::all();
+
+       // Pass both variables to the view
+       return view('admin.college_dean', compact('users', 'colleges'));
     }
 
     

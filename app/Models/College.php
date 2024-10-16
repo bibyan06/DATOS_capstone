@@ -18,5 +18,9 @@ class College extends Model
     // Define fillable properties to allow mass assignment
     protected $fillable = ['college_name'];
 
-    
+    public function users()
+    {
+        return $this->hasMany(User::class, 'college_id');
+    }
+        
 }
