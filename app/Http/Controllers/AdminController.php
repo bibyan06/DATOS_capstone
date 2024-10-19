@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Models\Employee;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use App\Models\SendDocument;
+use App\Models\ForwardedDocument;
 use App\Models\Role;
 
 class AdminController extends Controller
@@ -132,6 +135,27 @@ class AdminController extends Controller
         // Proceed with the action
     }
 
+    public function searchDocuments(Request $request)
+    {
+        $query = $request->input('query');
+    
+        // Perform the search operation only on approved documents
+        $documents = Document::where('document_status', 'Approved')
+            ->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where('document_name', 'LIKE', "%{$query}%")
+                             ->orWhereHas('tags', function ($q) use ($query) {
+                                 $q->where('tag_name', 'LIKE', "%{$query}%");
+                             });
+            })
+            ->with(['tags' => function ($q) {
+                $q->select('tags.tag_id as tag_id', 'tag_name');
+            }])
+            ->get();
+    
+        // Return the search results
+        return view('admin.admin_search', compact('documents'));
+    }
+
     public function reviewDocument(Request $request, $id)
     {
         $document = Document::findOrFail($id);
@@ -153,11 +177,22 @@ class AdminController extends Controller
         }
     }
 
-    public function showAdminPage()
+    public function showPendings()
     {
         // Fetch the pending document count
         $pendingCount = Document::where('document_status', 'Pending')->count();
+        
+        // Count pending documents from both 'forward_documents' and 'send_document' tables
+        $forwardPendingCount = DB::table('forwarded_documents')
+        ->where('status', 'delivered')
+        ->count();
 
+        $sendPendingCount = DB::table('send_document')
+        ->where('status', 'delivered')
+        ->count();
+
+        // Combine counts from both tables
+        $notificationCount = $forwardPendingCount + $sendPendingCount;
         // Pass the pending count to the correct view (ensure the right view file is used)
         return view('admin.admin_dashboard', compact('pendingCount')); // Adjust 'admin.dashboard' to the correct view file
     }
@@ -355,6 +390,5 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'Document forwarded successfully!']);
     }
-
 
 }

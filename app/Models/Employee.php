@@ -20,4 +20,9 @@ class Employee extends Model
 
     // Specify the correct table name
     protected $table = 'employee';
+
+    public function forwardedDocuments()
+    {
+        return $this->hasMany(ForwardedDocument::class, 'forwarded_to', 'id');
+    }
 }

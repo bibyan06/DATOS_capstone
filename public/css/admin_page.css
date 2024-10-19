@@ -750,7 +750,7 @@ th {
 
 #pending-count {
     position: absolute;
-    top: -5px;
+    /* top: -5px; */
     right: -10px;
     background-color: red;
     color: white;

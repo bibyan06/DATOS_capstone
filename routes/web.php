@@ -12,6 +12,8 @@ use App\Http\Controllers\DeanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\SentDocumentController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
@@ -97,11 +99,11 @@ Route::get('/admin/documents/mrsp', [AdminController::class, 'mrsp'])->name('adm
 Route::get('/admin/documents/cms', [AdminController::class, 'cms'])->name('admin.documents.cms');
 Route::get('/admin/documents/audited_dv', [AdminController::class, 'audited_dv'])->name('admin.documents.audited_dv');
 Route::get('/admin/documents/request_docs', [AdminController::class, 'request_docs'])->name('admin.documents.request_docs');
-Route::get('/admin/documents/sent_docs', [AdminController::class, 'sent_docs'])->name('admin.documents.sent_docs');
+// Route::get('/admin/documents/sent_docs', [AdminController::class, 'sent_docs'])->name('admin.documents.sent_docs');
 Route::get('/admin/documents/view_docs', [AdminController::class, 'view_docs'])->name('admin.documents.view_docs');
 Route::get('/admin/documents/all_docs', [AdminController::class, 'all_docs'])->name('admin.documents.all_docs');
 
-Route::get('/layouts/admin_layout', [AdminController::class, 'showAdminPage'])->name('layouts.admin_layouts');
+Route::get('/layouts/admin_layout', [AdminController::class, 'showPendings'])->name('layouts.admin_layouts');
 
 
 // Route for dean side 
@@ -214,12 +216,22 @@ Route::get('/office_staff/documents/audtied_dv', [OfficeStaffController::class, 
 
 //Route for Search function
 Route::get('/office_staff/documents/os_search', [OfficeStaffController::class, 'searchDocuments'])->name('office_staff.documents.os_search');
+Route::get('/admin/admin_search', [AdminController::class, 'searchDocuments'])->name('admin.admin_search');
 Route::get('/search-documents', [DocumentController::class, 'searchDocuments'])->name('search.documents');
 
 //Route for Forward function
 
 Route::get('/employees/exclude-current', [AdminController::class, 'getEmployee']);
 Route::post('/documents/forward', [AdminController::class, 'forwardDocument']);
+Route::post('/documents/forward', [DocumentController::class, 'forwardDocument'])->name('documents.forward');
+
+//Route for Sent/Forwarded Documents
+Route::get('/admin/documents/sent_docs', [SentDocumentController::class, 'index'])->name('admin.documents.sent_docs');
+
+//Route for Notification 
+Route::get('/notifications', [NotificationController::class, 'showNotifications'])->middleware('auth');
+Route::get('/admin/documents/admin_notification', [NotificationController::class, 'index'])->name('admin.admin_notification');
+
 
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');

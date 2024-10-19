@@ -47,7 +47,7 @@
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-house-fill" id="home-icon"></i></div></li>
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i></div></li>
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-file-earmark-fill" id="digitized-icon"></i></div></li>
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-people-fill" id="employees"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-people-fill" id="employees-icon"></i></div></li>
                 <li>
                     <div class="icon-container" data-target="#sidebar">
                         <i class="bi bi-hourglass-split" id="pendings"></i>
@@ -56,8 +56,15 @@
                         @endif
                     </div>
                 </li>
-
-                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-bell-fill" id="notification"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-send-check-fill" id="sent"></i></div></li>
+                <li>
+                    <div class="icon-container" data-target="#sidebar">
+                        <i class="bi bi-bell-fill" id="notification-icon"></i>
+                        @if(isset($notificationCount ) && $notificationCount  > 0)
+                            <span class="badge badge-pill badge-danger" id="notificication-count">{{ $notificationCount  }}</span>
+                        @endif
+                    </div>
+                </li>
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-cloud-arrow-up-fill" id="upload-icon"></i></div></li>
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-search" id="search-icon"></i></div></li>
             </ul>
@@ -117,9 +124,10 @@
                     </ul>
                 </li>
 
+                <li><a href="{{route ('admin.documents.sent_docs') }}" id="sent"> Sent </a></li>
                 <li><a href="{{route ('admin.admin_notification') }}" id="announcements-icon"> Notifications</a></li>
                 <li><a href="{{ route('admin.admin_upload_document') }}" id="upload">Upload</a></li>
-                <li><a href="{{ route ('office_staff.documents.os_search') }}" id="search">Search</a></li>
+                <li><a href="{{ route ('admin.admin_search') }}" id="search">Search</a></li>
             </ul>
                 <div class="profile-content">
                     <ul>

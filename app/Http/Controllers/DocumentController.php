@@ -201,4 +201,42 @@ class DocumentController extends Controller
         return abort(404);
     }
 
+    public function forwardDocument(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'document_id' => 'required|exists:documents,document_id',
+            'employee_id' => 'required|exists:employee,id',  // Ensure employee_id is an existing employee id
+            'message' => 'nullable|string',
+        ]);
+    
+        // Get the authenticated user
+        $authenticatedUser = Auth::user();
+        
+        // Check if the user is authenticated and retrieve their employee_id
+        $forwardedByEmployeeId = $authenticatedUser ? $authenticatedUser->employee_id : null;
+    
+        // Look up the employee's `id` (primary key) using the `employee_id`
+        $forwardedBy = DB::table('employee')
+                        ->where('employee_id', $forwardedByEmployeeId)
+                        ->value('id');  // Retrieve the `id` (primary key) corresponding to the employee_id
+    
+        // Save the forwarded document details
+        DB::table('forwarded_documents')->insert([
+            'document_id' => $request->input('document_id'),
+            'forwarded_by' => $forwardedBy, // Now this saves the correct `id`
+            'forwarded_to' => $request->input('employee_id'), // Assuming forwarded_to references the `id`
+            'forwarded_date' => now(),
+            'status' => 'delivered',  // Default status
+            'message' => $request->input('message'),
+        ]);
+    
+        return response()->json(['message' => 'Document forwarded successfully.'], 200);
+    }
+    
+
+
+    
+
+
 }

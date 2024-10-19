@@ -171,11 +171,10 @@ function searchEmployee(query) {
 
 // Function to handle forwarding the document
 function forwardDocument(documentId, employeeId, forwardMessage) {
-    // Make an AJAX request to forward the document to the selected employee with the message
     axios.post('/documents/forward', {
         document_id: documentId,
         employee_id: employeeId,
-        message: forwardMessage  // Include the message in the request
+        message: forwardMessage
     }).then(response => {
         Swal.fire({
             title: 'Success',
@@ -191,4 +190,5 @@ function forwardDocument(documentId, employeeId, forwardMessage) {
         console.error('Error forwarding document:', error);
     });
 }
+
 

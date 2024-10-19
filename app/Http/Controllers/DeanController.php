@@ -150,7 +150,7 @@ class DeanController extends Controller
             'first_name' => $validated['first_name'],
             'middle_name' => $validated['middle_name'],
             'email' => $validated['email'],
-            'college' => $college->college_id,  // Save the college name in the users table
+            'college' => $college->college_,  // Save the college name in the users table
             'password' => bcrypt($validated['password']),
             'employee_id' => $validated['employee_id'],
             'role_id' => $role->id,  // Save the fetched role ID
