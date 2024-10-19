@@ -23,6 +23,9 @@
 
     <div id="dashboard-section">
         <div class="dashboard-container">
+            @if($forwardedDocuments->isEmpty() && $sentDocuments->isEmpty())
+                <p class="no-notifications">You have no notifications at this time.</p>
+            @else
             <table class="email-list">
                 @foreach($forwardedDocuments as $forwarded)
                     <tr class="email-item">
@@ -31,7 +34,7 @@
                         <td class="sender">{{ $forwarded->forwardedToEmployee->first_name ?? 'Unknown' }}</td>
                         <td class="subject">
                             <span class="subject-text">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
-                            <span class="snippet"> - {{ $forwarded->document->description ?? 'No description available' }}</span>
+                            <span class="snippet"> - {{ $forwarded->message ?? 'No message' }}</span>
                         </td>
                         <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d') }}</td>
                         <td class="email-actions">
@@ -62,6 +65,7 @@
                     </tr>
                 @endforeach
             </table>
+            @endif
         </div>
     </div>
 </main>

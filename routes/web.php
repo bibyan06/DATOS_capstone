@@ -229,8 +229,7 @@ Route::post('/documents/forward', [DocumentController::class, 'forwardDocument']
 Route::get('/admin/documents/sent_docs', [SentDocumentController::class, 'index'])->name('admin.documents.sent_docs');
 
 //Route for Notification 
-Route::get('/notifications', [NotificationController::class, 'showNotifications'])->middleware('auth');
-Route::get('/admin/documents/admin_notification', [NotificationController::class, 'index'])->name('admin.admin_notification');
+Route::get('/admin/admin_notification', [NotificationController::class, 'showNotifications'])->name('admin.admin_notification');
 
 
 // Route for logout

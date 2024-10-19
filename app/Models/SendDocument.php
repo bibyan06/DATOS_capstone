@@ -22,6 +22,10 @@ class SendDocument extends Model
        return $this->belongsTo(Document::class, 'document_id', 'document_id');
    }
 
+   public function sender()
+   {
+       return $this->belongsTo(Employee::class, 'id');
+   }
 
 
 }

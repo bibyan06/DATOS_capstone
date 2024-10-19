@@ -11,20 +11,18 @@ class NotificationController extends Controller
 {
     public function showNotifications()
     {
-       
-        // Get current user ID
+        // Get the ID of the currently authenticated user
         $userId = Auth::id();
+        // dd($userId);
 
-        // Retrieve forwarded documents for the current user
-        $forwardedDocuments = ForwardedDocument::where('forwarded_to', $userId)
-            ->with(['forwardedToEmployee', 'document']) // eager load relationships
-            ->get();
+        $forwardedDocuments = ForwardedDocument::where('forwarded_to', $userId)->with(['forwardedToEmployee', 'document'])->get();
+        $sentDocuments = SendDocument::where('recipient_id', $userId)->with('document')->get();
+    
+        // Debug output to check data
+        // dd($forwardedDocuments, $sentDocuments);
 
-        // Retrieve sent documents for the current user
-        $sentDocuments = SendDocument::where('recipient_id', $userId)->with('sender')->get();
-
-        // Pass the data to the view
-        return view('notifications', [
+        // Return the view and pass the data
+        return view('admin.admin_notification', [
             'forwardedDocuments' => $forwardedDocuments,
             'sentDocuments' => $sentDocuments,
         ]);
