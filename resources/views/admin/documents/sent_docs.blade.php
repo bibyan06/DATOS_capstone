@@ -21,6 +21,9 @@
 
             <div id="dashboard-section">
                 <div class="dashboard-container">
+                @if($forwardedDocuments->isEmpty() && $sentDocuments->isEmpty())
+                    <p class="no-notifications">You have no sent document/s at this time.</p>
+                @else
                     <table class="email-list">
                         <!-- Loop through Forwarded Documents -->
                         @foreach($forwardedDocuments as $forwarded)

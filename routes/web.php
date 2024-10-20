@@ -226,7 +226,15 @@ Route::post('/documents/forward', [AdminController::class, 'forwardDocument']);
 Route::post('/documents/forward', [DocumentController::class, 'forwardDocument'])->name('documents.forward');
 
 //Route for Sent/Forwarded Documents
-Route::get('/admin/documents/sent_docs', [SentDocumentController::class, 'index'])->name('admin.documents.sent_docs');
+// Admin Sent Documents
+Route::get('/admin/documents/sent_docs', [SentDocumentController::class, 'index'])
+    ->defaults('viewName', 'admin.documents.sent_docs') // Pass the view name as a default parameter
+    ->name('admin.documents.sent_docs');
+
+// Office Staff Sent Documents
+Route::get('/office_staff/documents/sent_docs', [SentDocumentController::class, 'index'])
+    ->defaults('viewName', 'office_staff.documents.sent_docs') // Pass the view name as a default parameter
+    ->name('office_staff.documents.sent_docs');
 
 //Route for Notification 
 Route::get('/admin/admin_notification', [NotificationController::class, 'showNotifications'])->name('admin.admin_notification');

@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\ForwardedDocument;
 use App\Models\SendDocument;
-
+use Illuminate\Support\Facades\Auth; // Import Auth facade
 
 class SentDocumentController extends Controller
 {
-    public function index()
+    public function index($viewName)
     {
-        // Fetch forwarded documents with related employee (recipient) and document details
-        $forwardedDocuments = ForwardedDocument::with(['forwardedToEmployee', 'document'])->get();
-        $sentDocuments = SendDocument::with(['employee', 'document'])->get();
-    
-        return view('admin.documents.sent_docs', compact('forwardedDocuments', 'sentDocuments'));
+        // Fetch forwarded documents only for the authenticated user
+        $forwardedDocuments = ForwardedDocument::with(['forwardedToEmployee', 'document'])
+            ->where('forwarded_by', auth()->id())
+            ->get();
+
+        // Fetch sent documents only for the authenticated user
+        $sentDocuments = SendDocument::with(['employee', 'document'])
+            ->where('issued_by', auth()->id())
+            ->get();
+
+        // Return the view with the filtered documents
+        return view($viewName, compact('forwardedDocuments', 'sentDocuments'));
     }
-    
 }
