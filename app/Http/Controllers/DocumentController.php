@@ -127,22 +127,22 @@ class DocumentController extends Controller
     }
 
     public function decline($documentId, Request $request)
-{
-    // Validate the remark
-    $request->validate([
-        'remark' => 'required|string|max:255',
-    ]);
+    {
+        // Validate the remark
+        $request->validate([
+            'remark' => 'required|string|max:255',
+        ]);
 
-    // Find the document
-    $document = Document::findOrFail($documentId);
+        // Find the document
+        $document = Document::findOrFail($documentId);
 
-    // Update the document status and remark
-    $document->document_status = 'Declined';
-    $document->remark = $request->remark;
-    $document->save();
+        // Update the document status and remark
+        $document->document_status = 'Declined';
+        $document->remark = $request->remark;
+        $document->save();
 
-    return redirect()->route('admin.documents.declined_docs')->with('status', 'Document is declined.');
-}
+        return redirect()->route('admin.documents.declined_docs')->with('status', 'Document is declined.');
+    }
 
     public function showApprovedDocuments()
     {
@@ -233,10 +233,18 @@ class DocumentController extends Controller
     
         return response()->json(['message' => 'Document forwarded successfully.'], 200);
     }
-    
 
+    public function markAsSeen($id)
+    {
+        $document = Document::find($id);
+        if ($document) {
+            $document->status = 'seen';
+            $document->save();
 
-    
+            return response()->json(['success' => true]);
+        }
 
+        return response()->json(['success' => false], 404);
+    }
 
 }

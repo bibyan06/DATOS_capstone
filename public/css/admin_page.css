@@ -733,10 +733,10 @@ table {
     border-collapse: collapse;
 }
 th, td {
-    border: 1px solid #dddddd;
+    /* border: 1px solid #dddddd; */
     text-align: center;
-    padding: 8px;
-    font-size: 12px;
+    padding: 4px;
+    font-size: 14px;
     color: black;
     font-family: 'Poppins';
 }
@@ -744,9 +744,22 @@ th {
     background-color: #FF731E;
 }
 
-/* #pendings {
-    position: relative;
-} */
+.email-item .subject {
+    display: inline-flex;  /* Use inline-flex to align items inline */
+    align-items: center;   /* Vertically align the elements */
+}
+
+.email-item .receiver {
+    margin-left: 20px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.email-item .document-name {
+    margin-left: 10px; /* Pushes the document name to the right */
+    font-style: italic; /* Optional: style the document name */
+}
+
 
 #pending-count {
     position: absolute;

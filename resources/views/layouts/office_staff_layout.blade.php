@@ -47,7 +47,15 @@
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-house-fill" id="home-icon"></i></div></li>
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-grid-1x2-fill" id="dashboard-icon"></i></div></li>
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-file-earmark-fill"></i></div></li>
-                <li><div class="icon-container" data-target="#home"><i class="bi bi-bell-fill"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-send-check-fill" id="sent"></i></div></li>
+                <li>
+                    <div class="icon-container" data-target="#sidebar">
+                        <i class="bi bi-bell-fill" id="notification-icon"></i>
+                        @if(isset($notificationCount ) && $notificationCount  > 0)
+                            <span class="badge badge-pill badge-danger" id="notificication-count">{{ $notificationCount  }}</span>
+                        @endif
+                    </div>
+                </li>
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-cloud-arrow-up-fill"></i></div></li>
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-search"></i></div></li>
             </ul>
@@ -83,6 +91,7 @@
                 </li>            
             </ul>
             <ul>
+                <li><a href="{{route ('office_staff.documents.sent_docs') }}" id="sent"> Sent </a></li>
                 <li><a href="{{ route ('office_staff.os_notification') }}" id="announcements-icon">Notifications</a></li>
                 <li><a href="{{ route ('office_staff.os_upload_document') }}" id="upload">Upload</a></li>
                 <li><a href="{{ route('office_staff.documents.os_search') }}" id="search">Search</a></li>

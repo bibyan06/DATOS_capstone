@@ -1,4 +1,4 @@
-@extends('layouts.admin_layout')
+@extends('layouts.office_staff_layout')
 
 @section('title', 'Sent and Forwarded Documents')
 
@@ -74,7 +74,7 @@
 @endsection
 
 @section('custom-js')
-    <script src="{{ asset('js/admin_notification.js') }}"></script>
+    <script src="{{ asset('js/os/staff_notification.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 

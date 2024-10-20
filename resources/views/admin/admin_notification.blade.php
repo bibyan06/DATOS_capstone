@@ -9,8 +9,6 @@
 @section('main-id', 'dashboard-content')
 
 @section('content') 
-
-<main id="dashboard-content">
     <section class="title">
         <div class="title-content">
             <h3>Notification</h3>
@@ -68,8 +66,6 @@
             @endif
         </div>
     </div>
-</main>
-
 @endsection
 
 @section('custom-js')

@@ -22,3 +22,26 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTime();
     setInterval(updateTime, 1000);
 });
+
+
+document.querySelectorAll('.open-document').forEach(button => {
+    button.addEventListener('click', function() {
+        const documentId = this.getAttribute('data-document-id');
+
+        // Send AJAX request to mark as "Seen"
+        fetch(`/documents/${documentId}/mark-seen`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status: 'seen' })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Document marked as seen');
+            }
+        });
+    });
+});
