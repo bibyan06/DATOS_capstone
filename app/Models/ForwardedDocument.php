@@ -7,19 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 class ForwardedDocument extends Model
 {
     protected $table = 'forwarded_documents';
-    protected $fillable = ['forwarded_document_id', 'document_id', 'forwarded_by', 'forwarded_date', 'status', 'message'];
+    protected $fillable = ['forwarded_document_id', 'document_id', 'forwarded_by', 'forwarded_to', 'forwarded_date', 'status', 'message'];
 
-
+    // Relation to the Employee model (forwarded to)
     public function forwardedToEmployee()
     {
-        return $this->belongsTo(Employee::class, 'forwarded_to', 'id'); // Adjust 'employee_id' as per your Employee table's primary key
+        return $this->belongsTo(Employee::class, 'forwarded_to', 'id');
     }
 
-    // Define the relationship to the Document model (for document_id)
+    // Relation to the Employee model (forwarded by)
+    public function forwardedByEmployee()
+    {
+        return $this->belongsTo(Employee::class, 'forwarded_by', 'id');
+    }
+
+    // Relation to the Document model
     public function document()
     {
-        return $this->belongsTo(Document::class, 'document_id', 'document_id'); // Adjust 'document_id' as per your Document table's primary key
+        return $this->belongsTo(Document::class, 'document_id', 'document_id');
     }
-
 }
-

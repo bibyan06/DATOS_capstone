@@ -9,7 +9,6 @@
 @section('main-id', 'dashboard-content')
 
 @section('content')
-
     <section class="title">
         <div class="title-content">
             <h3>Sent Documents</h3>
@@ -19,8 +18,9 @@
             </div>
         </div>
     </section>
-        <div id="dashboard-section">
-            <div class="dashboard-container">
+
+    <div id="dashboard-section">
+        <div class="dashboard-container">
             @if($forwardedDocuments->isEmpty() && $sentDocuments->isEmpty())
                 <p class="no-notifications">You have no sent or forwarded documents at this time.</p>
             @else
@@ -36,7 +36,7 @@
                                 To: 
                                 <span class="receiver">
                                     {{ $forwarded->forwardedToEmployee->first_name ?? 'Unknown' }} 
-                                    {{ $forwarded->forwardedToEmployee->last_name ?? 'User' }} 
+                                    {{ $forwarded->forwardedToEmployee->last_name ?? 'User' }}
                                 </span>
                             </td>
                             <td class="document-name">{{ $forwarded->document->document_name ?? 'Unknown Document' }}</td>
@@ -71,9 +71,9 @@
                         </tr>
                     @endforeach
                 </table>
-                @endif
-            </div>
+            @endif
         </div>
+    </div>
 @endsection
 
 @section('custom-js')

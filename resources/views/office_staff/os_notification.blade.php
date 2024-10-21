@@ -21,17 +21,11 @@
 
 <div id="dashboard-section">
     <div class="dashboard-container">
-        {{-- Debugging: Check if variables are passed correctly --}}
-@if(isset($forwardedDocuments) && isset($sentDocuments))
-    <p>Forwarded Documents Count: {{ $forwardedDocuments->count() }}</p>
-    <p>Sent Documents Count: {{ $sentDocuments->count() }}</p>
-@else
-    <p>Variables are not set.</p>
-@endif
         @if($forwardedDocuments->isEmpty() && $sentDocuments->isEmpty())
             <p class="no-notifications">You have no notifications at this time.</p>
         @else
             <table class="email-list">
+                {{-- Loop through Forwarded Documents for the current user --}}
                 @foreach($forwardedDocuments as $forwarded)
                     <tr class="email-item">
                         <td class="checkbox"><input type="checkbox"></td>
@@ -51,6 +45,7 @@
                     </tr>
                 @endforeach
 
+                {{-- Loop through Sent Documents by the current user --}}
                 @foreach($sentDocuments as $sentDocument)
                     <tr class="email-item">
                         <td class="checkbox"><input type="checkbox"></td>
@@ -73,6 +68,7 @@
         @endif
     </div>
 </div>
+
 @endsection
 
 @section('custom-js')
