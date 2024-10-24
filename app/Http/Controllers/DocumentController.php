@@ -8,8 +8,10 @@ use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\ForwardedDocument;
+use App\Models\SendDocument;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException; // Import the correct exception class
+use Illuminate\Validation\ValidationException; 
 
 class DocumentController extends Controller
 {
@@ -201,6 +203,7 @@ class DocumentController extends Controller
         return abort(404);
     }
 
+    // Forwarded Documents
     public function forwardDocument(Request $request)
     {
         // Validate the request data
@@ -234,17 +237,44 @@ class DocumentController extends Controller
         return response()->json(['message' => 'Document forwarded successfully.'], 200);
     }
 
-    public function markAsSeen($id)
+    public function getDocumentDetails($id)
     {
-        $document = Document::find($id);
-        if ($document) {
-            $document->status = 'seen';
-            $document->save();
+        Log::info('Fetching forwarded document with ID: ' . $id);
 
-            return response()->json(['success' => true]);
+        // Fetch the forwarded document with the given ID, and load the related document and sender
+        $forwardedDocument = ForwardedDocument::with(['document', 'forwardedByEmployee'])
+            ->find($id);
+
+        if ($forwardedDocument) {
+            // Return forwarded document details as JSON
+            return response()->json([
+                'subject-text' => $forwardedDocument->document->document_name ?? 'No Title',
+                'snippet' => $forwardedDocument->message ?? 'No message available',
+                'sender' => optional($forwardedDocument->forwardedByEmployee)->first_name . ' ' . optional($forwardedDocument->forwardedByEmployee)->last_name
+            ]);
+        } else {
+            return response()->json(['error' => 'Forwarded document not found'], 404);
         }
+    }
 
-        return response()->json(['success' => false], 404);
+    public function updateStatus(Request $request, $id)
+    {
+        Log::info('Updating status', ['id' => $id, 'status' => $request->input('status')]);
+
+        // Find the forwarded document
+        $forwardedDocument = ForwardedDocument::find($id);
+    
+        // Check if the document exists
+        if ($forwardedDocument) {
+            // Update the status
+            $forwardedDocument->status = $request->input('status');
+            $forwardedDocument->save(); // Save changes to the database
+
+    
+            return response()->json(['success' => true, 'message' => 'Status updated successfully']);
+        }
+    
+        return response()->json(['success' => false, 'message' => 'Document not found'], 404);
     }
 
 }

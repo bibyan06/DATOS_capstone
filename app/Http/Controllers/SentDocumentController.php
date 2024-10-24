@@ -28,7 +28,7 @@ class SentDocumentController extends Controller
                 ->get();
 
             // Fetch sent documents where the current user issued the document
-            $sentDocuments = SendDocument::with(['employee', 'document'])
+            $sentDocuments = SendDocument::with(['sender', 'document'])
                 ->where('issued_by', $employeeId) // Correct filter for employee id
                 ->get();
 

@@ -10,10 +10,10 @@ class SendDocument extends Model
     protected $fillable = ['send_id', 'issued_to', 'document_id', 'issued_by', 'status', 'issued_date'];
 
     // Relation to the Employee model (issued to)
-    public function employee()
-    {
-        return $this->belongsTo(Employee::class, 'employee_id', 'id');
-    }
+    // public function employee()
+    // {
+    //     return $this->belongsTo(Employee::class, 'employee_id', 'id');
+    // }
 
     // Relation to the Document model
     public function document()

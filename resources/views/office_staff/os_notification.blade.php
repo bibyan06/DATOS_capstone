@@ -25,12 +25,17 @@
             <p class="no-notifications">You have no notifications at this time.</p>
         @else
             <table class="email-list">
-                {{-- Loop through Forwarded Documents for the current user --}}
+                {{-- Display Forwarded Documents --}}
                 @foreach($forwardedDocuments as $forwarded)
-                    <tr class="email-item">
+                    <tr class="email-item {{ $forwarded->status !== 'seen' ? 'delivered' : '' }}" 
+                        data-id="{{ $forwarded->id }}" 
+                        data-sender="{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $forwarded->forwardedByEmployee->last_name ?? '' }}" 
+                        data-document="{{ $forwarded->document->document_name ?? 'No Title' }}" 
+                        data-snippet="{{ $forwarded->message ?? 'No message' }}"
+                        data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}">
                         <td class="checkbox"><input type="checkbox"></td>
                         <td class="star">★</td>
-                        <td class="sender">{{ $forwarded->forwardedBy->first_name ?? 'Unknown' }}</td>
+                        <td class="sender">{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $forwarded->forwardedByEmployee->last_name ?? '' }}</td>
                         <td class="subject">
                             <span class="subject-text">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
                             <span class="snippet"> - {{ $forwarded->message ?? 'No message' }}</span>
@@ -39,31 +44,31 @@
                         <td class="email-actions">
                             <i class="bi bi-archive"></i>
                             <i class="bi bi-trash"></i>
-                            <i class="bi bi-envelope"></i>
-                            <i class="bi bi-clock"></i>
                         </td>
                     </tr>
                 @endforeach
 
-                {{-- Loop through Sent Documents by the current user --}}
+                {{-- Display Sent Documents --}}
                 @foreach($sentDocuments as $sentDocument)
-                    <tr class="email-item">
+                    <tr class="email-item {{ $sentDocument->status !== 'seen' ? 'delivered' : '' }}" 
+                        data-id="{{ $sentDocument->id }}" 
+                        data-sender="{{ $sentDocument->sender->first_name ?? 'Unknown Sender' }} {{ $sentDocument->sender->last_name ?? '' }}" 
+                        data-document="{{ $sentDocument->document->document_name ?? 'No Title' }}"
+                        data-file-url="{{ asset('storage/' . $sentDocument->document->file_path) }}">
                         <td class="checkbox"><input type="checkbox"></td>
                         <td class="star">★</td>
-                        <td class="sender">{{ $sentDocument->sender->name ?? 'Unknown Sender' }}</td>
+                        <td class="sender">{{ $sentDocument->sender->first_name ?? 'Unknown Sender' }} {{ $sentDocument->sender->last_name ?? '' }}</td>
                         <td class="subject">
                             <span class="subject-text">{{ $sentDocument->document->document_name ?? 'No Title' }}</span>
-                            <span class="snippet"> - {{ $sentDocument->description ?? 'No description available' }}</span>
                         </td>
-                        <td class="date">{{ \Carbon\Carbon::parse($sentDocument->created_at)->format('M d') }}</td>
+                        <td class="date">{{ \Carbon\Carbon::parse($sentDocument->issued_date)->format('M d') }}</td>
                         <td class="email-actions">
                             <i class="bi bi-archive"></i>
                             <i class="bi bi-trash"></i>
-                            <i class="bi bi-envelope"></i>
-                            <i class="bi bi-clock"></i>
                         </td>
                     </tr>
                 @endforeach
+
             </table>
         @endif
     </div>
@@ -72,5 +77,6 @@
 @endsection
 
 @section('custom-js')
-<script src="{{ asset('js/os/staff_notification.js') }}"></script>
+    <script src="{{ asset('js/os/staff_notification.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

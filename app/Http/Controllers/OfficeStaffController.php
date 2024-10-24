@@ -240,4 +240,29 @@ class OfficeStaffController extends Controller
         return view('office_staff._account', compact('user'));
     }
 
+    //Forward Docs
+
+    public function getEmployee()
+    {
+        $currentUserId = Auth::user()->employee_id;  // Get the employee_id of the current user
+        $employees = Employee::where('employee_id', '!=', $currentUserId)->get();  // Fetch employees except current user
+        
+        // Log employees to check the output
+        logger()->info($employees);
+
+        return response()->json($employees);  // Return employees as JSON
+    }
+
+    public function forwardDocument(Request $request)
+    {
+        // Get the document and employee IDs from the request
+        $documentId = $request->input('document_id');
+        $employeeId = $request->input('employee_id');
+        
+        // Your logic for forwarding the document (e.g., saving the forwarding record to the database)
+        // Example: DocumentForwarding::create([...]);
+
+        return response()->json(['message' => 'Document forwarded successfully!']);
+    }
+
 }

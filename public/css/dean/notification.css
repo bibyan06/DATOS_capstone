@@ -36,7 +36,7 @@ main {
 }
 .sender {
     font-weight: bold;
-    margin-right: 10px;
+    margin-right: 70px;
 }
 .subject {
     flex-grow: 1;

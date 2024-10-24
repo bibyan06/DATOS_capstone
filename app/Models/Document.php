@@ -14,6 +14,7 @@ class Document extends Model
 
     protected $table = 'documents';
     protected $fillable = [
+        'document_id',
         'document_number',
         'document_name',
         'description',

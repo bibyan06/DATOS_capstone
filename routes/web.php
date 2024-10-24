@@ -223,6 +223,8 @@ Route::get('/search-documents', [DocumentController::class, 'searchDocuments'])-
 
 Route::get('/employees/exclude-current', [AdminController::class, 'getEmployee']);
 Route::post('/documents/forward', [AdminController::class, 'forwardDocument']);
+Route::get('/employees/exclude-current', [OfficeStaffController::class, 'getEmployee']);
+Route::post('/documents/forward', [OfficeStaffController::class, 'forwardDocument']);
 Route::post('/documents/forward', [DocumentController::class, 'forwardDocument'])->name('documents.forward');
 
 //Route for Sent/Forwarded Documents
@@ -241,9 +243,28 @@ Route::middleware(['auth'])->group(function () {
 });
 
 //Route for Notification  
-Route::get('/notifications', [NotificationController::class, 'showNotifications'])
-->name('notifications')
-->middleware('auth'); 
+// Admin Notification Route
+Route::get('/admin/admin_notifications', [NotificationController::class, 'index'])
+    ->name('admin.admin_notification')
+    ->middleware('auth')
+    ->defaults('viewName', 'admin.admin_notification');
+
+// Office Staff Notification Route
+Route::get('/office_staff/os_notification', [NotificationController::class, 'index'])
+    ->name('office_staff.os_notification')
+    ->middleware('auth')
+    ->defaults('viewName', 'office_staff.os_notification');
+
+// Dean Notification Route
+Route::get('/dean/documents/dean_notification', [NotificationController::class, 'index'])
+    ->name('dean.documents.dean_notification')
+    ->middleware('auth')
+    ->defaults('viewName', 'dean.documents.dean_notification');
+
+Route::get('/get-document-details/{id}', [DocumentController::class, 'getDocumentDetails']);
+Route::patch('/forwarded-documents/{id}/update-status', [DocumentController::class, 'updateStatus'])->name('forwarded-documents.update-status');
+Route::get('/documents/{id}', [DocumentController::class, 'show'])->name('documents.show');
+
 
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');
