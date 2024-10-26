@@ -543,3 +543,23 @@ footer {
 .status-pending {
     color: orange;
 }
+
+/* notification */
+
+.custom-swal-width {
+    max-width: 80vw; 
+    width: 80vw;
+    height: 85vh; 
+    overflow: auto; /* Enable scrolling if content overflows */
+}
+
+.custom-title {
+    margin-bottom: 15px;  /* Adjust title bottom margin */
+}
+
+.custom-content {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 1em;
+    line-height: 1.5;  /* Adjust line height */
+}

@@ -35,18 +35,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 const snippet = this.getAttribute('data-snippet');
                 const fileUrl = this.getAttribute('data-file-url');
 
-                // Show SweetAlert modal
+                // Show SweetAlert modal with embedded PDF viewer
                 Swal.fire({
-                    title: documentName,
+                    title: `<strong>${documentName}</strong>`,
                     html: `
-                    <p><strong>Sender:</strong> ${sender}</p>
-                    <p><strong>Description:</strong> ${snippet}</p>
+                        <div style="text-align: left; margin-top: 10px;">
+                            <p><strong>Sender:</strong> ${sender}</p>
+                            <p><strong>Description:</strong> ${snippet}</p>
+                        </div>
+                        <iframe src="${fileUrl}" width="100%" height="400px" style="border:none; margin-top: 20px;"></iframe>
                     `,
-                    icon: 'info',
                     showCloseButton: true,
-                    confirmButtonText: 'View Document',
+                    confirmButtonText: 'Mark as Seen',
                     showCancelButton: true,
-                    cancelButtonText: 'Cancel',
+                    cancelButtonText: 'Close',
+                    customClass: {
+                        popup: 'custom-swal-width',
+                        title: 'custom-title'
+                    }
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Update status to "seen" via AJAX
@@ -67,8 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         .then(data => {
                             if (data.success) {
                                 console.log(data.message); // Log success message
-                                // Open the document in a new tab or window
-                                window.open(fileUrl, '_blank');
                             } else {
                                 console.error(data.message); // Log failure message
                             }

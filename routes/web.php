@@ -166,8 +166,8 @@ route::get('/home/admin', [AdminController::class, 'adminHome'])->name('home.adm
 Route::post('/admin/documents/declined_docs/{id}', [DocumentController::class, 'decline'])->name('admin.documents.decline');
 
 // Route to serve documents
-Route::get('/document/{filename}', function ($filename) {
-    $path = storage_path('app/documents/' . $filename);
+Route::get('/documents/{filename}', function ($filename) {
+    $path = public_path('storage/documents/' . $filename);
 
     if (!File::exists($path)) {
         abort(404);
@@ -175,6 +175,7 @@ Route::get('/document/{filename}', function ($filename) {
 
     return response()->file($path);
 })->name('document.serve');
+
 
 //Route to view document
 Route::get('/admin/documents/view_docs/{document_id}', [AdminController::class, 'view'])->name('admin.documents.view_docs');
