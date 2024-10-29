@@ -24,35 +24,41 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", () => {
     const emailItems = document.querySelectorAll('.email-item');
 
     emailItems.forEach(item => {
         item.addEventListener('click', function (e) {
             // Check if the click was inside the email-actions or the checkbox
             if (e.target.closest('.email-actions') || e.target.type === 'checkbox') {
-                // If click is on .email-actions or the checkbox, do nothing and return early
                 return;
             }
 
             // Get relevant information from the clicked row
             const documentName = this.querySelector('.document-name').textContent.trim();
             const receiverName = this.querySelector('.receiver').textContent.trim();
-            const status = this.getAttribute('data-status'); // Assuming you have a status attribute
+            const status = this.getAttribute('data-status'); 
+            const fileUrl = this.getAttribute('data-file-url');
 
             // Use SweetAlert2 to display the document details
             Swal.fire({
                 title: 'Document Details',
                 html: `
-                    <p><strong>Document Name:</strong> ${documentName}</p>
-                    <p><strong>Receiver:</strong> ${receiverName}</p>
-                    <p><strong>Status:</strong> ${status === 'seen' ? 'Seen' : 'Delivered'}</p>
+                    <div style="text-align: left">
+                        <p><strong>Document Name:</strong> ${documentName}</p>
+                        <p><strong>To:</strong> ${receiverName}</p>
+                        <p><strong>Status:</strong> ${status ? status : 'delivered'}</p>
+                    </div>
+                    <iframe src="${fileUrl}" width="100%" height="400px" style="border:none; margin-top: 20px;"></iframe>
                 `,
-                icon: status === 'seen' ? 'success' : 'info', // Icon based on status
                 showCloseButton: true,
                 focusConfirm: false,
                 confirmButtonText: 'Close',
-                confirmButtonColor: '#3085d6'
+                confirmButtonColor: '#3085d6',
+                customClass: {
+                    popup: 'custom-swal-width',
+                    title: 'custom-title'
+                }
             });
         });
     });

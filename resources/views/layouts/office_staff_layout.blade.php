@@ -53,13 +53,14 @@
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-file-earmark-fill"></i></div></li>
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-send-check-fill" id="sent"></i></div></li>
                 <li>
-                    <div class="icon-container" data-target="#sidebar">
+                    <div class="icon-container" data-target="#notifications">
                         <i class="bi bi-bell-fill" id="notification-icon"></i>
-                        @if(isset($notificationCount ) && $notificationCount  > 0)
-                            <span class="badge badge-pill badge-danger" id="notificication-count">{{ $notificationCount  }}</span>
+                        @if(isset($notificationCount) && $notificationCount > 0)
+                            <span class="badge badge-pill badge-danger" id="notification-count" style="display:none;">{{ $notificationCount }}</span>
                         @endif
                     </div>
                 </li>
+
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-cloud-arrow-up-fill"></i></div></li>
                 <li><div class="icon-container" data-target="#home"><i class="bi bi-search"></i></div></li>
             </ul>

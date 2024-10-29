@@ -27,7 +27,10 @@
                 <table class="email-list">
                     <!-- Loop through Forwarded Documents -->
                     @foreach($forwardedDocuments as $forwarded)
-                        <tr class="email-item">
+                        <tr class="email-item"
+                            data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}"
+                            data-status="{{ $forwarded->status }}">
+                            
                             <td class="checkbox"><input type="checkbox"></td>
                             <td class="star">★</td>
                             <td class="sender">DATOS</td>
@@ -40,7 +43,7 @@
                                 </span>
                             </td>
                             <td class="document-name">{{ $forwarded->document->document_name ?? 'Unknown Document' }}</td>
-                            <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d') }}</td>
+                            <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
                                 <i class="bi bi-archive"></i>
                                 <i class="bi bi-trash"></i>
@@ -50,7 +53,10 @@
 
                     <!-- Loop through Sent Documents -->
                     @foreach($sentDocuments as $sent)
-                        <tr class="email-item">
+                        <tr class="email-item"
+                            data-file-url="{{ asset('storage/' . $sent->document->file_path) }}"
+                            data-status="{{ $forwarded->status }}">
+            
                             <td class="checkbox"><input type="checkbox"></td>
                             <td class="star">★</td>
                             <td class="sender">DATOS</td>
@@ -63,7 +69,7 @@
                                     sent a document titled {{ $sent->document->document_name ?? 'Unknown Document' }}.
                                 </span>
                             </td>
-                            <td class="date">{{ \Carbon\Carbon::parse($sent->issued_date)->format('M d') }}</td>
+                            <td class="date">{{ \Carbon\Carbon::parse($sent->issued_date)->format('M d H:i') }}</td>
                             <td class="email-actions">
                                 <i class="bi bi-archive"></i>
                                 <i class="bi bi-trash"></i>

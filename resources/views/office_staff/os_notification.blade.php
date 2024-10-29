@@ -32,7 +32,8 @@
                         data-sender="{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $forwarded->forwardedByEmployee->last_name ?? '' }}" 
                         data-document="{{ $forwarded->document->document_name ?? 'No Title' }}" 
                         data-snippet="{{ $forwarded->message ?? 'No message' }}"
-                        data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}">
+                        data-file-url="{{ asset('storage/' . $forwarded->document->file_path) }}" >
+                        
                         <td class="checkbox"><input type="checkbox"></td>
                         <td class="star">★</td>
                         <td class="sender">{{ $forwarded->forwardedByEmployee->first_name ?? 'Unknown' }} {{ $forwarded->forwardedByEmployee->last_name ?? '' }}</td>
@@ -40,7 +41,7 @@
                             <span class="subject-text">{{ $forwarded->document->document_name ?? 'No Title' }}</span>
                             <span class="snippet"> - {{ $forwarded->message ?? 'No message' }}</span>
                         </td>
-                        <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d') }}</td>
+                        <td class="date">{{ \Carbon\Carbon::parse($forwarded->forwarded_date)->format('M d H:i') }}</td>
                         <td class="email-actions">
                             <i class="bi bi-archive"></i>
                             <i class="bi bi-trash"></i>

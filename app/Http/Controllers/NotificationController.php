@@ -7,6 +7,7 @@ use App\Models\ForwardedDocument;
 use App\Models\SendDocument;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
@@ -41,4 +42,37 @@ class NotificationController extends Controller
             return view($viewName)->withErrors(['Employee record not found.']);
         }
     }
+
+    public function getNotificationCount()
+    {
+        try {
+            $user = Auth::user();  // Get the authenticated user object
+
+            if (!$user) {
+                return response()->json(['error' => 'Unauthenticated'], 401);
+            }
+
+            $userId = $user->user_id;  // Get the custom user identifier
+
+            // Count notifications for the current user in both tables
+            $forwardedCount = DB::table('forwarded_documents')
+                                ->where('status', 'delivered')
+                                ->where('forwarded_to', $userId)  
+                                ->count();
+            
+            $sentCount = DB::table('send_document')
+                            ->where('status', 'delivered')
+                            ->where('issued_to', $userId)  
+                            ->count();
+
+            $notificationCount = $forwardedCount + $sentCount;
+
+            return response()->json(['notificationCount' => $notificationCount]);
+        } catch (\Exception $e) {
+            \Log::error("Error in getNotificationCount: " . $e->getMessage());
+            return response()->json(['error' => 'Server error'], 500);
+        }
+}   
+
+
 }

@@ -263,8 +263,11 @@ Route::get('/dean/documents/dean_notification', [NotificationController::class, 
     ->defaults('viewName', 'dean.documents.dean_notification');
 
 Route::get('/get-document-details/{id}', [DocumentController::class, 'getDocumentDetails']);
-Route::patch('/forwarded-documents/{id}/update-status', [DocumentController::class, 'updateStatus'])->name('forwarded-documents.update-status');
+Route::patch('/forwarded-documents/{forwardedDocumentId}/update-status', [DocumentController::class, 'updateStatus'])->name('forwardedDocuments.updateStatus');
+
 Route::get('/documents/{id}', [DocumentController::class, 'show'])->name('documents.show');
+
+Route::get('/notification/count', [NotificationController::class, 'getNotificationCount'])->name('notification.count');
 
 
 // Route for logout

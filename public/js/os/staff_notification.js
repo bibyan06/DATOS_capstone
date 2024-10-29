@@ -27,15 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     emailItems.forEach(item => {
         item.addEventListener('click', function(e) {
-            // Check if the clicked target is not an email action
-            if (!e.target.closest('.email-actions')) {
-                const documentId = this.getAttribute('data-id');
+            if (!e.target.closest('.email-actions') && !e.target.closest('.checkbox')) {
+                const forwardedDocumentId = this.getAttribute('data-id');
                 const sender = this.getAttribute('data-sender');
                 const documentName = this.getAttribute('data-document');
                 const snippet = this.getAttribute('data-snippet');
                 const fileUrl = this.getAttribute('data-file-url');
 
-                // Show SweetAlert modal with embedded PDF viewer
                 Swal.fire({
                     title: `<strong>${documentName}</strong>`,
                     html: `
@@ -54,31 +52,39 @@ document.addEventListener('DOMContentLoaded', function() {
                         title: 'custom-title'
                     }
                 }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Update status to "seen" via AJAX
-                        fetch(`/forwarded-documents/${documentId}/update-status`, {
+                    if (result.isConfirmed && forwardedDocumentId) {
+                        console.log("Attempting to send request to update status...");
+                        
+                        fetch(`/forwarded-documents/${forwardedDocumentId}/update-status`, {
                             method: 'PATCH',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                            },
-                            body: JSON.stringify({ status: 'seen' })
+                            }
                         })
                         .then(response => {
+                            console.log("Received response:", response);
                             if (!response.ok) {
-                                throw new Error('Network response was not ok');
+                                throw new Error(`HTTP error! Status: ${response.status}`);
                             }
                             return response.json();
                         })
                         .then(data => {
+                            console.log("Response data:", data);
                             if (data.success) {
-                                console.log(data.message); // Log success message
+                                Swal.fire('Success', 'Document status updated to "seen".', 'success')
+                                    .then(() => {
+                                        document.querySelector(`[data-id="${forwardedDocumentId}"]`).classList.remove('delivered');
+                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .sender`).style.fontWeight = 'normal';
+                                        document.querySelector(`[data-id="${forwardedDocumentId}"] .data-document`).style.fontWeight = 'normal';
+                                    });
                             } else {
-                                console.error(data.message); // Log failure message
+                                Swal.fire('Error', data.message || 'Failed to update document status.', 'error');
                             }
                         })
                         .catch(error => {
-                            console.error('Error updating status:', error);
+                            console.error('Error during fetch operation:', error);
+                            Swal.fire('Error', 'Failed to update document status. Please try again.', 'error');
                         });
                     }
                 });

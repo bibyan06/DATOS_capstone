@@ -554,12 +554,41 @@ footer {
 }
 
 .custom-title {
-    margin-bottom: 15px;  /* Adjust title bottom margin */
+    margin-bottom: 15px; 
 }
 
 .custom-content {
     text-align: left;
     margin-top: 10px;
     font-size: 1em;
-    line-height: 1.5;  /* Adjust line height */
+    line-height: 1.5;  
+}
+
+.email-item.seen {
+    font-weight: normal;
+}
+
+.icon-container {
+    position: relative; 
+}
+.badge {
+    position: absolute;
+    right: 3px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 1px 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#notification-count {
+    background-color: red; 
+    color: white; 
+    border-radius: 50%; 
+    padding: 5px 10px; 
+    position: absolute; 
+    top: 5px; 
+    right: 5px; 
+    font-size: 12px; 
 }

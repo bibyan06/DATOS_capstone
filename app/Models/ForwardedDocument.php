@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ForwardedDocument extends Model
 {
+    public $timestamps = false;
     protected $table = 'forwarded_documents';
+    protected $primaryKey = 'forwarded_document_id';
     protected $fillable = ['forwarded_document_id', 'document_id', 'forwarded_by', 'forwarded_to', 'forwarded_date', 'status', 'message'];
 
     // Relation to the Employee model (forwarded to)
