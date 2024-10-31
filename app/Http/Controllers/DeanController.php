@@ -5,7 +5,7 @@ use App\Models\Document;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -115,73 +115,86 @@ class DeanController extends Controller
 
     // Function to handle the addition of a new dean account
     public function storeDeanAccount(Request $request)
-{
-    try {
-        // Validate the input data
-        $validated = $request->validate([
-            'last_name' => 'required|string|max:255',
-            'first_name' => 'required|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'college_id' => 'required|integer|exists:college,college_id', // Validate the college_id
-            'password' => 'required|string|min:6',
-            'employee_id' => 'required|string|unique:users',
-        ]);
+    {
+        try {
+            // Validate the input data
+            $validated = $request->validate([
+                'last_name' => 'required|string|max:255',
+                'first_name' => 'required|string|max:255',
+                'middle_name' => 'nullable|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'college_id' => 'required|integer|exists:college,college_id', 
+                'password' => 'required|string|min:6',
+                'employee_id' => 'required|string|unique:users',
+            ]);
 
-        // Fetch the role ID for the dean from the roles table
-        $role = Role::where('position', 'Dean')->first();
+            // Fetch the role ID for the dean from the roles table
+            $role = Role::where('position', 'Dean')->first();
 
-        if (!$role) {
-            // Handle the case where the 'dean' role doesn't exist
-            \Log::error('Role not found for position: dean');
-            return response()->json(['success' => false, 'message' => 'Dean role not found.']);
+            if (!$role) {
+                // Handle the case where the 'dean' role doesn't exist
+                \Log::error('Role not found for position: dean');
+                return response()->json(['success' => false, 'message' => 'Dean role not found.']);
+            }
+
+            // Fetch the college name based on the provided college_id
+            $college = DB::table('college')->where('college_id', $validated['college_id'])->first();
+
+            if (!$college) {
+                return response()->json(['success' => false, 'message' => 'College not found.']);
+            }
+
+            // Create a new dean account and assign the role
+            $user = User::create([
+                'last_name' => $validated['last_name'],
+                'first_name' => $validated['first_name'],
+                'middle_name' => $validated['middle_name'],
+                'email' => $validated['email'],
+                'college' => $college->college_,  // Save the college name in the users table
+                'password' => bcrypt($validated['password']),
+                'employee_id' => $validated['employee_id'],
+                'role_id' => $role->id,  // Save the fetched role ID
+            ]);
+
+            // Send verification email
+            $user->sendEmailVerificationNotification();
+
+            // Create an entry in the Employee table
+            $employee = Employee::create([
+                'employee_id' => $validated['employee_id'], 
+                'last_name' => $user->last_name,
+                'first_name' => $user->first_name,
+                'position' => 'Dean', 
+            ]);
+
+            // Create an entry in the Dean table
+            DB::table('dean')->insert([
+                'user_id' => $user->user_id,     // Reference to the user_id from the users table
+                'college_id' => $validated['college_id'],  // Reference to the college_id from the form
+                'role_id' => $role->id,          // Reference to the role_id from the users table
+            ]);
+
+            // Send success response
+            return response()->json(['success' => true, 'message' => 'Dean account created successfully. Verification email sent.']);
+        } catch (\Exception $e) {
+            // Log the error and send failure response
+            \Log::error('Failed to create dean account:', ['error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'Failed to create dean account.']);
         }
-
-        // Fetch the college name based on the provided college_id
-        $college = DB::table('college')->where('college_id', $validated['college_id'])->first();
-
-        if (!$college) {
-            return response()->json(['success' => false, 'message' => 'College not found.']);
-        }
-
-        // Create a new dean account and assign the role
-        $user = User::create([
-            'last_name' => $validated['last_name'],
-            'first_name' => $validated['first_name'],
-            'middle_name' => $validated['middle_name'],
-            'email' => $validated['email'],
-            'college' => $college->college_,  // Save the college name in the users table
-            'password' => bcrypt($validated['password']),
-            'employee_id' => $validated['employee_id'],
-            'role_id' => $role->id,  // Save the fetched role ID
-        ]);
-
-        // Send verification email
-        $user->sendEmailVerificationNotification();
-
-        // Create an entry in the Employee table
-        $employee = Employee::create([
-            'employee_id' => $validated['employee_id'], // Use the validated employee_id
-            'last_name' => $user->last_name,
-            'first_name' => $user->first_name,
-            'position' => 'Dean', 
-        ]);
-
-        // Create an entry in the Dean table
-        DB::table('dean')->insert([
-            'user_id' => $user->user_id,     // Reference to the user_id from the users table
-            'college_id' => $validated['college_id'],  // Reference to the college_id from the form
-            'role_id' => $role->id,          // Reference to the role_id from the users table
-        ]);
-
-        // Send success response
-        return response()->json(['success' => true, 'message' => 'Dean account created successfully. Verification email sent.']);
-    } catch (\Exception $e) {
-        // Log the error and send failure response
-        \Log::error('Failed to create dean account:', ['error' => $e->getMessage()]);
-        return response()->json(['success' => false, 'message' => 'Failed to create dean account.']);
     }
-}
+
+    public function showDeanProfile()
+    {
+        $user = Auth::user();
+
+        // Check if the user is logged in and has the role of Dean
+        if ($user && $user->role_id == 3) {
+            return view('dean.dean_account', ['user' => $user]);
+        }
+
+        // Redirect if the user is not a dean or not logged in
+        return redirect()->route('home')->with('error', 'Unauthorized access.');
+    }
 
 }
 

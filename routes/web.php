@@ -125,14 +125,18 @@ Route::post('/add-dean-account', [DeanController::class, 'storeDeanAccount'])->n
 Route::get('/admin/college_dean', [DeanController::class, 'deanList'])->name('admin.college_dean');
 Route::post('/add-college', [CollegeController::class, 'store'])->name('add-college');
 Route::get('/admin/college_dean', [CollegeController::class, 'showCollegeDeanForm'])->name('admin.college_dean');
-
-
+Route::get('/dean/dean_account', [DeanController::class, 'showDeanProfile'])->name('dean.dean_account')->middleware('auth');
 
 
 // Route for Profile 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });
+
+// Route to update profile 
+Route::post('/update-profile', [ProfileController::class, 'updateDeanProfile']);
+
+
 
 //Route for recent documents 
 Route::get('/recent-documents', [DocumentController::class, 'showRecentDocuments'])->name('recent-documents');

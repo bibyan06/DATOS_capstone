@@ -56,7 +56,7 @@
                     <div class="icon-container" data-target="#notifications">
                         <i class="bi bi-bell-fill" id="notification-icon"></i>
                         @if(isset($notificationCount) && $notificationCount > 0)
-                            <span class="badge badge-pill badge-danger" id="notification-count" style="display:none;">{{ $notificationCount }}</span>
+                        <span class="badge badge-pill badge-danger" id="notification-count" style="display:none;">{{ $notificationCount }}</span>
                         @endif
                     </div>
                 </li>

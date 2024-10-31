@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use App\Models\Document;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,5 +33,10 @@ class AppServiceProvider extends ServiceProvider
             $pendingCount = Document::pending()->count(); // Retrieve the count of pending documents
             $view->with('pendingCount', $pendingCount);
         });
+
+        DB::listen(function ($query) {
+            Log::info('SQL Query: ' . $query->sql, $query->bindings);
+        });
+    
     }
 }

@@ -19,33 +19,14 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    // public $timestamps = false; 
- /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
+    protected $table = 'users';
+
     protected $primaryKey = 'user_id';
 
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = true; // Set to true if `user_id` is auto-incrementing
+    public $incrementing = true; 
 
-    /**
-     * The data type of the primary key.
-     *
-     * @var string
-     */
-    protected $keyType = 'string'; // Use 'int' if `user_id` is an integer
+    protected $keyType = 'int'; 
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'employee_id',
         'last_name',
@@ -60,7 +41,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'password',
         'role_id',
-        
     ];
 
     /**
@@ -122,7 +102,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function role()
     {
-        return $this->belongsTo(Role::class, 'role_id'); // Ensure this is the correct foreign key
+        return $this->belongsTo(Role::class, 'role_id'); 
     }
 
     
@@ -143,7 +123,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function forwardedDocuments()
     {
-        return $this->hasMany(ForwardedDocument::class, 'forwarded_to', 'user_id'); // Adjust 'user_id' based on your User table
+        return $this->hasMany(ForwardedDocument::class, 'forwarded_to', 'user_id'); 
     }
 
 }

@@ -112,6 +112,7 @@
     </footer>
 
     <script src="{{ asset ('js/dean/dean_page.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('custom-js')
 </body>
 </html>

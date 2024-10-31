@@ -374,4 +374,39 @@ main {
     border: 2px solid #e74c3c;
   }
   
+
+  /* profile */
+
+  .password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .password-container input[type="password"], 
+  .password-container input[type="text"] {
+      padding-right: 30px; /* Space for the eye icon */
+  }
+
+  .password-container i {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  .error-message {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 5px;
+    display: block;
+  }
+
+  .error-message {
+      color: red; 
+      font-size: 0.9em;
+      margin-top: 2px; 
+      display: none; 
+  }
+
+
   

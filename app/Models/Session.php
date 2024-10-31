@@ -17,4 +17,5 @@ class Session extends Model
 
     // If the primary key is not an integer
     protected $keyType = 'string';
+    
 }

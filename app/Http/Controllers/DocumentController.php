@@ -54,7 +54,7 @@ class DocumentController extends Controller
 
         // Check if the file is uploaded
         if ($request->hasFile('file')) {
-            $path = $request->file('file')->store('documents');
+            $path = $request->file('file')->store('public/documents');
             Log::info('File uploaded to: ' . $path);
 
             $document = new Document();
