@@ -135,6 +135,9 @@ Route::middleware(['auth'])->group(function () {
 
 // Route to update profile 
 Route::post('/update-profile', [ProfileController::class, 'updateDeanProfile']);
+Route::post('/update-profile', [ProfileController::class, 'updateAdminProfile'])->name('profile.update');
+Route::post('/update-profile', [ProfileController::class, 'updateOfficeStaffProfile'])->name('profile.update');
+
 
 
 

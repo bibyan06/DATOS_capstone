@@ -132,3 +132,54 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("warningModal").style.display = "none";
     };
 });
+
+
+// Profile Update
+document.getElementById('saveChangesBtn').addEventListener('click', function () {
+    const formData = new FormData(document.getElementById('updateProfileForm'));
+
+    fetch(profileUpdateUrl, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json'
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.errors) {
+            let errorMessages = '';
+            for (let field in data.errors) {
+                errorMessages += `<p>${data.errors[field]}</p>`;
+            }
+            // Use SweetAlert2 for error messages
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                html: errorMessages, // Set the errors as HTML
+                confirmButtonText: 'Close'
+            });
+        } else if (data.success) {
+            // Use SweetAlert2 for success messages
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: data.success,
+                confirmButtonText: 'Ok'
+            }).then(() => {
+                document.getElementById('myModal').style.display = 'none';
+                location.reload(); 
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Something went wrong. Please try again later.',
+            confirmButtonText: 'Close'
+        });
+    });
+});

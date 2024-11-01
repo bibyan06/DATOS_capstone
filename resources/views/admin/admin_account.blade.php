@@ -50,13 +50,13 @@
                 <span class="value" data-field="firstname">{{ Auth::user()->first_name }}</span>
             </div>
             <div class="info-row">
-                <span class="label">Middle Name</span>
+                <span class="label">Middle Name:</span>
                 <span class="value" data-field="middlename">{{ Auth::user()->middle_name }}</span>
             </div>
-            <!-- <div class="info-row">
-                <span class="label">Position:</span>
-                <span class="value" data-field="office">{{ Auth::user()->position }}</span>
-            </div> -->
+            <div class="info-row">
+                <div class="label">Username:</div>
+                <div class="value" data-field="username">{{ Auth::user()->username }}</div>
+            </div>
             <div class="info-row">
             <div class="label">Age:</div>
                 <div class="value" data-field="age">{{ Auth::user()->age }}</div>
@@ -84,27 +84,21 @@
                 <span class="close">&times;</span>
                 <h2>Update Profile</h2>
                 <form id="updateProfileForm">
+                    @csrf
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="lastname">Last Name</label>
-                            <input type="text" id="lastname" name="lastname" value="{{ Auth::user()->last_name }}" required>
+                            <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ Auth::user()->last_name }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="firstname">First Name</label>
-                            <input type="text" id="firstname" name="firstname" value="{{ Auth::user()->first_name }}" required>
+                            <label for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ Auth::user()->first_name }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="middlename">Middle Name</label>
-                            <input type="text" id="middlename" name="middlename" value="{{ Auth::user()->middle_name }}" required>
+                            <label for="middle_name">Middle Name</label>
+                            <input type="text" id="middle_name" name="middle_name" value="{{ Auth::user()->middle_name }}" required>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="position">Position</label>
-                            <input type="text" id="position" name="position" value="{{ Auth::user()->position }}" required>
-                        </div>
-                    </div>
-                        
                     <div class="form-row">
                         <div class="form-group">
                             <label for="age">Age</label>
@@ -118,13 +112,19 @@
                                 <option value="Female" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>Female</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" value="{{ Auth::user()->username }}" required>
+                        </div>
                     </div>
-                        
                     <div class="form-row">
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" id="email" name="email" value="{{ Auth::user()->email }}" required>
                         </div>
+                    </div>
+                        
+                    <div class="form-row">
                         <div class="form-group">
                             <label for="phone">Phone Number</label>
                             <input type="text" id="phone" name="phone" value="{{ Auth::user()->phone_number }}" required>
@@ -158,6 +158,8 @@
 
 
 @section('custom-js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>const profileUpdateUrl = "{{ route('profile.update') }}";</script>
     <script src="{{ asset('js/admin_account.js') }}"></script>
 @endsection
 

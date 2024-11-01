@@ -153,5 +153,75 @@ class ProfileController extends Controller
         $user->save();
     }
 
+    public function updateAdminProfile(Request $request)
+    {
+        $user = Auth::user();
+        $emailUniqueRule = 'unique:users,email,' . $user->user_id . ',user_id';
+
+        $validator = Validator::make($request->all(), [
+            'last_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'age' => 'required|integer|min:18|max:120',
+            'gender' => 'required|string',
+            'email' => 'required|string|email|max:255|' . $emailUniqueRule,
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = Auth::user();
+        $user->last_name = $request->last_name;
+        $user->first_name = $request->first_name;
+        $user->middle_name = $request->middle_name;
+        $user->age = $request->age;
+        $user->gender = $request->gender;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone;
+        $user->home_address = $request->address;
+        $user->save();
+
+        return response()->json(['success' => 'Profile updated successfully']);
+    }
+
+    public function updateOfficeStaffProfile(Request $request)
+    {
+        $user = Auth::user();
+        $emailUniqueRule = 'unique:users,email,' . $user->user_id . ',user_id';
+
+        $validator = Validator::make($request->all(), [
+            'last_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'username'=>'required|string|max:50',
+            'age' => 'required|integer|min:18|max:120',
+            'gender' => 'required|string',
+            'email' => 'required|string|email|max:255|' . $emailUniqueRule,
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = Auth::user();
+        $user->last_name = $request->last_name;
+        $user->first_name = $request->first_name;
+        $user->middle_name = $request->middle_name;
+        $user->username = $request -> username;
+        $user->age = $request->age;
+        $user->gender = $request->gender;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone;
+        $user->home_address = $request->address;
+        $user->save();
+
+        return response()->json(['success' => 'Profile updated successfully']);
+    }
+
 }
 
