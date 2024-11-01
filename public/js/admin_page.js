@@ -123,3 +123,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+const dropdownToggle3 = document.querySelector(".archives-dropdown-toggle");
+
+const dropdownMenuArchives = document.querySelector(".archives-dropdown-menu");
+
+dropdownToggle3.addEventListener("click", function () {
+        dropdownMenuArchives.classList.toggle("archives-dropdown-active");
+        this.querySelector("i.bi-chevron-right").classList.toggle("archives-dropdown-active");
+    });
+
+dropdownMenuArchives.addEventListener("mouseleave", function () {
+        dropdownMenuArchives.classList.remove("archives-dropdown-active");
+        dropdownToggle3.querySelector("i.bi-chevron-right").classList.remove("archives-dropdown-active");
+    });

@@ -124,6 +124,21 @@ class AdminController extends Controller
         return view('admin.documents.all_docs');
     }
 
+    public function archiveNotif()
+    {
+        return view('admin.archive_notif');
+    }
+    
+    public function archiveDocs()
+    {
+        return view('admin.archive_docs');
+    }
+
+    public function trash()
+    {
+        return view('admin.trash');
+    }
+
     public function someMethod()
     {
         $user = auth()->user();

@@ -276,6 +276,12 @@ Route::get('/documents/{id}', [DocumentController::class, 'show'])->name('docume
 
 Route::get('/notification/count', [NotificationController::class, 'getNotificationCount'])->name('notification.count');
 
+// Route for Archive and Trash 
+Route::get('/admin/archive_notif', [AdminController::class, 'archiveNotif'])->name('admin.archive_notif');
+Route::get('/admin/archive_docs', [AdminController::class, 'archiveDocs'])->name('admin.archive_docs');
+Route::get('/admin/trash', [AdminController::class, 'trash'])->name('admin.trash');
+
+
 
 // Route for logout
 Route::post('/logout', [AuthLoginController::class, 'logout'])->name('logout');
