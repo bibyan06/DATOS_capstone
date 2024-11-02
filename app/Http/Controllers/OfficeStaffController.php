@@ -50,6 +50,17 @@ class OfficeStaffController extends Controller
     {
         return view('office_staff.os_notification');
     }
+    
+    public function archiveDocs()
+    {
+        return view('office_staff.os_archive');
+    }
+
+    public function trash()
+    {
+        return view('office_staff.os_trash');
+    
+    }
 
     public function someMethod()
     {
@@ -264,5 +275,8 @@ class OfficeStaffController extends Controller
 
         return response()->json(['message' => 'Document forwarded successfully!']);
     }
+
+
+
 
 }

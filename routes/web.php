@@ -139,8 +139,6 @@ Route::post('/update-profile', [ProfileController::class, 'updateAdminProfile'])
 Route::post('/update-profile', [ProfileController::class, 'updateOfficeStaffProfile'])->name('profile.update');
 
 
-
-
 //Route for recent documents 
 Route::get('/recent-documents', [DocumentController::class, 'showRecentDocuments'])->name('recent-documents');
 Route::get('/home/office_staff', [OfficeStaffController::class, 'showHomePage'])->name('home.office_staff');
@@ -280,6 +278,10 @@ Route::get('/notification/count', [NotificationController::class, 'getNotificati
 Route::get('/admin/archive_notif', [AdminController::class, 'archiveNotif'])->name('admin.archive_notif');
 Route::get('/admin/archive_docs', [AdminController::class, 'archiveDocs'])->name('admin.archive_docs');
 Route::get('/admin/trash', [AdminController::class, 'trash'])->name('admin.trash');
+Route::get('/office_staff/os_archive', [OfficeStaffController::class, 'archiveDocs'])->name('office_staff.os_archive');
+Route::get('/office_staff/os_trash', [OfficeStaffController::class, 'trash'])->name('office_staff.os_trash');
+Route::get('/dean/dean_archive', [DeanController::class, 'archiveDocs'])->name('dean.dean_archive');
+Route::get('/dean/dean_trash', [DeanController::class, 'trash'])->name('dean.dean_trash');
 
 
 

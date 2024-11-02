@@ -78,6 +78,17 @@ class DeanController extends Controller
         return view('dean.documents.audited_dv');
     }
 
+    public function archiveDocs()
+    {
+        return view('dean.dean_archive');
+    }
+
+    public function trash()
+    {
+        return view('dean.dean_trash');
+    }
+    
+
     public function someMethod()
     {
         $user = auth()->user();

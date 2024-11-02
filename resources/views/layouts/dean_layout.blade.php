@@ -54,6 +54,8 @@
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-bell-fill" id="notification-icon"></i></div></li>
                 
                 <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-search" id="search-icon"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-archive-fill" id="archive"></i></div></li>
+                <li><div class="icon-container" data-target="#sidebar"><i class="bi bi-trash3-fill" id="trash"></i></div></li>
             </ul>
             <div class="profile-settings">
                 <div class="icon-container" data-target="#sidebar"><i class="bi bi-door-open-fill"></i></div>
@@ -88,8 +90,9 @@
             <ul>
                 <li><a href="{{ route ('dean.documents.dean_request') }}" id="request">Request a Document</a></li>
                 <li><a href="{{ route ('dean.documents.dean_notification') }}" id="announcements-icon">Notifications</a></li>
-                
                 <li><a href="{{ route ('dean.documents.dean_search') }}" id="search">Search</a></li>
+                <li><a href="{{ route ('dean.dean_archive') }}" id="archive">Archive</a></li>
+                <li><a href="{{ route ('dean.dean_trash') }}" id="trash">Trash</a></li>
             </ul>
             <div class="profile-content">
                 <ul>
