@@ -50,10 +50,9 @@
                                 <tr>
                                     <td>{{ $user->employee_id }}</td>
                                     <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-                                    <td>{{ $user->college }}</td>
+                                    <td>{{ $user->college }}</td> 
                                 </tr>
                             @endforeach
-                            
                         </tbody>
                     </table>
                 @endif

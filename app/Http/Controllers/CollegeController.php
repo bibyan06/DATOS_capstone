@@ -29,10 +29,10 @@ class CollegeController extends Controller
     }
 
     public function showCollegeDeanForm()
-    {
-       // Retrieve users or deans data
-       $users = User::where('role_id', '3')->get(); // Adjust the query as needed
-
+    { 
+        
+        $users = User::with('college')->where('role_id', '3')->get();
+        
        // Retrieve the list of colleges
        $colleges = College::all();
 

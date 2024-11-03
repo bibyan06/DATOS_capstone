@@ -11,7 +11,7 @@
 @section('content') 
 <section class="title">
             <div class="title-content">
-                <h3>Archive Document</h3>
+                <h3>Archives</h3>
                 <div class="date-time">
                     <i class="bi bi-calendar2-week-fill"></i>
                     <p id="current-date-time"></p>
@@ -21,22 +21,172 @@
 
         <div id="dashboard-section">
             <div class="dashboard-container">
-                <table class="email-list">
-                    <tr class="email-item">
-                        <td class="checkbox"><input type="checkbox"></td>
-                        <td class="sender">DATOS</td>
-                        <td class="subject">
-                            <span class="subject-text">Forwarded Document</span>
-                            <span class="snippet"> - Employee Vivian Vivo forwarded a document regarding the Office Memorandum No. 108 Series of 2024.</span>
-                        </td>
-                        <td class="date">Jul 31</td>
-                        <td class="email-actions">
-                            <i class="bi bi-arrow-counterclockwise" title="Restore"></i>
-                        </td>
-                    </tr>
-                </table>
+                <div class="documents">
+                    <div class="document">
+                        <div class="file-container">
+                            <div class="document-card">
+                                <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                            </div>                        
+                        </div>
+                        <div class="document-description">
+                            <div class="row">
+                                    <div class="column-left">
+                                        <h3>
+                                        Office Memorandum No. 84
+                                        </h3>
+                                    </div>
+                                    <div class="column-right">
+                                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
+                                        <div class="dropdown-more">
+                                            <a href="admin_view.html">View</a>
+                                            <a href="#">Download</a>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="other-details">
+                                <p>Archived Date: April 2, 2024</p>
+                                <p>Details of the memorandum go here.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="document">
+                        <div class="file-container">
+                            <div class="document-card">
+                                <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                            </div>
+                        </div>
+                        <div class="document-description">
+                            <div class="row">
+                                    <div class="column-left">
+                                        <h3>
+                                        Office Memorandum No. 84
+                                        </h3>
+                                    </div>
+                                    <div class="column-right">
+                                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
+                                        <div class="dropdown-more">
+                                            <a href="admin_view.html">View</a>
+                                            <a href="#">Download</a>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="other-details">
+                                <p>Archived Date: April 2, 2024</p>
+                                <p>Details of the memorandum go here.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="document">
+                        <div class="file-container">
+                            <div class="document-card">
+                                <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                            </div>
+                        </div>
+                        <div class="document-description">
+                            <div class="row">
+                                    <div class="column-left">
+                                        <h3>
+                                        Office Memorandum No. 84
+                                        </h3>
+                                    </div>
+                                    <div class="column-right">
+                                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
+                                        <div class="dropdown-more">
+                                            <a href="admin_view.html">View</a>
+                                            <a href="#">Download</a>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="other-details">
+                                <p>Archived Date: April 2, 2024</p>
+                                <p>Details of the memorandum go here.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="document">
+                        <div class="file-container">
+                            <div class="document-card">
+                                <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                            </div>
+                        </div>
+                        <div class="document-description">
+                            <div class="row">
+                                    <div class="column-left">
+                                        <h3>
+                                        Office Memorandum No. 84
+                                        </h3>
+                                    </div>
+                                    <div class="column-right">
+                                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
+                                        <div class="dropdown-more">
+                                            <a href="admin_view.html">View</a>
+                                            <a href="#">Download</a>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="other-details">
+                                <p>Archived Date: April 2, 2024</p>
+                                <p>Details of the memorandum go here.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="document">
+                        <div class="file-container">
+                            <div class="document-card">
+                                <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                            </div>
+                        </div>
+                        <div class="document-description">
+                            <div class="row">
+                                    <div class="column-left">
+                                        <h3>
+                                        Office Memorandum No. 84
+                                        </h3>
+                                    </div>
+                                    <div class="column-right">
+                                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
+                                        <div class="dropdown-more">
+                                            <a href="admin_view.html">View</a>
+                                            <a href="#">Download</a>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="other-details">
+                                <p>Archived Date: April 2, 2024</p>
+                                <p>Details of the memorandum go here.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="document">
+                        <div class="file-container">
+                            <div class="document-card">
+                                <iframe src="digitized_documents/CERTIFICATION.pdf#toolbar=0" width="100%" height="200px"></iframe>
+                            </div>
+                        </div>
+                        <div class="document-description">
+                            <div class="row">
+                                    <div class="column-left">
+                                        <h3>
+                                        Office Memorandum No. 84
+                                        </h3>
+                                    </div>
+                                    <div class="column-right">
+                                        <a href="#" class="dropdown-toggle"><i class="bi bi-three-dots-vertical"></i></a>
+                                        <div class="dropdown-more">
+                                            <a href="admin_view.html">Restore</a>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="other-details">
+                                <p>Archived Date: April 2, 2024</p>
+                                <p>Details of the memorandum go here.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Add more documents as needed -->
+                </div>
             </div>
-        </div>
 @endsection
 
 

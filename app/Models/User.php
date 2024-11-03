@@ -118,7 +118,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function college()
     {
-        return $this->belongsTo(College::class, 'college_id'); 
+        return $this->belongsTo(College::class, 'college', 'college_id');
     }
 
     public function forwardedDocuments()

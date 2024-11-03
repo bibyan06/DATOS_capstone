@@ -59,73 +59,86 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home/dean', [HomeController::class, 'deanHome'])->name('home.dean');
 });
 
-// Office staff
-// Route::get('/home/office_staff', function () {
-//     return view('home.office_staff');
-// })->name('home.office_staff');
-
-// Route::get('/home/dean', function () {
-//     return view('home.dean');
-// })->name('home.dean');
-
-// Route for office staff side 
-Route::get('/profile', [OfficeStaffController::class, 'showProfile'])->middleware('auth')->name('office_staff.os_account');
-Route::get('/office_staff/os_dashboard', [OfficeStaffController::class, 'dashboard'])->name('office_staff.os_dashboard');
-Route::get('/office_staff/os_account', [OfficeStaffController::class, 'os_account'])->name('office_staff.os_account');
-Route::get('/office_staff/os_upload_document', [OfficeStaffController::class, 'os_upload_document'])->name('office_staff.os_upload_document');
-Route::get('/office_staff/os_notification', [OfficeStaffController::class, 'os_notification'])->name('office_staff.os_notification');
-Route::get('/office_staff/documents/memorandum', [OfficeStaffController::class, 'memorandum'])->name('office_staff.documents.memorandum');
-Route::get('/office_staff/documents/os_view_docs', [OfficeStaffController::class, 'os_view_docs'])->name('office_staff.documents.os_view_docs');
-Route::get('/office_staff/documents/edit_docs', [OfficeStaffController::class, 'edit_docs'])->name('office_staff.documents.edit_docs');
 
 
-// Route for admin side 
-Route::get('/profile', [AdminController::class, 'showProfile'])->middleware('auth')->name('admin.admin_account');
-Route::get('/admin/admin_dashboard', [AdminController::class, 'dashboard'])->name('admin.admin_dashboard');
-Route::get('/admin/admin_account', [AdminController::class, 'admin_account'])->name('admin.admin_account');
-Route::get('/admin/admin_upload_document', [AdminController::class, 'admin_upload_document'])->name('admin.admin_upload_document');
-Route::get('/admin/admin_view_document', [AdminController::class, 'view_document'])->name('admin.admin_view_document');
-Route::get('/admin/college_dean', [AdminController::class, 'college_dean'])->name('admin.college_dean');
-Route::get('/admin/office_staff', [AdminController::class, 'office_staff'])->name('admin.office_staff');
-Route::get('/admin/admin_notification', [AdminController::class, 'notification'])->name('admin.admin_notification');
+// Routes for office staff side
+Route::prefix('office_staff')->name('office_staff.')->middleware('auth')->group(function () {
+    Route::get('/profile', [OfficeStaffController::class, 'showProfile'])->name('os_account');
+    Route::get('/os_dashboard', [OfficeStaffController::class, 'dashboard'])->name('os_dashboard');
+    Route::get('/os_account', [OfficeStaffController::class, 'os_account'])->name('os_account');
+    Route::get('/os_upload_document', [OfficeStaffController::class, 'os_upload_document'])->name('os_upload_document');
+    Route::get('/os_notification', [OfficeStaffController::class, 'os_notification'])->name('os_notification');
 
-Route::get('/admin/documents/review_docs', [AdminController::class, 'review_docs'])->name('admin.documents.review_docs');
-Route::get('/admin/documents/approved_docs', [AdminController::class, 'approved_docs'])->name('admin.documents.approved_docs');
-Route::get('/admin/documents/declined_docs', [AdminController::class, 'declined_docs'])->name('admin.documents.declined_docs');
-// Route::get('/admin/documents/edit_docs', [AdminController::class, 'edit_docs'])->name('admin.documents.edit_docs');
-Route::get('/admin/documents/memorandum', [AdminController::class, 'memorandum'])->name('admin.documents.memorandum');
-Route::get('/admin/documents/admin_order', [AdminController::class, 'admin_order'])->name('admin.documents.admin_order');
-Route::get('/admin/documents/mrsp', [AdminController::class, 'mrsp'])->name('admin.documents.mrsp');
-Route::get('/admin/documents/cms', [AdminController::class, 'cms'])->name('admin.documents.cms');
-Route::get('/admin/documents/audited_dv', [AdminController::class, 'audited_dv'])->name('admin.documents.audited_dv');
-Route::get('/admin/documents/request_docs', [AdminController::class, 'request_docs'])->name('admin.documents.request_docs');
-// Route::get('/admin/documents/sent_docs', [AdminController::class, 'sent_docs'])->name('admin.documents.sent_docs');
-Route::get('/admin/documents/view_docs', [AdminController::class, 'view_docs'])->name('admin.documents.view_docs');
-Route::get('/admin/documents/all_docs', [AdminController::class, 'all_docs'])->name('admin.documents.all_docs');
+    // Document routes for office staff
+    Route::prefix('documents')->name('documents.')->group(function () {
+        Route::get('/memorandum', [OfficeStaffController::class, 'memorandum'])->name('memorandum');
+        Route::get('/os_view_docs', [OfficeStaffController::class, 'os_view_docs'])->name('os_view_docs');
+        Route::get('/edit_docs', [OfficeStaffController::class, 'edit_docs'])->name('edit_docs');
+    });
+});
 
+// Routes for admin side
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::get('/profile', [AdminController::class, 'showProfile'])->name('admin_account');
+    Route::get('/admin_dashboard', [AdminController::class, 'dashboard'])->name('admin_dashboard');
+    Route::get('/admin_account', [AdminController::class, 'admin_account'])->name('admin_account');
+    Route::get('/admin_upload_document', [AdminController::class, 'admin_upload_document'])->name('admin_upload_document');
+    Route::get('/admin_view_document', [AdminController::class, 'view_document'])->name('admin_view_document');
+    Route::get('/college_dean', [AdminController::class, 'college_dean'])->name('college_dean');
+    Route::get('/office_staff', [AdminController::class, 'office_staff'])->name('office_staff');
+    Route::get('/admin_notification', [AdminController::class, 'notification'])->name('admin_notification');
+
+    // Document routes for admin
+    Route::prefix('documents')->name('documents.')->group(function () {
+        Route::get('/review_docs', [AdminController::class, 'review_docs'])->name('review_docs');
+        Route::get('/approved_docs', [AdminController::class, 'approved_docs'])->name('approved_docs');
+        Route::get('/declined_docs', [AdminController::class, 'declined_docs'])->name('declined_docs');
+        Route::get('/memorandum', [AdminController::class, 'memorandum'])->name('memorandum');
+        Route::get('/admin_order', [AdminController::class, 'admin_order'])->name('admin_order');
+        Route::get('/mrsp', [AdminController::class, 'mrsp'])->name('mrsp');
+        Route::get('/cms', [AdminController::class, 'cms'])->name('cms');
+        Route::get('/audited_dv', [AdminController::class, 'audited_dv'])->name('audited_dv');
+        Route::get('/request_docs', [AdminController::class, 'request_docs'])->name('request_docs');
+        Route::get('/view_docs', [AdminController::class, 'view_docs'])->name('view_docs');
+        Route::get('/all_docs', [AdminController::class, 'all_docs'])->name('all_docs');
+    });
+});
+
+// Route for layout
 Route::get('/layouts/admin_layout', [AdminController::class, 'showPendings'])->name('layouts.admin_layouts');
 
 
-// Route for dean side 
-Route::get('/dean/dean_dashboard', [DeanController::class, 'dashboard'])->name('dean.dean_dashboard');
-Route::get('/dean/dean_account', [DeanController::class, 'dean_account'])->name('dean.dean_account');
-Route::get('/dean/dean_upload_document', [DeanController::class, 'upload_document'])->name('dean.dean_upload_document');
-Route::get('/dean/documents/dean_edit_docs', [DeanController::class, 'edit_docs'])->name('dean.documents.dean_edit_docs');
-Route::get('/dean/documents/dean_notification', [DeanController::class, 'notification'])->name('dean.documents.dean_notification');
-Route::get('/dean/documents/dean_request', [DeanController::class, 'request'])->name('dean.documents.dean_request');
-Route::get('/dean/documents/dean_search', [DeanController::class, 'search'])->name('dean.documents.dean_search');
-Route::get('/dean/documents/dean_view_docs', [DeanController::class, 'view_docs'])->name('dean.documents.dean_view_docs');
-Route::get('/dean/documents/memorandum', [DeanController::class, 'memorandum'])->name('dean.documents.memorandum');
-Route::get('/dean/documents/admin_order', [DeanController::class, 'admin_order'])->name('dean.documents.admin_order');
-Route::get('/dean/documents/mrsp', [DeanController::class, 'mrsp'])->name('dean.documents.mrsp');
-Route::get('/dean/documents/cms', [DeanController::class, 'cms'])->name('dean.documents.cms');
-Route::get('/dean/documents/audited_dv', [DeanController::class, 'audited_dv'])->name('dean.documents.audited_dv');
+// Routes for dean side
+Route::prefix('dean')->name('dean.')->middleware('auth')->group(function () {
+    Route::get('/dean_dashboard', [DeanController::class, 'dashboard'])->name('dean_dashboard');
+    Route::get('/dean_account', [DeanController::class, 'dean_account'])->name('dean_account');
+    Route::get('/dean_upload_document', [DeanController::class, 'upload_document'])->name('dean_upload_document');
+    Route::get('/dean_account', [DeanController::class, 'showDeanProfile'])->name('dean_account');
 
-Route::post('/add-dean-account', [DeanController::class, 'storeDeanAccount'])->name('dean.store');
-Route::get('/admin/college_dean', [DeanController::class, 'deanList'])->name('admin.college_dean');
-Route::post('/add-college', [CollegeController::class, 'store'])->name('add-college');
-Route::get('/admin/college_dean', [CollegeController::class, 'showCollegeDeanForm'])->name('admin.college_dean');
-Route::get('/dean/dean_account', [DeanController::class, 'showDeanProfile'])->name('dean.dean_account')->middleware('auth');
+    // Document routes for dean
+    Route::prefix('documents')->name('documents.')->group(function () {
+        Route::get('/dean_edit_docs', [DeanController::class, 'edit_docs'])->name('dean_edit_docs');
+        Route::get('/dean_notification', [DeanController::class, 'notification'])->name('dean_notification');
+        Route::get('/dean_request', [DeanController::class, 'request'])->name('dean_request');
+        Route::get('/dean_search', [DeanController::class, 'search'])->name('dean_search');
+        Route::get('/dean_view_docs', [DeanController::class, 'view_docs'])->name('dean_view_docs');
+        Route::get('/memorandum', [DeanController::class, 'memorandum'])->name('memorandum');
+        Route::get('/admin_order', [DeanController::class, 'admin_order'])->name('admin_order');
+        Route::get('/mrsp', [DeanController::class, 'mrsp'])->name('mrsp');
+        Route::get('/cms', [DeanController::class, 'cms'])->name('cms');
+        Route::get('/audited_dv', [DeanController::class, 'audited_dv'])->name('audited_dv');
+    });
+
+    // Route for adding dean account
+    Route::post('/add-dean-account', [DeanController::class, 'storeDeanAccount'])->name('store');
+});
+
+// Routes related to college and dean management by admin
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/college_dean', [DeanController::class, 'deanList'])->name('college_dean');
+    Route::get('/college_dean', [CollegeController::class, 'showCollegeDeanForm'])->name('college_dean');
+    Route::post('/add-college', [CollegeController::class, 'store'])->name('add-college');
+});
 
 
 // Route for Profile 

@@ -139,16 +139,6 @@ class AdminController extends Controller
         return view('admin.trash');
     }
 
-    public function someMethod()
-    {
-        $user = auth()->user();
-
-        // Ensure the user has the '01' prefix in employee_id for admin actions
-        if (strpos($user->employee_id, '01') !== 0) {
-            abort(403, 'Unauthorized action.');
-        }
-        // Proceed with the action
-    }
 
     public function searchDocuments(Request $request)
     {
